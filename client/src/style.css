@@ -1,0 +1,33 @@
+.component {
+    width: 100%;
+    height: 100%;
+}
+
+.root {
+    padding: 100px 100px;
+}
+
+.col {
+    width: 50%;
+}
+
+.login-form {
+}
+.text-input {
+}
+.login-form__username-input {
+}
+.login-form__buttons {
+}
+.login-form__submit {
+}
+.button {
+}
+.button__capture {
+}
+.button__capture_red {
+}
+.button__active_disabled {
+}
+.login-form__reset {
+}

@@ -1,0 +1,29 @@
+.button {
+    // display: inline-block;
+    background-color: #4CAF50;
+    outline: none;
+    border: none;
+    border-radius: 20px;
+    color: white;
+    padding: 10px 20px;
+    font-size: 16px;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    opacity: 0.5;
+    transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+
+    &:hover { 
+        opacity: 1; 
+        transform: translate(20px) ;
+    }
+
+    &:active {
+        background-color: #458d47;
+        border: none;
+    }
+}
+
+.button__red {
+    background-color: red !important;
+}
