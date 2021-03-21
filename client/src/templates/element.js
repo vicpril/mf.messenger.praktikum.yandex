@@ -1,4 +1,4 @@
-import { Templator } from "./../classes/templator";
+import { Templator } from "./../classes/templators/templator";
 // import "./../templates/button/button.scss";
 
 

@@ -1,7 +1,7 @@
-import { get } from "../utils/mydash/get";
+import { get } from "../../utils/mydash/get";
 
-export class Templator {
-   TEMPLATE_REGEXP = /\{\{(.*?)\}\}/gi;
+export class TemplatorVariables {
+   TEMPLATE_REGEXP = /\{\{(.*?)\}\}/i;
 
    constructor(template) {
       this._template = template;
@@ -15,7 +15,6 @@ export class Templator {
       let template = this._template;
       const regExp = this.TEMPLATE_REGEXP; // avoid from infinity loop
       let key = null;
-
       while ((key = regExp.exec(template))) {
          if (key[1]) {
             const templValue = key[1].trim();
