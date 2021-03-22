@@ -1,20 +1,4 @@
-// Colors
-$primary: #6588DE !default;
-$secondary: #F3BA4A !default;
-$light:#E3F6FC !default;
-$grey: #B5C2CE !default;
-$info: #C0CEF1 !default;
-$hover: #D7ECF9 !default;
-$success: #4af3c0 !default;
-$danger: #e45579 !default;
-$warning: orange !default;
-$backgraund_main: #fff !default;
-
-$text-primary: #52585D !default;
-$text-secondary: #96A9BA !default;
-$text-white: #fff !important;
-
-$font-primary: "Inter";
+@import "./variables";
 
 html, body {
     height: 100%;
@@ -112,12 +96,7 @@ html, body {
     }
 }
 
-img.user__avatar {
-    width: 44px;
-    height: 44px;
-    border: 3px solid;
-    border-radius: 50%;
-}
+
 .user__info {
     flex: 1;
     display: flex;
@@ -151,24 +130,7 @@ img.user__avatar {
     width: 60px;
     text-align: right; 
 }
-.button {
-    border: none;
-    cursor: pointer;
-    outline: none;
-    border-radius: 12px;
-    padding: 0 20px;
-}
-.button__user_settings {
-    background-color: transparent;
-    color: $primary;
-    margin-left: auto;
-    padding: 3px 15px;
-    border-radius: 10px;
 
-    i{
-        background-color: transparent;
-    }
-}
 .last_message_date {
     font-size: 9px;
     font-weight: 300;
@@ -205,10 +167,10 @@ img.user__avatar {
     bottom: 75px;
     left: 0;
     overflow-y: hidden;
+    width: 330px;
 
 
     &:hover {
-        width: 330px;
         z-index: 3999;
         overflow-y: auto;
         position: fixed;
@@ -262,19 +224,6 @@ img.user__avatar {
 
 
 
-.input {
-    border: 1px solid $grey;
-    border-radius: 12px;
-    height: 30px;
-    outline: none;
-    color: $text-primary;
-}
-.input__search_chats {
-    flex-grow: 1;
-    margin: 20px, 10px !important;
-    align-self: stretch;
-    text-align: center;
-}
 
 .messager__wrapper {
     padding-right: 50px;
@@ -366,9 +315,7 @@ img.user__avatar {
     display: flex;
     flex-direction: row;
 }
-.block__avatar {
 
-}
 .block__messages {
     flex-grow: 1;
 }
@@ -412,21 +359,10 @@ img.user__avatar {
     display: flex;
     flex-flow: row nowrap;
 }
-.button__attach {
-    color: $primary;
-    background-color: transparent;
-    padding-right: 5px;
-}
+
 .input__message {
     flex-grow: 1;
     margin: 0 10px;
     padding: 0 20px;
 }
-.button__submit {
-    background-color: $primary;
-    color: $text-white;
-    font-size: 13px;
-    font-weight: 700;
-    padding: 0 30px;
 
-}

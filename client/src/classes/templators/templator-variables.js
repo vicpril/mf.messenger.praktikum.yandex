@@ -28,10 +28,11 @@ export class TemplatorVariables {
 
             // handle function
             if (typeof value === 'function') {
-               window[templValue] = value;
+               const salt = "_" + Date.now();
+               window[templValue + salt] = value;
                template = template.replace(
                   new RegExp(key[0], "gi"),
-                  `window.${key[1].trim()}()`
+                  `window.${key[1].trim()}${salt}()`
                )
                continue;
             }

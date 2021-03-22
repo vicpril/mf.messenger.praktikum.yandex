@@ -1,22 +1,22 @@
 /**
  *  <v-if="var1 === var1">
  *      var1: {{var1}}
- *  <v-if-end>
+ *  </v-if>
  * 
  *  <v-if="var1 >= var2">
  *      {{var1}}
  *  <v-else>
  *      {{var2}}
- *  <v-if-end>
+ *  </v-if>
  */
 
-import { get } from "../../utils/mydash/get";
-import { compare } from "../../utils/mydash/compare";
-import { isUndefined } from "../../utils/mydash/isUndefined";
-import { trimQuotes } from "../../utils/mydash/trimQuotes";
+import { get } from "/utils/mydash/get";
+import { compare } from "/utils/mydash/compare";
+import { isUndefined } from "/utils/mydash/isUndefined";
+import { trimQuotes } from "/utils/mydash/trimQuotes";
 
 export class TemplatorIf {
-   TEMPLATE_REGEXP = /<v-if(="(.*?)")>(.*?)(<v-else>(.*?))?<v-if-end>/gis;
+   TEMPLATE_REGEXP = /<v-if(="(.*?)")>(.*?)(<v-else>(.*?))?<\/v-if>/gis;
    COMPARE_REGEXP = /(\w+)((.*?)(\'?\w+\'?))?/;
 
    constructor(template) {
@@ -41,7 +41,12 @@ export class TemplatorIf {
             : key[5].trim();
 
          const [postString, operator, valueString] = this._parseCondition(condition);
-         const post = get(ctx, postString, postString)
+         const post = get(ctx, postString)
+
+         if (isUndefined(post)) {
+            result = result.replace(new RegExp(key[0], "gi"), partElse);
+            continue;
+         }
          const value = !isUndefined(valueString)
             ? get(ctx, valueString, valueString)
             : valueString;

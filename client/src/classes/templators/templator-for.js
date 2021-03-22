@@ -1,9 +1,9 @@
 /**
- * <v-for="(item, index) in array">
+ * <v-for :item :index in array">
  *     {{content}}
  *  <v-for-end>
  *
- *  <v-for="(value, key) in object">
+ *  <v-for :value :key in object">
  *     {{content}}
  *  <v-for-end>
  */
@@ -12,7 +12,8 @@ import { get } from "../../utils/mydash/get";
 import { TemplatorVariables } from "./templator-variables";
 
 export class TemplatorFor {
-   TEMPLATE_REGEXP = /<v-for(="\((.*?),\s(.*?)\)\sin\s(.*?)")>(.*?)<v-for-end>/gis;
+   // TEMPLATE_REGEXP = /<v-for(="\((.*?),\s(.*?)\)\sin\s(.*?)")>(.*?)<v-for-end>/gis;
+   TEMPLATE_REGEXP = /<v-for\s*(:(.*?)\s*:(.*?)\sin\s(.*?))>(.*?)<\/v-for>/gis;
 
    constructor(template) {
       this._template = template;
@@ -29,7 +30,6 @@ export class TemplatorFor {
       let key = null;
 
       while ((key = regExp.exec(template))) {
-         // console.log(key)
          const valueKey = key[2].trim();
          const indexKey = key[3].trim();
          const target = get(ctx, key[4].trim(), []);
@@ -52,9 +52,10 @@ export class TemplatorFor {
                   })
             }
 
+         template = template.replace(new RegExp(key[0], "gis"), result);
       }
 
-      return result;
+      return template;
    }
 
    _createContext(indexKey, index, valueKey, value) {
