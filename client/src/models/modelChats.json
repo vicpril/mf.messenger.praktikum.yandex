@@ -13,24 +13,24 @@
                     "user": "clowndesbrough0",
                     "type": "attachment",
                     "unread": true,
-                    "content": "Vestibulum ac est lacinia nisi venenatis tristique. Fusce congue, diam id ornare imperdiet, sapien urna pretium nisl, ut volutpat sapien arcu sed augue. Aliquam erat volutpat."
+                    "content": "Vestibulum ac est lacinia nisi venenatis tristique."
                 },
                 {
-                    "time": "1603950281000",
+                    "time": "1602738018000",
                     "user": "clowndesbrough0",
                     "type": "text",
                     "unread": true,
-                    "content": "Duis aliquam convallis nunc. Proin at turpis a pede posuere nonummy. Integer non velit.\n\nDonec diam neque, vestibulum eget, vulputate ut, ultrices vel, augue. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Donec pharetra, magna vestibulum aliquet ultrices, erat tortor sollicitudin mi, sit amet lobortis sapien sapien non mi. Integer ac neque.\n\nDuis bibendum. Morbi non quam nec dui luctus rutrum. Nulla tellus."
+                    "content": "Duis 12312 aliquam convallis nunc. Proin at turpis a pede posuere nonummy. Integer non velit.\n\nDonec diam neque, vestibulum eget, vulputate ut, ultrices vel, augue. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Donec pharetra, magna vestibulum aliquet ultrices, erat tortor sollicitudin mi, sit amet lobortis sapien sapien non mi. Integer ac neque.\n\nDuis bibendum. Morbi non quam nec dui luctus rutrum. Nulla tellus."
                 },
                 {
                     "time": "1589645716000",
                     "user": "fdrew1",
                     "type": "attachment",
                     "unread": true,
-                    "content": "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Proin risus. Praesent lectus.\n\nVestibulum quam sapien, varius ut, blandit non, interdum in, ante. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Duis faucibus accumsan odio. Curabitur convallis.\n\nDuis consequat dui nec nisi volutpat eleifend. Donec ut dolor. Morbi vel lectus in quam fringilla rhoncus."
+                    "content": "Lorem ipsum dolor sit amet"
                 },
                 {
-                    "time": "1595385863000",
+                    "time": "1589645516000",
                     "user": "fdrew1",
                     "type": "text",
                     "unread": true,
@@ -68,36 +68,7 @@
         "display_name": "Corrianne Palethorpe",
         "avatar": "https://robohash.org/quiaautemaperiam.png?size=200x200&set=set1",
         "data": {
-            "messages": [
-                {
-                    "time": "1609221400000",
-                    "user": "cpalethorpe2",
-                    "type": "text",
-                    "unread": true,
-                    "content": "Praesent id massa id nisl venenatis lacinia. Aenean sit amet justo. Morbi ut odio.\n\nCras mi pede, malesuada in, imperdiet et, commodo vulputate, justo. In blandit ultrices enim. Lorem ipsum dolor sit amet, consectetuer adipiscing elit.\n\nProin interdum mauris non ligula pellentesque ultrices. Phasellus id sapien in sapien iaculis congue. Vivamus metus arcu, adipiscing molestie, hendrerit at, vulputate vitae, nisl."
-                },
-                {
-                    "time": "1609013931000",
-                    "user": "cpalethorpe2",
-                    "type": "attachment",
-                    "unread": true,
-                    "content": "Aliquam quis turpis eget elit sodales scelerisque. Mauris sit amet eros. Suspendisse accumsan tortor quis turpis.\n\nSed ante. Vivamus tortor. Duis mattis egestas metus.\n\nAenean fermentum. Donec ut mauris eget massa tempor convallis. Nulla neque libero, convallis eget, eleifend luctus, ultricies eu, nibh."
-                },
-                {
-                    "time": "1602372160000",
-                    "user": "cpalethorpe2",
-                    "type": "text",
-                    "unread": true,
-                    "content": "Nullam porttitor lacus at turpis. Donec posuere metus vitae ipsum. Aliquam non mauris.\n\nMorbi non lectus. Aliquam sit amet diam in magna bibendum imperdiet. Nullam orci pede, venenatis non, sodales sed, tincidunt eu, felis.\n\nFusce posuere felis sed lacus. Morbi sem mauris, laoreet ut, rhoncus aliquet, pulvinar sed, nisl. Nunc rhoncus dui vel sem."
-                },
-                {
-                    "time": "1607343922000",
-                    "user": "clowndesbrough0",
-                    "type": "text",
-                    "unread": true,
-                    "content": "Integer ac leo. Pellentesque ultrices mattis odio. Donec vitae nisi.\n\nNam ultrices, libero non mattis pulvinar, nulla pede ullamcorper augue, a suscipit nulla elit ac nulla. Sed vel enim sit amet nunc viverra dapibus. Nulla suscipit ligula in lacus."
-                }
-            ]
+            "messages": []
         }
     },
     {
@@ -142,7 +113,7 @@
                     "user": "clowndesbrough0",
                     "type": "text",
                     "unread": true,
-                    "content": "Duis aliquam convallis nunc. Proin at turpis a pede posuere nonummy. Integer non velit."
+                    "content": "Duis 12312weraliquam convallis nunc. Proin at turpis a pede posuere nonummy. Integer non velit."
                 }
             ]
         }
@@ -449,7 +420,7 @@
                     "time": "1612237730000",
                     "user": "clowndesbrough0",
                     "type": "text",
-                    "unread": false,
+                    "unread": true,
                     "content": "Curabitur gravida nisi at nibh. In hac habitasse platea dictumst. Aliquam augue quam, sollicitudin vitae, consectetuer eget, rutrum at, lorem.\n\nInteger tincidunt ante vel ipsum. Praesent blandit lacinia erat. Vestibulum sed magna at nunc commodo placerat.\n\nPraesent blandit. Nam nulla. Integer pede justo, lacinia eget, tincidunt eget, tempus vel, pede."
                 },
                 {
@@ -463,7 +434,7 @@
                     "time": "1608831556000",
                     "user": "dfg789",
                     "type": "text",
-                    "unread": false,
+                    "unread": true,
                     "content": "Praesent blandit. Nam nulla. Integer pede justo, lacinia eget, tincidunt eget, tempus vel, pede.\n\nMorbi porttitor lorem id ligula. Suspendisse ornare consequat lectus. In est risus, auctor sed, tristique in, tempus sit amet, sem.\n\nFusce consequat. Nulla nisl. Nunc nisl."
                 },
                 {

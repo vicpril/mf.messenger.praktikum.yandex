@@ -1,4 +1,5 @@
-import { get } from "../../utils/mydash/get";
+import { get } from "/utils/mydash/get";
+import { getUniqueStr } from "/utils/mydash/getUniqueStr";
 
 export class TemplatorVariables {
    TEMPLATE_REGEXP = /\{\{(.*?)\}\}/i;
@@ -28,7 +29,7 @@ export class TemplatorVariables {
 
             // handle function
             if (typeof value === 'function') {
-               const salt = "_" + Date.now();
+               const salt = "_" + getUniqueStr();
                window[templValue + salt] = value;
                template = template.replace(
                   new RegExp(key[0], "gi"),

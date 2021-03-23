@@ -6,6 +6,9 @@
  * @param  {any} defaultValue
  */
 export function get(obj, str, defaultValue) {
+    if (!str) {
+        return defaultValue
+    }
     const keys = str.split('.');
     let result = obj;
 

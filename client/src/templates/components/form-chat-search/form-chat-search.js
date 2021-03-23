@@ -31,7 +31,7 @@ export class FormChatSearch {
         const formData = new FormData(form);
         const data = formData.getData()
 
-        console.log('Search form data:', data);
+        console.log('Send form data:', data);
     }
 
 }

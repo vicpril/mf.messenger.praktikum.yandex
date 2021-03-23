@@ -17,7 +17,7 @@ import { trimQuotes } from "/utils/mydash/trimQuotes";
 
 export class TemplatorIf {
    TEMPLATE_REGEXP = /<v-if(="(.*?)")>(.*?)(<v-else>(.*?))?<\/v-if>/gis;
-   COMPARE_REGEXP = /(\w+)((.*?)(\'?\w+\'?))?/;
+   COMPARE_REGEXP = /\!?(\w+)((.*?)(\'?!?\w+\'?))?/;
 
    constructor(template) {
       this._template = template;
@@ -27,13 +27,14 @@ export class TemplatorIf {
       return this._compileTemplate(ctx);
    }
 
-   _compileTemplate(ctx) {
+   _compileTemplate(ctx, newTemplate = null) {
       const regExp = this.TEMPLATE_REGEXP; // avoid from infinity loop
-      let template = this._template;
+      let template = newTemplate ?? this._template;
       let result = template;
       let key = null;
 
       while ((key = regExp.exec(template))) {
+
          const condition = key[2].trim();
          const partIf = key[3].trim();
          const partElse = isUndefined(key[5])
@@ -41,16 +42,31 @@ export class TemplatorIf {
             : key[5].trim();
 
          const [postString, operator, valueString] = this._parseCondition(condition);
-         const post = get(ctx, postString)
+
+         let post
+         if (postString.charAt(0) !== "!") {
+            post = get(ctx, postString)
+         } else {
+            post = !get(ctx, postString.slice(1))
+         }
 
          if (isUndefined(post)) {
             result = result.replace(new RegExp(key[0], "gi"), partElse);
             continue;
          }
-         const value = !isUndefined(valueString)
-            ? get(ctx, valueString, valueString)
-            : valueString;
 
+         let value
+         if (!isUndefined(valueString)) {
+            if (valueString.charAt(0) !== "!") {
+               value = get(ctx, valueString)
+            } else {
+               value = !get(ctx, valueString.slice(1))
+            }
+         } else {
+            value = valueString;
+         }
+
+         post = post === "null" ? null : post
          if (compare(post, operator, value)) {
             result = result.replace(new RegExp(key[0], "gi"), partIf);
          } else {
@@ -66,8 +82,16 @@ export class TemplatorIf {
    _parseCondition(str) {
       const regExp = this.COMPARE_REGEXP;
       const keys = regExp.exec(str);
-      return !isUndefined(keys[3])
-         ? [trimQuotes(keys[1]), keys[3].trim(), trimQuotes(keys[4])] // set 2 variables and condition
-         : [str]; // set a variable only
+      if (!isUndefined(keys[3])) {
+         const post = trimQuotes(keys[1]);
+         const value = trimQuotes(keys[4]);
+         const operator = keys[3].trim();
+         return [post, operator, value];
+      } else {
+         const post = trimQuotes(str);
+         return [post]; // set a variable only
+      }
+
+
    }
 }

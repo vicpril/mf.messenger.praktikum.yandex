@@ -1,7 +1,8 @@
 import { LeftSidebar } from "/templates/components/leftSidebar/left-sidebar";
-import { MainContainer } from "/templates/components/main/main";
+import { MainContainer } from "/templates/components/main-container/main-container";
 import account from "/models/modelAccount.json";
 import chats from "/models/modelChats.json";
+import { getUrlParameter } from "/utils/mydash/getUrl";
 
 export class App {
     constructor(selector) {
@@ -9,7 +10,6 @@ export class App {
     }
 
     init() {
-        // debugger
         this.render();
     }
 
@@ -33,7 +33,11 @@ export class App {
         this.$el.insertAdjacentHTML('beforeend', main.render());
         // this.$el.insertAdjacentHTML('beforeend', rightSidebar.render());
 
+
+
+
     }
+
 
     _getChats() {
         return chats;
@@ -43,16 +47,31 @@ export class App {
         return account;
     }
 
+    /**
+     * Return an object with account and current chat
+     * 
+     * @param {String} current_user
+     * @returns {Object}
+     */
     _getData(current_user = null) {
-        return current_user
+        const chat = current_user
             ? this._getChats()
-                .filter(user => user.login === current_user)
-                .data
-            : {}
+                .filter(chat => chat.login === current_user)[0]
+            : null
             ;
+        const account = this._getAccount();
+        return Object.assign({}, { chat }, { account }, { current_user });
     }
 
     __getCurrentUser() {
-        return this._getChats()[1].login;
+        const userlogin = getUrlParameter('user');
+        if (!userlogin) {
+            return null;
+        }
+        const user = this._getChats().filter(u => u.login === userlogin).first();
+        return user ? user.login : null;
+
     }
+
 }
+
