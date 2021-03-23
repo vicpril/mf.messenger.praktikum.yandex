@@ -1,19 +1,25 @@
 {
   "name": "first-module",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Easy conversation",
   "scripts": {
     "start": "node ./server/index.js",
-    "dev": "npm --prefix ./client run dev",
-    "build": "npm --prefix ./client run build"
+    "dev": "parcel serve src/index.html",
+    "build": "parcel build src/index.html"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/vicpril/middle.messenger.praktikum.yandex.git"
   },
-  "author": "",
+  "author": "Viktor Prilepin",
   "license": "ISC",
+  "devDependencies": {
+    "parcel-bundler": "^1.12.5",
+    "sass": "^1.32.8"
+  },
+  "dependencies": {
+    "@fortawesome/fontawesome-free": "^5.15.3"
+  },
   "bugs": {
     "url": "https://github.com/vicpril/middle.messenger.praktikum.yandex/issues"
   },
