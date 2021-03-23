@@ -1,3 +1,5 @@
+[![Netlify Status](https://api.netlify.com/api/v1/badges/cc37130e-3551-46c1-9f0d-68ce33b86df0/deploy-status)](https://app.netlify.com/sites/keen-gates-c91a4b/deploys)
+
 ## Netlify
 [Ссылка на netlify](https://keen-gates-c91a4b.netlify.app) (ветка deploy)
 ## Figma
