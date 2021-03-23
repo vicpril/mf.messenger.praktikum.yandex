@@ -1,3 +1,4 @@
+import 'regenerator-runtime/runtime'
 import { App } from "./classes/app";
 import "/utils/prototypes.custom";
 
