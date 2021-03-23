@@ -6,12 +6,13 @@ import { InputCustom } from "/templates/elements/input/input";
 export class FormChatSearch {
     constructor() {
         this.template = template;
+        this.css = "search__wrapper";
     }
 
     render() {
         const context = {
-            css: "search__wrapper",
-            onsubmit: this._onsubmit,
+            css: this.css,
+            onsubmit: this._onsubmit.bind(this),
             prevent_action: "event.preventDefault();",
             content: (new InputCustom({
                 css: "input input__search_chats",
@@ -26,7 +27,7 @@ export class FormChatSearch {
     }
 
     _onsubmit() {
-        const form = document.getElementsByClassName("search__wrapper")[0];
+        const form = document.getElementsByClassName(this.css)[0];
         const formData = new FormData(form);
         const data = formData.getData()
 

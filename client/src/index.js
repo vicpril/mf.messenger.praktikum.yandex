@@ -1,7 +1,7 @@
 import { App } from "./classes/app";
 import "/utils/prototypes.custom";
 
-import "./styles/main.scss";
+import "./styles/styles.scss";
 
 const app = new App('#app');
 

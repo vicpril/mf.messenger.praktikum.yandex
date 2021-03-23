@@ -2,9 +2,7 @@ export default `<input
     <v-if="id">
         id="{{id}}"
     </v-if>
-    <v-if="css">
-        class="{{css}}"
-    </v-if>
+        class="input {{css}}"
     <v-if="type">
         type="{{type}}"
     <v-else>

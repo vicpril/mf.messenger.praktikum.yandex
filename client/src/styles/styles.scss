@@ -7,6 +7,10 @@ html, body {
     font-family: $font-primary;
 }
 
+.hidden {
+    display: none;
+}
+
 .fluid-container {
     width: 100%;
     display: flex;

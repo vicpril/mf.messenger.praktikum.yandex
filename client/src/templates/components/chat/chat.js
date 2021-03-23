@@ -25,8 +25,8 @@ export class Chat {
 
     _getAccountContext() {
         return {
+            is_account: true,
             css: "account__user",
-            is_account: this.isAccount,
             display_name: this.user.display_name,
             avatar: (new Avatar({
                 css: "user__avatar",
@@ -34,7 +34,8 @@ export class Chat {
             }, this.user.login)).render(),
             btn_settings: (new ButtonCustom({
                 css: "button button__user_settings",
-                title: '<i class="fas fa-ellipsis-v"></i>'
+                title: '<i class="fas fa-ellipsis-v"></i>',
+                onclick: () => { document.location.href = '/account/' }
             })).render()
         }
     }
@@ -44,7 +45,7 @@ export class Chat {
         const lastMessage = sortedMessages[0];
         return {
             css: "",
-            is_account: this.isAccount,
+            is_account: false,
             display_name: this.user.display_name,
             is_current: this.isCurrent,
             last_message: lastMessage.content,

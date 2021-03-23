@@ -1,6 +1,7 @@
-import { LeftSidebar } from "../templates/components/leftSidebar/left-sidebar";
-import account from "./../models/modelAccount.json";
-import chats from "./../models/modelChats.json";
+import { LeftSidebar } from "/templates/components/leftSidebar/left-sidebar";
+import { MainContainer } from "/templates/components/main/main";
+import account from "/models/modelAccount.json";
+import chats from "/models/modelChats.json";
 
 export class App {
     constructor(selector) {
@@ -17,17 +18,19 @@ export class App {
 
         const account = this._getAccount();
         const chats = this._getChats();
-        const leftSidebar = new LeftSidebar(account, chats);
+        const current_user = this.__getCurrentUser();
 
-        // const data = {};
-        // const main = new Main(data);
+        const leftSidebar = new LeftSidebar(account, chats, current_user);
+
+        const data = this._getData(current_user);
+        const main = new MainContainer(data);
 
         // const user = {};
         // const rightSidebar = new RightSidebar(user);
 
         this.$el.innerHtml = '';
         this.$el.insertAdjacentHTML('beforeend', leftSidebar.render());
-        // this.$el.insertAdjacentHTML('beforeend', main.render());
+        this.$el.insertAdjacentHTML('beforeend', main.render());
         // this.$el.insertAdjacentHTML('beforeend', rightSidebar.render());
 
     }
@@ -38,5 +41,18 @@ export class App {
 
     _getAccount() {
         return account;
+    }
+
+    _getData(current_user = null) {
+        return current_user
+            ? this._getChats()
+                .filter(user => user.login === current_user)
+                .data
+            : {}
+            ;
+    }
+
+    __getCurrentUser() {
+        return this._getChats()[1].login;
     }
 }

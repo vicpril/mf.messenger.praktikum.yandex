@@ -5,11 +5,11 @@ import { Chat } from "../chat/chat.js";
 import { FormChatSearch } from "../form-chat-search/form-chat-search.js";
 
 export class LeftSidebar {
-    constructor(account, users) {
+    constructor(account, users, current_user = null) {
         this.template = template;
         this.account = account;
         this.users = users;
-        this.current_user = this.users[1].login;
+        this.current_user = current_user;
     }
 
     render() {
@@ -20,7 +20,6 @@ export class LeftSidebar {
             account: (new Chat(this.account, false, true)).render(),
             chats: chats,
             current_user: this.users[2].login,
-
             form_search: (new FormChatSearch()).render()
         };
 
