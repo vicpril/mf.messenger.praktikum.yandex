@@ -1,5 +1,7 @@
 ## Netlify
 [Ссылка на netlify](https://keen-gates-c91a4b.netlify.app) (ветка deploy)
+## Figma
+[Ссылка на макеты страниц](https://www.figma.com/file/4EHI7pSzvl3b5SrxIutW21/Chat-Copy?node-id=0%3A1)
 
 
 ## Figma
