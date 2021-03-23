@@ -2,6 +2,9 @@
   "name": "client-app",
   "version": "1.0.0",
   "description": "",
+  "browserslist": [
+    "last 1 Chrome versions"
+  ],
   "main": "index.js",
   "scripts": {
     "dev": "parcel serve src/index.html",
