@@ -1,4 +1,6 @@
 @import "./variables";
+@import '../../node_modules/@fortawesome/fontawesome-free/css/all.min.css';
+
 
 html, body {
     height: 100%;
@@ -9,6 +11,10 @@ html, body {
 
 .hidden {
     display: none;
+}
+
+i.settings {
+    overflow: visible
 }
 
 .fluid-container {
