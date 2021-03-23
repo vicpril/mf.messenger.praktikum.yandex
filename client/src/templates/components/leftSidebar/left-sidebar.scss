@@ -1,0 +1,86 @@
+@import "/styles/variables.scss";
+
+.left_sidebar {
+    width: 330px !important;
+    position: absolute;
+    top: 0;
+    left: 0;
+    flex-direction: column;
+}
+
+.account__wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 310px;
+    background-color: $light;
+    border-radius: 0 0 20px 0;
+    padding: 5px 10px 5px 10px  ;
+    
+}
+
+.chats__wrapper {
+    flex-direction: column;
+    align-content: stretch;
+    background-color: $light;
+    border-radius: 0 20px 0 0;
+    margin-top: 10px;
+}
+
+.chats_scrollable {
+    flex: 1;
+    min-height: 50px;
+    position: fixed;
+    top: 80px;
+    bottom: 75px;
+    left: 0;
+    overflow-y: hidden;
+    width: 330px;
+
+
+    &:hover {
+        z-index: 3999;
+        overflow-y: auto;
+        position: fixed;
+        top: 320;
+        bottom: 75px;
+        left: 0;
+    }
+}
+
+.scroll_style::-webkit-scrollbar-track
+{
+    border-radius: 10px;
+    background-color: transparent;
+}
+
+.scroll_style::-webkit-scrollbar
+{
+    width: 6px;
+    background-color: transparent;
+}
+
+.scroll_style::-webkit-scrollbar-thumb
+{
+    border-radius: 10px;
+    background-color: $grey;
+}
+
+.chats {
+    flex-direction: column;
+    padding: 0 10px;
+}
+
+.chats__user {
+    padding: 10px;
+}
+
+.chats__menu {
+    background-color: $light;
+    padding: 0 10px;
+    border-top: 1px solid $grey;
+    width: 310px;
+    position: fixed;
+    bottom: 0;
+
+}

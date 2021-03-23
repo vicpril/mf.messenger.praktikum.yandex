@@ -27,9 +27,7 @@ export default `
         <!-- end chats -->
 
         <div class="chats__menu">
-            <form action="" class="form search__wrapper">
-                {{input_search}}
-            </form>
+            {{form_search}}
         </div>
 
     </div>

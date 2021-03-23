@@ -1,19 +1,15 @@
 import { Templator } from "/classes/templators/templator";
-import { TemplatorIf } from "/classes/templators/templator-if";
-import { TemplatorFor } from "/classes/templators/templator-for";
 import template from "./left-sidebar.tmpl.js";
 import "./left-sidebar.scss";
-import { InputCustom } from "/templates/elements/input/input";
-import { ButtonCustom } from "/templates/elements/button/button";
-import { Avatar } from "/templates/elements/avatar/avatar";
 import { Chat } from "../chat/chat.js";
+import { FormChatSearch } from "../form-chat-search/form-chat-search.js";
 
 export class LeftSidebar {
     constructor(account, users) {
         this.template = template;
         this.account = account;
         this.users = users;
-        this.current_user = this.users[2].login;
+        this.current_user = this.users[1].login;
     }
 
     render() {
@@ -24,12 +20,8 @@ export class LeftSidebar {
             account: (new Chat(this.account, false, true)).render(),
             chats: chats,
             current_user: this.users[2].login,
-            input_search: (new InputCustom({
-                css: "input input__search_chats",
-                name: "search",
-                value: "",
-                placeholder: "Search"
-            })).render()
+
+            form_search: (new FormChatSearch()).render()
         };
 
         const tepmlator = new Templator(this.template);
