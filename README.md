@@ -48,19 +48,13 @@
 
         npm run start
 
-    либо
-
-        cd server
-        npm run start
 
 - **Сборка клиентской части в режиме разработки, запуск сервера на `localhost:1234`**
 
-        cd client
         npm run dev
 
 - **Сборка клиентской части в продакшн**
 
-        cd client
         npm run build
 
 ## **Примеры использования**
