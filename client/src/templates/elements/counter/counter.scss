@@ -1,0 +1,23 @@
+@import "/styles/variables.scss";
+
+.counter {
+    font-size: 11px;
+    font-weight: 600;
+    line-height: 13px;
+    background-color: $primary;
+    color: $text-white;
+    padding: 2px 7px;
+    border-radius: 8px;
+
+}
+
+.unread_messages_counter {
+    background-color: $secondary;
+    margin-left: auto;
+    margin-top: auto;
+    color: $text-white;
+
+    &.is_null {
+        display: none;
+    }
+}
