@@ -1,5 +1,5 @@
 .cache
 .vscode
 node_modules
-*.code-workspace
 dist
+*.code-workspace
