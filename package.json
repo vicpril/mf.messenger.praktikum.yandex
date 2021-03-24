@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Easy conversation",
   "scripts": {
-    "start": "npm run build && node ./server/index.js",
+    "start": "parcel build client/src/index.html && node ./server/index.js",
     "dev": "parcel client/src/index.html",
     "build": "parcel build client/src/index.html"
   },
