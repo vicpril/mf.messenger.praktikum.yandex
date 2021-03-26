@@ -5,7 +5,8 @@
   "scripts": {
     "start": "parcel build client/src/index.html && node ./server/index.js",
     "dev": "parcel client/src/index.html",
-    "build": "parcel build client/src/index.html"
+    "build": "parcel build client/src/index.html",
+    "html": "parcel ./client/html-templates/index.html "
   },
   "repository": {
     "type": "git",

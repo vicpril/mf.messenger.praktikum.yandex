@@ -1,4 +1,4 @@
-@import "/../styles/variables.scss";
+@import "/../styles/_variables.scss";
 
 img.user__avatar {
     width: 44px;
@@ -8,4 +8,9 @@ img.user__avatar {
     background-color: #fff;
 }
 
-.block__avatar {}
+.avatar__info {
+    width: 100px !important;
+    height: 100px !important;
+    margin: 10px auto !important;
+    border-width: 4px !important;
+}

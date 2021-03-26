@@ -3,7 +3,7 @@ import template from "./avatar.tmpl.js";
 import "./avatar.scss"
 import { TemplatorIf } from "/classes/templators/templator-if";
 import unknownAvatar from '/assets/unknown_avatar.png';
-import { strToColor } from "/utils/mydash/strToColor";
+import { strToColor } from "/utils/mydash/string";
 
 
 

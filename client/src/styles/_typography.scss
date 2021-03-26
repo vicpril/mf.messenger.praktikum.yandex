@@ -1,0 +1,42 @@
+h1 {
+    font-size: 25px;
+    color: $text-primary;
+    margin-bottom: 30px;
+}
+h2 {
+    font-size: 21px;
+    color: $text-primary;
+    margin-bottom: 30px;
+}
+h3 {
+    font-size: 19px;
+    color: $text-primary;
+    margin-bottom: 30px;
+}
+h4 {
+    font-size: 15px;
+    color: $text-primary;
+    margin-bottom: 30px;
+}
+
+.text-primary {
+    color: $text-primary;
+}
+.text-secondary {
+    color: $text-secondary;
+}
+.text-danger {
+    color: $text-danger;
+}
+.text-info {
+    color: $text-info;
+}
+.text-grey {
+    color: $text-grey;
+}
+.text-light-grey {
+    color: $text-light-grey;
+}
+.text-white {
+    color: $text-white;
+}

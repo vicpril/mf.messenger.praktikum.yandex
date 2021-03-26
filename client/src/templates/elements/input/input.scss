@@ -1,11 +1,13 @@
-@import "/styles/variables.scss";
+@import "/styles/_variables.scss";
 
 .input {
-    border: 1px solid $grey;
+    border: 1px solid $info;
     border-radius: 12px;
     height: 30px;
     outline: none;
-    color: $text-primary;
+    color: #52585d;
+    padding: 0 15px;
+    background-color: rgba(#fff, 0.8);
 }
 .input__search_chats {
     flex-grow: 1;

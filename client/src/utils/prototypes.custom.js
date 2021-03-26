@@ -3,12 +3,12 @@ import { last } from "/utils/mydash/last";
 
 
 export default (function () {
-    FormData.prototype.getData = function () {
-        return [...this.entries()]
-            .reduce(
-                (obj, pair) => Object.assign(obj, { [pair[0]]: pair[1] }), {}
-            );
-    }
+    // FormData.prototype.getData = function () {
+    //     return [...this.entries()]
+    //         .reduce(
+    //             (obj, pair) => Object.assign(obj, { [pair[0]]: pair[1] }), {}
+    //         );
+    // }
 
     Date.prototype.getTimeFormatted = function () {
         const hh = ("0" + this.getHours()).slice(-2);

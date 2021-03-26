@@ -15,6 +15,9 @@ export default `<input
     <v-if="placeholder">
         placeholder="{{placeholder}}"
     </v-if>
+    <v-if="required">
+        required
+    </v-if>
     
 />
 `;

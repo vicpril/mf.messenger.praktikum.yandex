@@ -1,5 +1,5 @@
-import { LeftSidebar } from "/templates/components/leftSidebar/left-sidebar";
-import { MainContainer } from "/templates/components/main-container/main-container";
+import { LeftSidebar } from "/templates/components/structural/left-sidebar/left-sidebar";
+import { MainContainer } from "/templates/components/structural/main-container/main-container";
 import account from "/models/modelAccount.json";
 import chats from "/models/modelChats.json";
 import { getUrlParameter } from "/utils/mydash/getUrl";

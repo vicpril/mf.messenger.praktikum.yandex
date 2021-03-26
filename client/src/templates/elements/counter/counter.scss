@@ -1,4 +1,4 @@
-@import "/styles/variables.scss";
+@import "/styles/_variables.scss";
 
 .counter {
     font-size: 11px;
@@ -8,7 +8,6 @@
     color: $text-white;
     padding: 2px 7px;
     border-radius: 8px;
-
 }
 
 .unread_messages_counter {

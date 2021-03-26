@@ -1,0 +1,64 @@
+@import "/styles/_variables.scss";
+
+.info__wrapper {
+    display: flex;
+    flex-flow: column nowrap;
+
+    min-width: 320px;
+    max-width: 320px;
+    background-color: #e3f6fc;
+    opacity: 1;
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+
+    margin: 40px 10px;
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 0px 0px 20px 10px #cbdee46c;
+    transition: all 0.5s;
+
+    overflow-x: auto;
+}
+
+.button__close {
+    display: inline;
+    align-self: flex-start;
+    padding: 1px 7px;
+    border-radius: 25px;
+
+    background-color: $primary;
+    color: $text-white;
+    font-size: 21px;
+    font-weight: lighter;
+    line-height: 25px;
+}
+
+.info__section {
+    flex-grow: 1;
+    display: flex;
+    flex-flow: column nowrap;
+}
+
+.info__content {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    text-align: center;
+    margin: auto 0;
+
+    input {
+        text-align: center;
+    }
+}
+
+.info__actions {
+    display: flex;
+    flex-flow: column nowrap;
+    margin: 20px 0;
+}
+
+.info__button {
+    margin: 7px 0;
+}
