@@ -25,6 +25,7 @@ export class FormAccountSettingsContent {
             input: {
                 id: key,
                 name: key,
+                type: key === "email" ? "email" : "text",
                 value: this.user[key]
             }
         })).render());
@@ -59,7 +60,7 @@ export class FormAccountSettingsContent {
         const formData = new FormData(form);
         const data = getFormData(formData);
 
-        console.log('Send form data:', data);
+        console.log('Account settings form data:', data);
     }
 
 }

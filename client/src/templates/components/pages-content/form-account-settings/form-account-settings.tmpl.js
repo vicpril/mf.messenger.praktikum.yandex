@@ -1,5 +1,5 @@
 export default `
-    <form class="info__section "
+    <form class="info__section form__account_settings"
     <v-if="action">    
         action="{{action}}"
     </v-if>

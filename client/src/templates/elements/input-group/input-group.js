@@ -20,6 +20,7 @@ export class InputGroup {
             id: get(this.options, "input.id", strToLodash(this.title)),
             input: (new InputCustom({
                 id: get(this.options, "input.id", strToLodash(this.title)),
+                type: get(this.options, "input.type", "text"),
                 name: get(this.options, "input.name", strToLodash(this.title)),
                 css: get(this.options, "input.css", ""),
                 value: get(this.options, "input.value", ""),
