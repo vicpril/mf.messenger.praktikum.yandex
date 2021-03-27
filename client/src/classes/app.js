@@ -18,7 +18,7 @@ export class App {
 
         const account = this._getAccount();
         const chats = this._getChats();
-        const current_user = this.__getCurrentUser();
+        const current_user = this._getCurrentUser();
 
         const leftSidebar = new LeftSidebar(account, chats, current_user);
 
@@ -63,14 +63,13 @@ export class App {
         return Object.assign({}, { chat }, { account }, { current_user });
     }
 
-    __getCurrentUser() {
+    _getCurrentUser() {
         const userlogin = getUrlParameter('user');
         if (!userlogin) {
             return null;
         }
         const user = this._getChats().filter(u => u.login === userlogin).first();
         return user ? user.login : null;
-
     }
 
 }
