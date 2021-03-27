@@ -4,6 +4,7 @@ import template from "./right-sidebar.tmpl.js";
 import "./right-sidebar.scss";
 import { AccountInfoContent } from "/templates/components/pages-content/account-info/account-info.js";
 import { ContactInfoContent } from "/templates/components/pages-content/contact-info/contact-info.js";
+import { FormAvatarChangeContent } from "/templates/components/pages-content/form-avatar-change/form-avatar-change.js";
 import { FormAccountSettingsContent } from "/templates/components/pages-content/form-account-settings/form-account-settings.js";
 import { FormPasswordChangeContent } from "/templates/components/pages-content/form-password-change/form-password-change.js";
 
@@ -43,9 +44,10 @@ export class RightSidebar {
 
     getRightSidebarContent() {
         // return (new AccountInfoContent()).render();
+        return (new FormAvatarChangeContent()).render();
         // return (new FormAccountSettingsContent()).render();
         // return (new FormPasswordChangeContent()).render();
-        return (new ContactInfoContent()).render();
+        // return (new ContactInfoContent()).render();
     }
 }
 

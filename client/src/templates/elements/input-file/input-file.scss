@@ -1,0 +1,43 @@
+@import "/styles/_variables.scss";
+
+.input_file {
+    label {
+        color: $text-light-grey;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 14px !important;
+        padding: 2px 15px;
+    }
+
+    .input-file {
+        width: 0.1px;
+        height: 0.1px;
+        opacity: 0;
+        overflow: hidden;
+        position: absolute;
+        z-index: -1;
+    }
+
+    .input-file + span.filename {
+        width: 100%;
+        display: inline-grid;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        padding: 20px 10px;
+        margin: 10px;
+        cursor: pointer;
+
+        .icon:before {
+            content: "\f093";
+        }
+    }
+
+    .file + span.filename.has-file {
+        .icon:before {
+            content: "\f00c";
+            color: #5aac7b;
+        }
+    }
+}

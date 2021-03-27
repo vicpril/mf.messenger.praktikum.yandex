@@ -2,10 +2,7 @@
 
 .input_group {
     display: flex;
-    // flex-flow: row nowrap;
     flex-flow: column nowrap;
-    // align-items: center;
-
     margin-bottom: 20px;
 
     label {
@@ -13,7 +10,6 @@
         font-weight: bold;
         margin-bottom: 3px;
         font-size: 15px;
-        // margin-right: 10px;
     }
 
     input {
