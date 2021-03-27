@@ -1,0 +1,36 @@
+@import "/styles/_variables.scss";
+@import "/templates/components/structural/right-sidebar/right-sidebar";
+
+.fluid-container {
+    height: 100%;
+}
+
+.main__default {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-flow: row nowrap;
+    align-content: stretch;
+}
+
+.main__wrapper {
+    flex-grow: 1;
+    display: flex;
+    flex-flow: column;
+    text-align: center;
+    justify-content: center;
+    background-color: #fff;
+}
+
+.default__right_sidebar {
+    @extend .info__wrapper;
+
+    margin-right: 30px;
+    position: relative;
+    width: 360px;
+    background-color: $light;
+}
+
+p {
+    color: $text-primary;
+}

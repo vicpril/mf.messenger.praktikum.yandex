@@ -3,6 +3,11 @@ import { MainContainer } from "/templates/components/structural/main-container/m
 import account from "/models/modelAccount.json";
 import chats from "/models/modelChats.json";
 import { getUrlParameter } from "/utils/mydash/getUrl";
+import { ErrorPage } from "/templates/components/pages-content/error-page/error-page";
+import { ErrorPage500 } from "../templates/components/pages-content/error-page-500/error-page-500";
+import { ErrorPage404 } from "../templates/components/pages-content/error-page-404/error-page-404";
+import { SignInPage } from "../templates/components/pages-content/sign-in/sing-in";
+import { SignUpPage } from "../templates/components/pages-content/sign-up/sing-up";
 
 export class App {
     constructor(selector) {
@@ -25,15 +30,18 @@ export class App {
         const data = this._getData(current_user);
         const main = new MainContainer(data);
 
-        // const user = {};
-        // const rightSidebar = new RightSidebar(user);
-
         this.$el.innerHtml = '';
         this.$el.insertAdjacentHTML('beforeend', leftSidebar.render());
         this.$el.insertAdjacentHTML('beforeend', main.render());
-        // this.$el.insertAdjacentHTML('beforeend', rightSidebar.render());
 
+        // const page = new ErrorPage404();
 
+        // const page = new ErrorPage500();
+
+        // const page = new SignInPage();
+        // const page = new SignUpPage();
+
+        // this.$el.insertAdjacentHTML('beforeend', page.render());
 
 
     }
