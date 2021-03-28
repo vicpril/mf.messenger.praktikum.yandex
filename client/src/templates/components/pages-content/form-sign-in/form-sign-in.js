@@ -40,7 +40,7 @@ export class FormSignIn {
                 css: "info__button button_outline_primary",
                 type: "button",
                 title: "Sign up",
-                onclick: () => { document.location.href = "/sign-up/"; }
+                onclick: () => { document.location.href = "/signup.html"; }
             })).render()
         };
 

@@ -18,7 +18,7 @@ export default `
         
         <div class="info__actions">
             {{button_sign_up}}
-            <a href="/">Back to Sign in</a>
+            <a href="/signin.html">Back to Sign in</a>
         </div>
     </form>
 `;
