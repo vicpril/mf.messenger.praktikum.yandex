@@ -3,10 +3,13 @@
   "version": "1.0.0",
   "description": "Easy conversation",
   "scripts": {
-    "start": "parcel build client/src/index.html && node ./server/index.js",
-    "dev": "parcel client/src/index.html",
-    "build": "parcel build client/src/index.html",
-    "html": "parcel ./client/html-templates/index.html "
+    "start": "(npm run clear && npm run build) && npm run copy",
+    "dev": "parcel ./client/src/*.html",
+    "build": "parcel client/src/*.html",
+    "html": "parcel ./client/html-templates/index.html ",
+    "clear": "rm -f ./static/* ./dist/*",
+    "copy": "copy ./dist/* ./static/",
+    "server": "node ./server/index.js"
   },
   "repository": {
     "type": "git",

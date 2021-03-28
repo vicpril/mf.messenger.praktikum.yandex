@@ -6,4 +6,4 @@ import "./styles/styles.scss";
 
 const app = new App('#app');
 
-app.init();
+app.init("chats");

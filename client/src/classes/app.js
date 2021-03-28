@@ -12,14 +12,16 @@ import { SignUpPage } from "../templates/components/pages-content/sign-up/sing-u
 export class App {
     constructor(selector) {
         this.$el = document.querySelector(selector);
+        this.page = null;
     }
 
-    init() {
+    init(page) {
+        this.page = page;
         this.render();
     }
 
     render() {
-        this.$el.innerHtml = '';
+        // this.$el.innerHtml = '';
 
         const account = this._getAccount();
         const chats = this._getChats();
@@ -30,9 +32,43 @@ export class App {
         const data = this._getData(current_user);
         const main = new MainContainer(data);
 
-        this.$el.innerHtml = '';
-        this.$el.insertAdjacentHTML('beforeend', leftSidebar.render());
-        this.$el.insertAdjacentHTML('beforeend', main.render());
+        const pageElements = [];
+
+        /**
+         * 
+         * Switch pages for printing html
+         * 
+         *      This needs only for Sprint 1
+         */
+        switch (this.page) {
+
+            case "404":
+                pageElements.push(new ErrorPage404());
+                break;
+            case "500":
+                pageElements.push(new ErrorPage500());
+                break;
+            case "signin":
+                pageElements.push(new SignInPage());
+                break;
+            case "signup":
+                pageElements.push(new SignUpPage());
+                break;
+
+            case "chat":
+            default:
+                pageElements.push(leftSidebar);
+                pageElements.push(main);
+                break;
+
+                break;
+        }
+
+        this._render(pageElements)
+
+        // this.$el.innerHtml = '';
+        // this.$el.insertAdjacentHTML('beforeend', leftSidebar.render());
+        // this.$el.insertAdjacentHTML('beforeend', main.render());
 
         // const page = new ErrorPage404();
 
@@ -43,7 +79,13 @@ export class App {
 
         // this.$el.insertAdjacentHTML('beforeend', page.render());
 
+    }
 
+    _render(elements) {
+        this.$el.innerHtml = '';
+        for (const element of elements) {
+            this.$el.insertAdjacentHTML('beforeend', element.render());
+        }
     }
 
 
