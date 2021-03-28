@@ -5,9 +5,9 @@
   "scripts": {
     "start": "(npm run clear && npm run build && npm run copy) && npm run server",
     "dev": "parcel ./client/src/index.html",
-    "build": "parcel build client/src/*.html",
-    "clear": "rm -f ./static/* ./dist/*",
-    "copy": "mkdir -p ./static/ && cp ./dist/* ./static/",
+    "build": "parcel build client/src/*.html --out-dir build",
+    "clear": "rm -f ./static/* ./build/*",
+    "copy": "mkdir -p ./static/ && cp ./build/* ./static/",
     "server": "node ./server/index.js"
   },
   "repository": {
