@@ -4,9 +4,8 @@
   "description": "Easy conversation",
   "scripts": {
     "start": "(npm run clear && npm run build && npm run copy) && npm run server",
-    "dev": "parcel ./client/src/account.html",
+    "dev": "parcel ./client/src/index.html",
     "build": "parcel build client/src/*.html",
-    "html": "parcel ./client/html-templates/index.html ",
     "clear": "rm -f ./static/* ./dist/*",
     "copy": "mkdir -p ./static/ && cp ./dist/* ./static/",
     "server": "node ./server/index.js"

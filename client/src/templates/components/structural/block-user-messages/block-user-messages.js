@@ -2,6 +2,7 @@ import { Templator } from "/classes/templators/templator";
 import template from "./block-user-messages.tmpl.js";
 import "./block-user-messages.scss";
 import { Avatar } from "/templates/elements/avatar/avatar";
+import { mapMessageDateCustom } from "/utils/mydash/date.js";
 
 export class BlockUserMessages {
     constructor(user, isForeign) {
@@ -15,7 +16,7 @@ export class BlockUserMessages {
         const context = {
             user: this.user,
             is_foreign: this.isForeign,
-            messages: this.messages.map(mapMessageTime),
+            messages: this.messages.map(mapMessageDateCustom),
             avatar: (new Avatar({
                 css: "user__avatar",
                 src: this.user.avatar
@@ -30,9 +31,4 @@ export class BlockUserMessages {
         this.messages.push(message);
     }
 
-}
-
-const mapMessageTime = (message) => {
-    message.time = (new Date(+message.time)).getTimeFormatted();
-    return message;
 }

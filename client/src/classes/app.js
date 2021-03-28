@@ -8,6 +8,7 @@ import { ErrorPage500 } from "../templates/components/pages-content/error-page-5
 import { ErrorPage404 } from "../templates/components/pages-content/error-page-404/error-page-404";
 import { SignInPage } from "../templates/components/pages-content/sign-in/sing-in";
 import { SignUpPage } from "../templates/components/pages-content/sign-up/sing-up";
+import { first } from "/utils/mydash/first";
 
 export class App {
     constructor(selector) {
@@ -73,20 +74,6 @@ export class App {
         }
 
         this._render(pageElements)
-
-        // this.$el.innerHtml = '';
-        // this.$el.insertAdjacentHTML('beforeend', leftSidebar.render());
-        // this.$el.insertAdjacentHTML('beforeend', main.render());
-
-        // const page = new ErrorPage404();
-
-        // const page = new ErrorPage500();
-
-        // const page = new SignInPage();
-        // const page = new SignUpPage();
-
-        // this.$el.insertAdjacentHTML('beforeend', page.render());
-
     }
 
     _render(elements) {
@@ -126,7 +113,7 @@ export class App {
         if (!userlogin) {
             return null;
         }
-        const user = this._getChats().filter(u => u.login === userlogin).first();
+        const user = first(this._getChats().filter(u => u.login === userlogin));
         return user ? user.login : null;
     }
 

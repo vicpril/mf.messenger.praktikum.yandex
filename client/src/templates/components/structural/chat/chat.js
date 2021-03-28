@@ -6,6 +6,7 @@ import { ButtonCustom } from "/templates/elements/button/button.js";
 import { Counter } from "/templates/elements/counter/counter";
 import { toggleRightSidebar } from "/templates/components/structural/right-sidebar/right-sidebar";
 import { sortByTime } from "/utils/sortMessages";
+import { DateCustom } from "../../../../utils/mydash/date.js";
 
 export class Chat {
     constructor(user, isCurrent = false) {
@@ -19,9 +20,12 @@ export class Chat {
         const lastMessage = sortedMessages ? sortedMessages[0] : null;
         let lastMessageContent = '';
         let lastMessageDate = '';
+        if (this.isCurrent) {
+            console.log(lastMessage);
+        }
         if (lastMessage) {
             lastMessageContent = lastMessage.content;
-            lastMessageDate = (new Date(+lastMessage.time)).toLocaleDateString();
+            lastMessageDate = (new DateCustom(+lastMessage.time)).getDateFormatted;
         }
 
         const context = {

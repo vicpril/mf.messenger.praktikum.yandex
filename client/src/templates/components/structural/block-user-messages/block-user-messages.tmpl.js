@@ -18,7 +18,7 @@ export default `<section class="block block__message
                                     <div class="message__content">
                                         <span class="message_text">{{message.content}}</span>
                                     </div>
-                                    <span class="message__time">{{message.time}}</span>
+                                    <span class="message__time">{{message.time.getTimeFormatted}}</span>
                                 </div>
                             </v-for>
 

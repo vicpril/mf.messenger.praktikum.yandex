@@ -5,6 +5,8 @@ import template from "./contact-info.tmpl.js";
 import "./contact-info.scss";
 import modelChats from "/models/modelChats";
 import { getUrlParameter } from "/utils/mydash/getUrl";
+import { first } from "/utils/mydash/first";
+
 
 export class ContactInfoContent {
     constructor() {
@@ -52,7 +54,7 @@ export class ContactInfoContent {
         if (!userlogin) {
             return null;
         }
-        const user = modelChats.filter(u => u.login === userlogin).first();
+        const user = first(modelChats.filter(u => u.login === userlogin));
         return user ?? null;
     }
 

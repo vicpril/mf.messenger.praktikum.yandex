@@ -13,7 +13,7 @@ export function compare(post, operator, value) {
         case '!==': return post !== value;
         case '&&': return post && value;
         case '||': return post || value;
-        case '!!': return !post;
+        case '!': return !post;
         case null:
         case undefined:
             return post;
