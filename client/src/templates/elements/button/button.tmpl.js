@@ -9,6 +9,6 @@ export default `<button
         type="submit"
     </v-if>
     <v-if="onclick">
-        onclick="{{onclick}}"
+        onclick="{{prevent_action}}{{onclick}}"
     </v-if>
 >{{title}}</button>`;

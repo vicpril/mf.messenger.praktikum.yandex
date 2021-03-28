@@ -12,7 +12,6 @@ import { get } from "../../utils/mydash/get";
 import { TemplatorVariables } from "./templator-variables";
 
 export class TemplatorFor {
-   // TEMPLATE_REGEXP = /<v-for(="\((.*?),\s(.*?)\)\sin\s(.*?)")>(.*?)<v-for-end>/gis;
    TEMPLATE_REGEXP = /<v-for\s*(:(.*?)\s*:(.*?)\sin\s(.*?))>(.*?)<\/v-for>/gis;
 
    constructor(template) {

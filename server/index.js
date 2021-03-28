@@ -4,7 +4,7 @@ const { controller } = require('./controller');
 
 const app = express();
 const PORT = 3000;
-const dist_folder = (__dirname + '/../dist/');
+const dist_folder = (__dirname + '/../static/');
 
 app.use(express.static(dist_folder));
 

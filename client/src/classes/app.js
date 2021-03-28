@@ -21,7 +21,6 @@ export class App {
     }
 
     render() {
-        // this.$el.innerHtml = '';
 
         const account = this._getAccount();
         const chats = this._getChats();
@@ -30,9 +29,9 @@ export class App {
         const leftSidebar = new LeftSidebar(account, chats, current_user);
 
         const data = this._getData(current_user);
-        const main = new MainContainer(data);
 
         const pageElements = [];
+        let main = null;
 
         /**
          * 
@@ -55,12 +54,21 @@ export class App {
                 pageElements.push(new SignUpPage());
                 break;
 
-            case "chat":
-            default:
+            case "account":
+            case "avatar-edit":
+            case "settings-edit":
+            case "password-change":
+            case "contact-info":
                 pageElements.push(leftSidebar);
+                main = new MainContainer(data, this.page);
                 pageElements.push(main);
                 break;
 
+            case "chat":
+            default:
+                pageElements.push(leftSidebar);
+                main = new MainContainer(data);
+                pageElements.push(main);
                 break;
         }
 

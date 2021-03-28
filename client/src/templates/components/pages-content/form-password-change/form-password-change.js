@@ -44,7 +44,7 @@ export class FormPasswordChangeContent {
                 css: "info__button button_outline_primary",
                 type: "button",
                 title: "Cancel",
-                onclick: () => { document.location.href = "/account/"; }
+                onclick: () => { document.location.href = "/account.html"; }
             })).render()
         };
 

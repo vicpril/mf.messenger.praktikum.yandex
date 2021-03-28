@@ -1,17 +1,13 @@
 export default `
 <!-- Main -->
-        <main class="main">
+        <main class="main right_sidebar__close">
+
             <v-if="current_user">
-                <!-- messager     -->
+
+                <!-- messager -->
                 <div class="messager ">
 
-                    <!-- messager__wrapper -->
-                    <div class="messager__wrapper messager_scrollable scroll_style">
-                        <v-for :block :index in blocks>
-                            {{block}}
-                        </v-for>
-                    </div>
-                    <!-- end messager__wrapper -->
+                    {{messager}}
 
                 </div>
                 <!-- end messager -->
@@ -21,15 +17,15 @@ export default `
                     {{form_send_message}}
                 </div>
                 <!-- end form -->
+
             <v-else>
                 <div class="chat_placeholder">
                 <h3>
                 Select a friend to type with...
                 </h3>
                 </div>
-            </v-if>
 
-            
+            </v-if>
 
             <!-- Right-sidebar -->
                 {{right_sidebar}}

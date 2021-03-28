@@ -14,12 +14,8 @@ onclick="{{onclick}}"
         <span class="user__last_message">{{last_message}}</span>
     </div>
     <div class="user__actions">
-        <v-if="is_account">
-            {{btn_settings}}
-        <v-else>  
-            <span class="last_message_date">{{last_message_date}}</span>
-            {{counter}}
-        </v-if>
+        <span class="last_message_date">{{last_message_date}}</span>
+        {{counter}}
     </div>
 
 </div>

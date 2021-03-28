@@ -10,7 +10,7 @@ export class ErrorPage {
     }
 
     render() {
-        this.context.link = `<a href="#">&larr; Let's go back</a>`;
+        this.context.link = `<a href="/">&larr; Let's go back</a>`;
 
         const tepmlator = new TemplatorVariables(this.template);
         const sidebar_content = tepmlator.compile({ code: this.context.code });

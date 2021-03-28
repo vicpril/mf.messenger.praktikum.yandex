@@ -24,19 +24,19 @@ export class AccountInfoContent {
                 css: "info__button button_outline_primary",
                 type: "button",
                 title: "Change avatar",
-                onclick: () => { document.location.href = "/account/avatar-edit/"; }
+                onclick: () => { document.location.href = "/avatar-edit.html"; }
             })).render(),
             button_change_settings: (new ButtonCustom({
                 css: "info__button button_outline_primary",
                 type: "button",
                 title: "Account settings",
-                onclick: () => { document.location.href = "/account/settings/"; }
+                onclick: () => { document.location.href = "/settings-edit.html"; }
             })).render(),
             button_change_password: (new ButtonCustom({
                 css: "info__button button_outline_primary",
                 type: "button",
                 title: "Change password",
-                onclick: () => { document.location.href = "/account/password-change/"; }
+                onclick: () => { document.location.href = "/password-change.html"; }
             })).render(),
         };
 

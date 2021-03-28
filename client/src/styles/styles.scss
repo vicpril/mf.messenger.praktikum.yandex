@@ -8,14 +8,11 @@ body {
     width: 100%;
     margin: 0;
     font-family: $font-primary;
+    overflow-x: hidden;
 }
 
 .hidden {
     display: none;
-}
-
-i.settings {
-    overflow: visible;
 }
 
 .fluid-container {

@@ -9,13 +9,13 @@ import { FormAccountSettingsContent } from "/templates/components/pages-content/
 import { FormPasswordChangeContent } from "/templates/components/pages-content/form-password-change/form-password-change.js";
 
 export class RightSidebar {
-    constructor(content) {
+    constructor(page = null) {
         this.template = template;
-        this.content = content;
-
+        this.page = page
     }
 
     render() {
+        const content = this.getRightSidebarContent(this.page)
 
         const context = {
             button_close: (new ButtonCustom({
@@ -24,7 +24,7 @@ export class RightSidebar {
                 title: "&times;",
                 onclick: closeRightSidebar
             })).render(),
-            content: this.getRightSidebarContent()
+            content: content
         };
 
         const tepmlator = new Templator(this.template);
@@ -42,12 +42,38 @@ export class RightSidebar {
     }
 
 
-    getRightSidebarContent() {
-        // return (new AccountInfoContent()).render();
-        return (new FormAvatarChangeContent()).render();
-        // return (new FormAccountSettingsContent()).render();
-        // return (new FormPasswordChangeContent()).render();
-        // return (new ContactInfoContent()).render();
+    getRightSidebarContent(page = null) {
+
+        /**
+         * Switch pages for printing html
+         * 
+         *      This needs only for Sprint 1
+         */
+
+        if (page) {
+            window["openSidebar"] = openRightSidebar;
+            const body = document.getElementsByTagName('body')[0];
+            const script = document.createElement('script');
+            script.textContent = (() => {
+                document.addEventListener('DOMContentLoaded', window.openSidebar);
+            })()
+            body.insertAdjacentElement('beforeend', script);
+        }
+
+        switch (page) {
+            case "avatar-edit":
+                return (new FormAvatarChangeContent()).render();
+            case "settings-edit":
+                return (new FormAccountSettingsContent()).render();
+            case "password-change":
+                return (new FormPasswordChangeContent()).render();
+            case "contact-info":
+                return (new ContactInfoContent()).render();
+            case "account":
+                return (new AccountInfoContent()).render();
+            default:
+        }
+
     }
 }
 
