@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Easy conversation",
   "scripts": {
-    "start": "(npm run clear && npm run build && npm run copy) && npm run server",
+    "start": "(npm run clear && parcel build client/src/*.html --out-dir build && npm run copy) && npm run server",
     "dev": "parcel ./client/src/index.html",
     "build": "parcel build client/src/*.html --out-dir build",
     "clear": "rm -f ./static/* ./build/*",
