@@ -1,0 +1,14 @@
+{
+   "compilerOptions": {
+      "outDir": "./build",
+      "target": "es6",
+      "removeComments": true,
+      "declaration": false,
+      "module": "commonjs",
+      "sourceMap": true,
+      "resolveJsonModule": true,
+      "moduleResolution": "node"
+   },
+   "include": ["./client/src/**/*"],
+   "exclude": ["node_modules", "**/*.spec.ts"]
+}
