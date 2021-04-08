@@ -1,3 +1,5 @@
+import { isEmpty } from "./isEmpty";
+
 export function capitalize(string: string) {
    if (typeof string !== "string") {
       return "";
@@ -29,7 +31,7 @@ function firstToUpper(string: string): string {
  * @param  {any} defaultValue
  */
 export function get(obj, str: string, defaultValue?: any): any {
-   if (!str || isUndefined(obj)) {
+   if (!str || isEmpty(obj)) {
       return defaultValue;
    }
    const keys = str.split(".");
@@ -45,7 +47,7 @@ export function get(obj, str: string, defaultValue?: any): any {
       result = value;
    }
 
-   return typeof result === "undefined" ? result : defaultValue;
+   return typeof result !== "undefined" ? result : defaultValue;
 }
 
 export function getUniqueStr(): string {

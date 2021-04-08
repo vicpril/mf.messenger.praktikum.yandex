@@ -12,7 +12,6 @@ export class ComponentDOMListenrt {
       this.checkRoot();
       this.listeners.forEach((listener) => {
          const method = getMethodName(listener);
-         console.log(this);
          if (!this.methods[method]) {
             throw new Error(
                `Method ${method} is not implemented: ${this.name} Component`

@@ -6,9 +6,6 @@ class DomAbstraction {
       selector: HTMLElement | string,
       $root: HTMLElement | Document = document
    ) {
-      if (typeof selector === "string")
-         console.log(selector, $root.querySelector(selector));
-
       this.$el =
          typeof selector === "string"
             ? document.querySelector(selector)

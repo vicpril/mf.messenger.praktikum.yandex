@@ -14,6 +14,12 @@ type TRawStaff = {
    subscribers?: Object;
    props?: Object;
    methods?: Object;
+   beforeCreate?: () => void;
+   beforeMount?: () => void;
+   beforeInit?: () => void;
+   afterInit?: () => void;
+   beforeUpdate?: () => void;
+   beforeDestroy?: () => void;
 };
 
 // type TMethod = (...args: any) => void;
@@ -38,36 +44,55 @@ export class Component extends ComponentDOMListenrt {
    template: string = "";
    subscribers?: Object;
    options?: TRawStaff;
-   parentComponent: Component | null;
+   // parentComponent: Component | null;
    props: any;
 
    constructor(
       private $targetEl: TDomAbstraction,
       options: TRawStaff,
-      parentComponent = null
+      public parentComponent: Component | null = null
    ) {
       super(options.listeners);
       this.name = options.name || (Component.name as string);
       this.components = options.components;
       this.template = options.template || "";
-      this.props = options.props || {};
+      this.props = options.props ?? {};
       this.subscribers = options.subscribers || {};
       this.methods = options.methods || {};
 
-      this.initMethods(options.methods);
+      this.initMethods(options);
 
       this.emmiter = getEmmiter();
 
       this.prepare();
    }
 
-   private initMethods(methods: Object) {
-      Object.getOwnPropertyNames(methods).forEach((key) => {
+   private initMethods(options: TRawStaff) {
+      Object.getOwnPropertyNames(options.methods).forEach((key) => {
          Object.defineProperty(this, key, {
             configurable: false,
             writable: false,
-            value: methods[key].bind(this),
+            value: options.methods[key].bind(this),
          });
+      });
+
+      const LifeCycleMethods = [
+         "beforeCreate",
+         "beforeMount",
+         "beforeInit",
+         "afterInit",
+         "beforeUpdate",
+         "beforeDestroy",
+      ];
+
+      LifeCycleMethods.forEach((key) => {
+         if (options[key]) {
+            Object.defineProperty(this, key, {
+               configurable: false,
+               writable: false,
+               value: options[key].bind(this),
+            });
+         }
       });
    }
 
@@ -82,6 +107,7 @@ export class Component extends ComponentDOMListenrt {
    }
 
    getPropsFromTemplate(): void {
+      if (isEmpty(this.parentComponent)) return;
       if (!get(this.parentComponent, "props", false)) {
          this.props = {};
          return;
@@ -161,7 +187,7 @@ export class Component extends ComponentDOMListenrt {
       this.components.forEach((RawStaff: TRawStaff) => {
          const $tags: TDomAbstraction[] = this.findAllTags(RawStaff.name);
          $tags.forEach(($targetEl) => {
-            const component = new Component($targetEl, RawStaff);
+            const component = new Component($targetEl, RawStaff, this);
             this.componentsInst.push(component);
          });
       });

@@ -6,7 +6,7 @@ export const App = {
    template: template,
    components: [LeftSidebar],
    props: {
-      test: "testProp",
+      test: "testProp123",
    },
    listeners: [],
    subscribers: {
@@ -15,4 +15,16 @@ export const App = {
       },
    },
    methods: {},
+   beforeCreate() {
+      console.log("beforeCreate", this.name);
+   },
+   beforeMount() {
+      console.log("beforeMount", this.name);
+   },
+   beforeInit() {
+      console.log("beforeInit", this.name);
+   },
+   afterInit() {
+      console.log("afterInit", this.name);
+   },
 };
