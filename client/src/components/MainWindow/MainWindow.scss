@@ -1,0 +1,58 @@
+@import "../../styles/_variables.scss";
+
+.chat_placeholder {
+   display: inline-block;
+   margin: auto auto;
+   color: $text-light-grey;
+}
+
+main {
+   position: absolute;
+   top: 0;
+   right: 360px;
+   bottom: 74px;
+   left: 330px;
+   z-index: 1000;
+   display: flex;
+   flex-direction: row;
+   padding: 0;
+   transition: all 0.5s ease-out;
+}
+
+main.right_sidebar__close {
+   right: 0;
+
+   .messager__menu {
+      right: 0;
+   }
+
+   .info__wrapper {
+      right: -360px;
+      opacity: 0;
+   }
+}
+
+.messager {
+   position: relative;
+   display: flex;
+   flex-flow: column nowrap;
+   align-self: self-end;
+   width: 100%;
+   padding: 0 50px;
+}
+
+.messager__wrapper {
+   display: flex;
+   flex-flow: column nowrap;
+   padding-bottom: 70px;
+}
+
+.messager__menu {
+   position: fixed;
+   right: 360px;
+   bottom: 0;
+   left: 330px;
+   padding: 0 10px;
+   background-color: #fff;
+   transition: right 0.5s ease-out;
+}

@@ -1,7 +1,6 @@
-export default `
-   <div class="app">
-      <LeftSidebar bind:test="test" bind:test2="test222"></LeftSidebar>
+export default /*html*/ `
+   <div class="fluid-container">
+      <LeftSidebar bind:account="account" bind:chats="chats"></LeftSidebar>
       <MainWindow></MainWindow>
-      <h1>Я крут!</h1>
    </div>
 `;

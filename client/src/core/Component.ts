@@ -1,15 +1,16 @@
 import { $, TDomAbstraction } from "../utils/dom-abstraction";
-import { isEmpty } from "../utils/isEmpty";
-import { get } from "../utils/pure-functions";
+import { Subscription, TEmmiter, getEmmiter } from "./Emmiter";
+
 import { ComponentDOMListenrt } from "./ComponentDOMListener";
-import { TEmmiter, getEmmiter, Subscription } from "./Emmiter";
 import { Templator } from "./templators/templator";
 import { TemplatorProps } from "./templators/templator-props";
+import { get } from "../utils/pure-functions";
+import { isEmpty } from "../utils/isEmpty";
 
-type TRawStaff = {
+type TIngredients = {
    name: string;
    template?: string;
-   components: TRawStaff[];
+   components: TIngredients[];
    listeners?: string[];
    subscribers?: Object;
    props?: Object;
@@ -22,8 +23,6 @@ type TRawStaff = {
    beforeDestroy?: () => void;
 };
 
-// type TMethod = (...args: any) => void;
-
 type ComponentLifeCycleNames = {
    BEFORE_CREATE: string;
    BEFORE_MOUNT: string;
@@ -34,31 +33,33 @@ type ComponentLifeCycleNames = {
 };
 
 export class Component extends ComponentDOMListenrt {
-   static className: string = "";
-
    EVENTS: ComponentLifeCycleNames;
    emmiter: TEmmiter;
    emmiterSubscriptions: Subscription[] = [];
-   components: TRawStaff[] = [];
+   components: TIngredients[] = [];
    componentsInst: Component[] = [];
    template: string = "";
    subscribers?: Object;
-   options?: TRawStaff;
-   // parentComponent: Component | null;
+   options?: TIngredients;
    props: any;
 
    constructor(
       private $targetEl: TDomAbstraction,
-      options: TRawStaff,
+      options: TIngredients,
       public parentComponent: Component | null = null
    ) {
       super(options.listeners);
+      if (isEmpty(options)) {
+         throw new Error(`No options in Component`);
+      }
+      if (!options.name) {
+         throw new Error(`No name defined in Component`);
+      }
       this.name = options.name || (Component.name as string);
-      this.components = options.components;
+      this.components = options.components || [];
       this.template = options.template || "";
-      this.props = options.props ?? {};
+      this.props = options.props || {};
       this.subscribers = options.subscribers || {};
-      this.methods = options.methods || {};
 
       this.initMethods(options);
 
@@ -67,12 +68,13 @@ export class Component extends ComponentDOMListenrt {
       this.prepare();
    }
 
-   private initMethods(options: TRawStaff) {
-      Object.getOwnPropertyNames(options.methods).forEach((key) => {
+   private initMethods(options: TIngredients) {
+      this.methods = options.methods || {};
+      Object.getOwnPropertyNames(this.methods).forEach((key) => {
          Object.defineProperty(this, key, {
             configurable: false,
             writable: false,
-            value: options.methods[key].bind(this),
+            value: this.methods[key].bind(this),
          });
       });
 
@@ -143,21 +145,6 @@ export class Component extends ComponentDOMListenrt {
       this.initRoot();
 
       // RENDER all children components
-      //       foreach components
-      //             component
-      //             find all TAGS of Class in $root  --> $componentsInst
-      //                      <Chat bind:chats=chats bind:index=0></Chat>     <--- $root
-      //                      <Chat bind:chats=chats bind:index=1></Chat>
-      //                      <Chat bind:chats=chats bind:index=2></Chat>
-      //                      foreach $components ($component)
-      //                            const $el = $component
-      //                            const component = new Class($el, {???}, this)
-
-      //                      <div class=""></div>  <-- component.props = {chats, index: 0}
-      //                      <div class=""></div>  <-- component.props = {chats, index: 1}
-
-      //                            component.render() - ?????????? возможно ренден не нужен
-      //                            this.componentsInst.push(component)
       this.initChildren();
 
       this.$emit(this.EVENTS.BEFORE_MOUNT);
@@ -172,7 +159,8 @@ export class Component extends ComponentDOMListenrt {
       if (isEmpty(template.trim())) {
          return "";
       }
-      const context = get(this.parentComponent, "props", {});
+      // const context = get(this.parentComponent, "props", {});
+      const context = this.props;
       const templator = new Templator(template);
       return templator.compile(context).trim();
    }
@@ -184,10 +172,10 @@ export class Component extends ComponentDOMListenrt {
    }
 
    private initChildren(): void {
-      this.components.forEach((RawStaff: TRawStaff) => {
-         const $tags: TDomAbstraction[] = this.findAllTags(RawStaff.name);
+      this.components.forEach((Ingredients: TIngredients) => {
+         const $tags: TDomAbstraction[] = this.findAllTags(Ingredients.name);
          $tags.forEach(($targetEl) => {
-            const component = new Component($targetEl, RawStaff, this);
+            const component = new Component($targetEl, Ingredients, this);
             this.componentsInst.push(component);
          });
       });
@@ -201,7 +189,11 @@ export class Component extends ComponentDOMListenrt {
    private _beforeMount(): void {
       this.beforeMount();
       // MOUNT: replace $targetEl on $root
-      this.$targetEl.parent().replaceChild(this.$root, this.$targetEl);
+      if (!this.$root.isEmpty()) {
+         this.$targetEl.parent().replaceChild(this.$root, this.$targetEl);
+      } else {
+         this.$targetEl.remove();
+      }
 
       this.$emit(this.EVENTS.BEFORE_INIT);
    }
@@ -222,6 +214,7 @@ export class Component extends ComponentDOMListenrt {
    afterInit(): void {}
    private _afterInit(): void {
       this.afterInit();
+      console.log(this.name, this);
    }
 
    beforeUpdate(): void {}

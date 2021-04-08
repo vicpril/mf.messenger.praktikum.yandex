@@ -6,7 +6,7 @@ export class ComponentDOMListenrt {
    $root: TDomAbstraction;
    methods: Object;
 
-   constructor(private listeners: string[]) {}
+   constructor(private listeners: string[] = []) {}
 
    initDOMListeners(): void {
       this.checkRoot();

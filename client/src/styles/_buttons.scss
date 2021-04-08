@@ -1,0 +1,106 @@
+@import "/../styles/_variables.scss";
+
+.button {
+   padding: 7px 20px;
+   border: none;
+   border-radius: 12px;
+   cursor: pointer;
+
+   &:focus {
+      outline: 1px solid;
+   }
+}
+
+@mixin button($color) {
+   color: $text-white;
+   background-color: $color;
+   border: 1px solid $color;
+   transition: all 0.2s ease-out;
+
+   &:hover {
+      color: $text-white;
+      background-color: darken($color, 10%);
+   }
+
+   &:active {
+      color: $text-white;
+      background-color: darken($color, 20%);
+   }
+}
+
+.button_primary {
+   @include button($primary);
+}
+
+@mixin button_outline($color) {
+   color: $color;
+   background-color: transparent;
+   border: 1px solid $color;
+   transition: all 0.2s ease-out;
+
+   &:hover {
+      color: $color;
+      background-color: rgba($color, 15%);
+   }
+
+   &:active {
+      color: $text-white;
+      background-color: lighten($color, 15%);
+   }
+}
+
+.button_outline_primary {
+   @include button_outline($primary);
+}
+
+.button_outline_danger {
+   @include button_outline($danger);
+}
+
+@mixin button_empty($color) {
+   padding: 0;
+   color: $color;
+   background-color: transparent !important;
+   border: none !important;
+   transition: all 0.2s ease-out;
+
+   &:hover {
+      color: darken($color, 10%);
+   }
+
+   &:active {
+      color: darken($color, 20%);
+   }
+}
+
+.button_empty_primary {
+   @include button_empty($primary);
+}
+
+.button_empty_danger {
+   @include button_empty($danger);
+}
+
+.button__user_settings {
+   width: 25px;
+   height: 25px;
+   margin-left: auto;
+   padding: 3px 15px;
+   color: $primary;
+   background-color: transparent;
+   border-radius: 10px;
+}
+
+.button__attach {
+   padding-right: 5px;
+   color: $primary;
+   background-color: transparent;
+}
+
+.button__submit {
+   padding: 0 30px;
+   color: $text-white;
+   font-weight: 700;
+   font-size: 13px;
+   background-color: $primary;
+}

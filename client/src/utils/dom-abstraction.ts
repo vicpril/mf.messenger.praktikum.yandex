@@ -3,7 +3,7 @@ export type TDomAbstraction = InstanceType<typeof DomAbstraction>;
 class DomAbstraction {
    $el: HTMLElement;
    constructor(
-      selector: HTMLElement | string,
+      selector: HTMLElement | Element | string,
       $root: HTMLElement | Document = document
    ) {
       this.$el =
@@ -30,17 +30,6 @@ class DomAbstraction {
       // @ts-ignore: Unreachable code error
       return $(this.$el.content.childNodes[0]);
    }
-
-   // text(text: string | null | undefined) {
-   //    if (typeof text === "string") {
-   //       this.$el.textContent = text;
-   //       return this;
-   //    }
-   //    if (this.$el.tagName.toLowerCase() === "input") {
-   //       return (this.$el as HTMLInputElement).value.trim();
-   //    }
-   //    return this.$el.textContent.trim();
-   // }
 
    clear() {
       this.html("");
@@ -71,6 +60,10 @@ class DomAbstraction {
       return this;
    }
 
+   hasClass(niddle: string): boolean {
+      return this.$el.classList.contains(niddle);
+   }
+
    closest(selector: string) {
       return $(this.$el.closest(selector) as HTMLElement);
    }
@@ -97,10 +90,18 @@ class DomAbstraction {
 
       return this;
    }
+
+   isEmpty(): boolean {
+      return typeof this.$el === "undefined";
+   }
+
+   remove(): void {
+      this.$el.remove();
+   }
 }
 
 export function $(
-   selector: HTMLElement | string,
+   selector: HTMLElement | Element | string,
    $root: HTMLElement | Document = document
 ): DomAbstraction {
    return new DomAbstraction(selector);

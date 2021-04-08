@@ -1,30 +1,20 @@
+import "./App.scss";
+
+import { AppService } from "../../services/AppService";
 import { LeftSidebar } from "../LeftSidebar/LeftSidebar";
+import { MainWindow } from "../MainWindow/MainWindow";
+import { TUser } from "../../models/types";
 import template from "./App.tmpl";
 
 export const App = {
-   name: "app",
+   name: "App",
    template: template,
-   components: [LeftSidebar],
+   components: [LeftSidebar, MainWindow],
    props: {
-      test: "testProp123",
+      account: AppService.getAccount(),
+      chats: AppService.getChats(),
    },
-   listeners: [],
-   subscribers: {
-      LSclick: (...args) => {
-         console.log("App is listening: LSclick", "params:", ...args);
-      },
-   },
-   methods: {},
-   beforeCreate() {
-      console.log("beforeCreate", this.name);
-   },
-   beforeMount() {
-      console.log("beforeMount", this.name);
-   },
-   beforeInit() {
-      console.log("beforeInit", this.name);
-   },
-   afterInit() {
-      console.log("afterInit", this.name);
-   },
+   // listeners: [],
+   // subscribers: {},
+   // methods: {},
 };

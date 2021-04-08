@@ -1,0 +1,49 @@
+h1 {
+   margin-bottom: 30px;
+   color: $text-primary;
+   font-size: 25px;
+}
+h2 {
+   margin-bottom: 30px;
+   color: $text-primary;
+   font-size: 21px;
+}
+h3 {
+   margin-bottom: 30px;
+   color: $text-primary;
+   font-size: 19px;
+}
+h4 {
+   margin-bottom: 30px;
+   color: $text-primary;
+   font-size: 15px;
+}
+
+.text-primary {
+   color: $text-primary;
+}
+.text-secondary {
+   color: $text-secondary;
+}
+.text-danger {
+   color: $text-danger;
+}
+.text-info {
+   color: $text-info;
+}
+.text-grey {
+   color: $text-grey;
+}
+.text-light-grey {
+   color: $text-light-grey;
+}
+.text-white {
+   color: $text-white;
+}
+
+label {
+   margin-bottom: 3px;
+   color: $primary;
+   font-weight: bold;
+   font-size: 15px;
+}
