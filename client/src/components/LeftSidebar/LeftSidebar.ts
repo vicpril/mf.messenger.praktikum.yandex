@@ -26,5 +26,6 @@ export const LeftSidebar = {
    },
    afterInit() {
       console.log("afterInit", this.name);
+      window.leftsidebar = this;
    },
 };

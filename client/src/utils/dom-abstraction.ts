@@ -64,6 +64,13 @@ class DomAbstraction {
       return Array.from(this.$el.querySelectorAll(selector));
    }
 
+   css(styles = {}): TDomAbstraction {
+      Object.keys(styles).forEach((key) => {
+         this.$el.style[key] = styles[key];
+      });
+      return this;
+   }
+
    closest(selector: string) {
       return $(this.$el.closest(selector) as HTMLElement);
    }

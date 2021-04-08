@@ -236,6 +236,7 @@ export class Component extends ComponentDOMListenrt {
       // DESTROY: create $root
       this.removeDOMListeners();
       this.emmiterSubscriptions.forEach((sub) => sub.unsubscribe());
+      this.$root.$el.remove();
    }
 
    render(): void {}
@@ -249,5 +250,13 @@ export class Component extends ComponentDOMListenrt {
    $on(event: string, fn): void {
       const subscription = this.emmiter.subscribe(event, fn);
       this.emmiterSubscriptions.push(subscription);
+   }
+
+   $show(): void {
+      this.$root.css({ opacity: 1 });
+   }
+
+   $hide(): void {
+      this.$root.css({ opacity: 0 });
    }
 }
