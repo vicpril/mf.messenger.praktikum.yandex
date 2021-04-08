@@ -19,6 +19,6 @@ export type TMessage = {
 export type TChat = {
    user: TUser;
    data: {
-      messages: TMessage[];
+      messages: TMessage[] | [];
    };
 };

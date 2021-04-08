@@ -38,7 +38,16 @@ export function get(obj, str: string, defaultValue?: any): any {
    let result = obj;
 
    for (let key of keys) {
-      const value = result[key];
+      let value;
+      // check on array with index
+      // like chats[2]
+      const split = key.split(/[\[\]]+/gi);
+
+      if (split.length > 1) {
+         value = result[split[0]][split[1]]; // get from array
+      } else {
+         value = result[key];
+      }
 
       if (typeof value === "undefined") {
          return defaultValue;
@@ -69,6 +78,7 @@ export function strToColor(str: string): TColor {
 }
 
 function hashCode(str: string): number {
+   if (!str) return 0;
    // java String#hashCode
    var hash = 0;
    for (var i = 0; i < str.length; i++) {
@@ -80,4 +90,14 @@ function hashCode(str: string): number {
 function intToRGB(i: number): TColor {
    var c = (i & 0x00ffffff).toString(16).toUpperCase();
    return "#" + ("00000".substring(0, 6 - c.length) + c);
+}
+
+export function first<T>(list: T[]): T {
+   if (!Array.isArray(list) || list.length === 0) return undefined;
+   return list[0];
+}
+
+export function getUrlParameter(key: string): string {
+   const url = new URL(location.href);
+   return url.searchParams.get(key);
 }

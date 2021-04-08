@@ -8,8 +8,8 @@
  *  <v-for-end>
  */
 
-import { get } from "../../utils/pure-functions";
 import { TemplatorVariables } from "./templator-variables";
+import { get } from "../../utils/pure-functions";
 
 export class TemplatorFor {
    TEMPLATE_REGEXP = /<v-for\s*(:(.*?)\s*:(.*?)\sin\s(.*?))>(.*?)<\/v-for>/gis;
@@ -57,7 +57,10 @@ export class TemplatorFor {
             });
          }
 
-         template = template.replace(new RegExp(key[0], "gis"), result);
+         template = template.replace(
+            new RegExp(this.escapeRegExp(key[0]), "gis"),
+            result
+         );
       }
 
       return template;
@@ -68,5 +71,9 @@ export class TemplatorFor {
       obj[indexKey] = index;
       obj[valueKey] = value;
       return obj;
+   }
+
+   private escapeRegExp(str: string): string {
+      return str.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&");
    }
 }

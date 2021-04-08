@@ -9,7 +9,7 @@
 import { get } from "../../utils/pure-functions";
 
 export class TemplatorProps {
-   TEMPLATE_REGEXP = /bind:(\w+)=\"(\w+)\"/gis;
+   TEMPLATE_REGEXP = /bind:(\w+)=\"([\w\.]+[\[\d+\]]*?)\"/gis;
 
    constructor(private template: string) {}
 

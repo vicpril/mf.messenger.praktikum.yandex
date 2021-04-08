@@ -10,9 +10,9 @@ export default /*html*/ `
 
             <v-for :chat :index in chats>
             <!-- User -->
-            <div class="chats__user">
-                {{chat}}
-            </div>
+
+            <Chat bind:chat="chats[{{index}}]"></Chat>
+            
             <!-- end User -->
             </v-for>
 

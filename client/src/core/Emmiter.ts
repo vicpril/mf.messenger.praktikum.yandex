@@ -32,6 +32,10 @@ class Emmiter {
       });
       return true;
    }
+
+   contains(event: string): boolean {
+      return typeof this.listeners[event] !== "undefined";
+   }
 }
 
 export function getEmmiter(): Emmiter {

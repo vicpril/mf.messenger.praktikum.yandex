@@ -1,10 +1,11 @@
-import { capitalize } from "../utils/pure-functions";
 import { TDomAbstraction } from "../utils/dom-abstraction";
+import { capitalize } from "../utils/pure-functions";
 
 export class ComponentDOMListenrt {
    name: string = "";
    $root: TDomAbstraction;
    methods: Object;
+   id: string;
 
    constructor(private listeners: string[] = []) {}
 
@@ -17,9 +18,10 @@ export class ComponentDOMListenrt {
                `Method ${method} is not implemented: ${this.name} Component`
             );
          }
+         const uniqueName = `${method}_${this.id}`;
          // to avoid unremoving callbacks, becouse `bind` creates new function
-         this.methods[method] = this.methods[method].bind(this);
-         this.$root.on(listener, this.methods[method]);
+         this.methods[uniqueName] = this.methods[method].bind(this);
+         this.$root.on(listener, this.methods[uniqueName]);
       });
    }
 
@@ -27,7 +29,8 @@ export class ComponentDOMListenrt {
       this.checkRoot();
       this.listeners.forEach((listener) => {
          const method = getMethodName(listener);
-         this.$root.off(listener, this.methods[method]);
+         const uniqueName = `${method}_${this.id}`;
+         this.$root.off(listener, this.methods[uniqueName]);
       });
    }
 

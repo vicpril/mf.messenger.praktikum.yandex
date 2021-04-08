@@ -6,6 +6,7 @@ import { Templator } from "./templators/templator";
 import { TemplatorProps } from "./templators/templator-props";
 import { get } from "../utils/pure-functions";
 import { isEmpty } from "../utils/isEmpty";
+import { v4 as uuidv4 } from "uuid";
 
 type TIngredients = {
    name: string;
@@ -15,6 +16,7 @@ type TIngredients = {
    subscribers?: Object;
    props?: Object;
    methods?: Object;
+   beforePrepare?: () => void;
    beforeCreate?: () => void;
    beforeMount?: () => void;
    beforeInit?: () => void;
@@ -42,6 +44,7 @@ export class Component extends ComponentDOMListenrt {
    subscribers?: Object;
    options?: TIngredients;
    props: any;
+   id: string = uuidv4();
 
    constructor(
       private $targetEl: TDomAbstraction,
@@ -78,7 +81,8 @@ export class Component extends ComponentDOMListenrt {
          });
       });
 
-      const LifeCycleMethods = [
+      const BaseMethods = [
+         "beforePrepare",
          "beforeCreate",
          "beforeMount",
          "beforeInit",
@@ -87,7 +91,7 @@ export class Component extends ComponentDOMListenrt {
          "beforeDestroy",
       ];
 
-      LifeCycleMethods.forEach((key) => {
+      BaseMethods.forEach((key) => {
          if (options[key]) {
             Object.defineProperty(this, key, {
                configurable: false,
@@ -100,8 +104,10 @@ export class Component extends ComponentDOMListenrt {
 
    // get props from template
    // init LifeCycle events in Emmiter
+   beforePrepare(): void {}
    private prepare(): void {
       this.getPropsFromTemplate();
+      this.beforePrepare();
       this.initSubscribers();
       this.initEventsNames();
       this.initLifeCycleEvents();
@@ -115,17 +121,24 @@ export class Component extends ComponentDOMListenrt {
          return;
       }
       const templator = new TemplatorProps(this.$targetEl.html());
-      this.props = templator.compile(this.parentComponent.props);
+      this.props = {
+         ...this.props,
+         ...templator.compile(this.parentComponent.props),
+      };
    }
 
    private initEventsNames(): void {
+      const prefix = this.emmiter.contains(`${this.name}:beforeCreate`)
+         ? `${this.name}_${this.id}`
+         : this.name;
+
       this.EVENTS = {
-         BEFORE_CREATE: `${this.name}:beforeCreate`,
-         BEFORE_MOUNT: `${this.name}:beforeMount`,
-         BEFORE_INIT: `${this.name}:beforeInit`,
-         AFTER_INIT: `${this.name}:afterInit`,
-         UPDATE: `${this.name}:update`,
-         DESTROY: `${this.name}:destroy`,
+         BEFORE_CREATE: `${prefix}:beforeCreate`,
+         BEFORE_MOUNT: `${prefix}:beforeMount`,
+         BEFORE_INIT: `${prefix}:beforeInit`,
+         AFTER_INIT: `${prefix}:afterInit`,
+         UPDATE: `${prefix}:update`,
+         DESTROY: `${prefix}:destroy`,
       };
    }
 

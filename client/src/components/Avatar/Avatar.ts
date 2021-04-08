@@ -2,6 +2,7 @@ import "./Avatar.scss";
 
 import { strToColor } from "../../utils/pure-functions";
 import template from "./Avatar.tmpl";
+import { v4 as uuidv4 } from "uuid";
 
 export const Avatar = {
    name: "Avatar",
@@ -9,13 +10,18 @@ export const Avatar = {
    components: [],
    props: {
       user: {},
-      alt: "texttext",
       borderColor: "",
    },
    listeners: [],
    subscribers: {},
    methods: {},
+   beforePrepare() {
+      // this.name = `${this.name}_${uuidv4()}`;
+   },
    beforeCreate() {
+      if (!this.props.user) {
+         throw new Error("Avatar: User is not implemented");
+      }
       this.props.borderColor = strToColor(this.props.user.avatar);
    },
 };
