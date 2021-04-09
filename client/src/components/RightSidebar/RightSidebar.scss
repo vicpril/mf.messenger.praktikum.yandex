@@ -1,0 +1,60 @@
+@import "../../styles/variables";
+
+.info__wrapper {
+   position: fixed;
+   top: 0;
+   right: 0;
+   bottom: 0;
+   display: flex;
+   flex-flow: column nowrap;
+   min-width: 320px;
+   max-width: 320px;
+   margin: 40px 10px;
+   padding: 20px;
+   overflow-x: auto;
+   background-color: #e3f6fc;
+   border-radius: 20px;
+   box-shadow: 0 0 20px 10px #cbdee46c;
+   opacity: 1;
+   transition: all 0.5s;
+}
+
+.button__close {
+   display: inline;
+   align-self: flex-start;
+   padding: 1px 7px;
+   color: $text-white;
+   font-weight: lighter;
+   font-size: 21px;
+   line-height: 25px;
+   background-color: $primary;
+   border-radius: 25px;
+}
+
+.info__section {
+   display: flex;
+   flex-grow: 1;
+   flex-flow: column nowrap;
+}
+
+.info__content {
+   display: flex;
+   flex-flow: column nowrap;
+   justify-content: center;
+   margin: auto 0;
+   text-align: center;
+
+   input {
+      text-align: center;
+   }
+}
+
+.info__actions {
+   display: flex;
+   flex-flow: column nowrap;
+   margin: 20px 0;
+}
+
+.info__button {
+   margin: 7px 0;
+}

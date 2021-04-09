@@ -26,6 +26,10 @@ class DomAbstraction {
       return this.$el.outerHTML.trim();
    }
 
+   get data(): DOMStringMap {
+      return this.$el.dataset;
+   }
+
    firstChild() {
       // @ts-ignore: Unreachable code error
       return $(this.$el.content.childNodes[0]);
@@ -62,6 +66,25 @@ class DomAbstraction {
 
    hasClass(niddle: string): boolean {
       return this.$el.classList.contains(niddle);
+   }
+
+   addClass(niddle: string): TDomAbstraction {
+      this.$el.classList.add(niddle);
+      return this;
+   }
+
+   removeClass(niddle: string): TDomAbstraction {
+      this.$el.classList.remove(niddle);
+      return this;
+   }
+
+   toggleClass(niddle: string): TDomAbstraction {
+      if (this.hasClass(niddle)) {
+         this.removeClass(niddle);
+      } else {
+         this.addClass(niddle);
+      }
+      return this;
    }
 
    closest(selector: string) {

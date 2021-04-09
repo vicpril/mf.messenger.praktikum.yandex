@@ -10,20 +10,63 @@
  *  </v-if>
  */
 
-import { compare } from "../../utils/compare";
 import { get, isUndefined, trimQuotes } from "../../utils/pure-functions";
+
+import { MapCompiler } from "./map-compiler";
+import { TagsMapBuilder } from "./tags-map-builder";
+import { compare } from "../../utils/compare";
 
 export class TemplatorIf {
    TEMPLATE_REGEXP = /<v-if(="(.*?)")>(.*?)(<v-else>(.*?))?<\/v-if>/gis;
-   COMPARE_REGEXP = /\!?(\w+)((.*?)(\'?!?\w+\'?))?/;
+   COMPARE_REGEXP = /\!?([\w\.]+)((.*?)(\'?!?[\w\.]+\'?))?/;
 
    constructor(private template: string) {}
 
    compile(context: Object) {
-      return this._compileTemplate(context);
+      /**
+       * We need to compile recursive this templator
+       * So I use TagsMapBuilder and MapCompiler to build intervals^
+       *       [start, end][], where
+       *       - start is the start position of local template
+       *       - end a the end position of local template
+       * Next I define and compile local templates
+       *       and replece them in the global template.
+       */
+      const template = this.template;
+      const mapBuilder = new TagsMapBuilder(
+         this.template,
+         `<v-if(="(.*?)")>`,
+         `</v-if>`
+      );
+      let tagMap = mapBuilder.build();
+
+      const combiner = new MapCompiler(this.template, tagMap);
+      const intervals = combiner.combineMap();
+
+      const toLocalTemplates = (int: [number, number]) => {
+         return this.template.slice(int[0], int[1]);
+      };
+      const toLocalTemplatesCompiled = (template: string) => {
+         const templator = new TemplatorIf(template);
+         return templator._compileAtoms(context);
+      };
+
+      intervals.map(toLocalTemplates).forEach((local: string) => {
+         const localCompiled = toLocalTemplatesCompiled(local);
+         this.template = this.template.replace(
+            new RegExp(this.escapeRegExp(local), "gi"),
+            localCompiled
+         );
+      });
+
+      intervals.forEach((int) => {
+         const locaTemplate = template.slice(int[0], int[1]);
+      });
+
+      return this._compileAtoms(context);
    }
 
-   _compileTemplate(context, newTemplate: string = null) {
+   private _compileAtoms(context, newTemplate: string = null) {
       const regExp = this.TEMPLATE_REGEXP; // avoid from infinity loop
       let template = newTemplate ?? this.template;
       let result = template;
@@ -34,7 +77,7 @@ export class TemplatorIf {
          const partIf = key[3].trim();
          const partElse = isUndefined(key[5]) ? "" : key[5].trim();
 
-         const [postString, operator, valueString] = this._parseCondition(
+         let [postString, operator, valueString] = this._parseCondition(
             condition
          );
 
@@ -46,16 +89,20 @@ export class TemplatorIf {
          }
 
          if (isUndefined(post)) {
-            result = result.replace(new RegExp(key[0], "gi"), partElse);
+            result = result.replace(new RegExp(key[0], "gi"), partElse.trim());
             continue;
          }
 
          let value;
          if (!isUndefined(valueString)) {
             if (valueString.charAt(0) !== "!") {
-               value = get(context, valueString);
+               value = get(context, valueString, valueString);
             } else {
-               value = !get(context, valueString.slice(1));
+               value = !get(
+                  context,
+                  valueString.slice(1),
+                  valueString.slice(1)
+               );
             }
          } else {
             value = valueString;
@@ -63,9 +110,15 @@ export class TemplatorIf {
 
          post = post === "null" ? null : post;
          if (compare(post, operator, value)) {
-            result = result.replace(new RegExp(key[0], "gi"), partIf);
+            result = result.replace(
+               new RegExp(this.escapeRegExp(key[0]), "gi"),
+               partIf.trim()
+            );
          } else {
-            result = result.replace(new RegExp(key[0], "gi"), partElse);
+            result = result.replace(
+               new RegExp(this.escapeRegExp(key[0]), "gi"),
+               partElse.trim()
+            );
          }
          continue;
       }
@@ -85,5 +138,9 @@ export class TemplatorIf {
          const post = trimQuotes(string);
          return [post]; // set a variable only
       }
+   }
+
+   private escapeRegExp(str: string): string {
+      return str.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&");
    }
 }

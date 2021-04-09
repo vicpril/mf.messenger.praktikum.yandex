@@ -1,23 +1,31 @@
 import "./Messager.scss";
 
+import { Block, TBlock, TBlockDate, TBlockMessage } from "../Block/Block";
 import { TChat, TMessage, TUser } from "../../models/types";
 
+import { $ } from "../../utils/dom-abstraction";
 import { AppService } from "../../services/AppService";
-import { isEmpty } from "../../utils/isEmpty";
 import { isUndefined } from "../../utils/pure-functions";
+import { sortByTime } from "../../utils/sortMessages";
 import template from "./Messager.tmpl";
 
 export const Messager = {
    name: "Messager",
    template: template,
-   components: [],
+   components: [Block],
    props: {
       chat: {},
       account: AppService.getAccount(),
       blocks: [],
    },
    listeners: [],
-   subscribers: {},
+   subscribers: {
+      "App:afterInit": function () {
+         setTimeout(() => {
+            window.scrollTo(0, this.$root.$el.scrollHeight);
+         }, 10);
+      },
+   },
    methods: {},
 
    beforeCreate() {
@@ -27,25 +35,8 @@ export const Messager = {
    },
 };
 
-export type TBlock = {
-   type: "date" | "message";
-   content: any;
-};
-export type TBlockDate = TBlock & {
-   type: "date";
-   content: string;
-};
-export type TBlockMessage = TBlock & {
-   type: "message";
-   content: {
-      user: TUser;
-      isForeign: boolean;
-      messages: TMessage[];
-   };
-};
-
 function* buildBlocksHistory(chat: TChat, account: TUser): Iterable<TBlock> {
-   const messages = chat.data.messages;
+   const messages = sortByTime(chat.data.messages, "asc");
    let i: number = 0;
    let block: TBlock = null;
 
@@ -94,6 +85,6 @@ function createBlockUserMessages(
    const currentBlockUser = isForeign ? user : account;
    return {
       type: "message",
-      content: { user: currentBlockUser, isForeign: isForeign, messages: [] },
+      content: { user: currentBlockUser, isforeign: isForeign, messages: [] },
    };
 }
