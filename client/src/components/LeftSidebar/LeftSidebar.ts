@@ -1,15 +1,17 @@
 import "./LeftSidebar.scss";
 
-import { Chat } from "../Chat/Chat";
 import { ChatAccount } from "../ChatAccount/ChatAccount";
+import { ChatSearch } from "../ChatSearch/ChatSearch";
+import { Chats } from "../Chats/Chats";
 import template from "./LeftSidebar.tmpl";
 
 export const LeftSidebar = {
    name: "LeftSidebar",
    template: template,
-   components: [ChatAccount, Chat],
-   props: {},
+   components: [ChatAccount, Chats, ChatSearch],
+   props: {
+      chats: [],
+   },
    methods: {},
    listeners: [],
-   subscribers: {},
 };

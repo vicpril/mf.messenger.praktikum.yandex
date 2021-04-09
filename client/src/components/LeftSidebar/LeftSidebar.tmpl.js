@@ -6,23 +6,11 @@ export default /*html*/ `
     <!-- Chats wrapper-->
     <div class="chats__wrapper chats_scrollable scroll_style">
         <!-- Chats -->
-        <div class="chats ">
-
-            <v-for :chat :index in chats>
-            <!-- User -->
-
-            <Chat bind:chat="chats[{{index}}]"></Chat>
-            
-            <!-- end User -->
-            </v-for>
-
-        </div>
+        <Chats bind:chats="chats"></Chats>
         <!-- end chats -->
 
-        <div class="chats__menu">
-            {{form_search}}
-        </div>
-
+        <ChatSearch></ChatSearch>
+        
     </div>
     <!-- end Chats wrapper-->
 </div>

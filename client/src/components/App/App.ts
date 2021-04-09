@@ -17,4 +17,5 @@ export const App = {
    // listeners: [],
    // subscribers: {},
    // methods: {},
+   // afterInit() {},
 };

@@ -3,6 +3,7 @@ import "./Chat.scss";
 import { $ } from "../../utils/dom-abstraction";
 import { AppService } from "../../services/AppService";
 import { Avatar } from "../Avatar/Avatar";
+import { ChatSearch } from "../ChatSearch/ChatSearch";
 import { DateCustom } from "../../utils/date";
 import { TMessage } from "../../models/types";
 import { isEmpty } from "../../utils/isEmpty";
@@ -24,7 +25,7 @@ export const Chat = {
          // Click on active Avatar
          if ($(e.target).hasClass("pulse")) {
             const login = this.props.chat.user.login;
-            document.location.href = `/contact-info.html?user=${login}`;
+            document.location.href = `/contact-info.html?info=${login}`;
          }
          // Click on wrapper
          else if (checkSwitchUserPossible(e.target)) {

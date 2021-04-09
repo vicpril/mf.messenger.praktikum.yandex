@@ -227,13 +227,13 @@ export class Component extends ComponentDOMListenrt {
    afterInit(): void {}
    private _afterInit(): void {
       this.afterInit();
-      console.log(this.name, this);
    }
 
    beforeUpdate(): void {}
    private _update(): void {
       this.beforeUpdate();
       // UPDATE: rereder
+      this.rerender();
    }
 
    beforeDestroy(): void {}
@@ -242,12 +242,20 @@ export class Component extends ComponentDOMListenrt {
       // DESTROY: create $root
       this.removeDOMListeners();
       this.emmiterSubscriptions.forEach((sub) => sub.unsubscribe());
-      this.$root.$el.remove();
+      this.componentsInst.forEach((component) => {
+         component.$emit(component.EVENTS.DESTROY);
+      });
+      this.componentsInst = [];
+      // this.$root.$el.remove();
    }
 
    render(): void {}
 
-   _reRender(): void {}
+   rerender(): void {
+      this.$targetEl = this.$root;
+      this.$emit(this.EVENTS.DESTROY);
+      this.$emit(this.EVENTS.BEFORE_CREATE);
+   }
 
    $emit(event: string, ...params: any): void {
       this.emmiter.emit(event, ...params);

@@ -101,3 +101,15 @@ export function getUrlParameter(key: string): string {
    const url = new URL(location.href);
    return url.searchParams.get(key);
 }
+
+export function strContains(
+   needle: string,
+   highstack: string,
+   strict: boolean = true
+): boolean {
+   if (!strict) {
+      highstack = highstack.toLowerCase();
+      needle = needle.toLowerCase();
+   }
+   return highstack.indexOf(needle) !== -1;
+}
