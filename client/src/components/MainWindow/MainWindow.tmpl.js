@@ -1,20 +1,14 @@
-export default `
+export default /*html*/ `
 <main class="main right_sidebar__close">
 
-   <v-if="current_user">
+   <v-if="is_selected">
 
          <!-- messager -->
-         <div class="messager ">
-
-            {{messager}}
-
-         </div>
+         <Messager bind:chat="chat"></Messager>
          <!-- end messager -->
 
          <!-- messager form -->
-         <div class="messager__menu">
-            {{form_send_message}}
-         </div>
+         <MessagerMenu bind:chat="chat"></MessagerMenu>
          <!-- end form -->
 
    <v-else>

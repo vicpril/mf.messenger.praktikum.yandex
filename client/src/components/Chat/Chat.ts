@@ -16,7 +16,7 @@ export const Chat = {
    components: [Avatar],
    props: {
       chat: {},
-      selectedUser: AppService.getSelectedUser(),
+      selectedChat: AppService.getSelectedChat(),
    },
    listeners: ["click"],
    subscribers: {},
@@ -39,7 +39,9 @@ export const Chat = {
    },
    beforeCreate() {
       const P = this.props; // just alias
-      P.is_selected = P.selectedUser === P.chat.user.login;
+      P.is_selected =
+         !isEmpty(P.selectedChat) &&
+         P.selectedChat.user.login === P.chat.user.login;
 
       const lastMessage = getLastMessage(P.chat.data.messages);
 

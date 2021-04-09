@@ -233,25 +233,23 @@ export class Component extends ComponentDOMListenrt {
    private _update(): void {
       this.beforeUpdate();
       // UPDATE: rereder
-      this.rerender();
+      this.reBuild();
    }
 
    beforeDestroy(): void {}
    private _destroy(): void {
       this.beforeDestroy();
-      // DESTROY: create $root
+      // DESTROY:
+      // remove listeners, unsubscribe, recursive for children
       this.removeDOMListeners();
       this.emmiterSubscriptions.forEach((sub) => sub.unsubscribe());
       this.componentsInst.forEach((component) => {
          component.$emit(component.EVENTS.DESTROY);
       });
       this.componentsInst = [];
-      // this.$root.$el.remove();
    }
 
-   render(): void {}
-
-   rerender(): void {
+   private reBuild(): void {
       this.$targetEl = this.$root;
       this.$emit(this.EVENTS.DESTROY);
       this.$emit(this.EVENTS.BEFORE_CREATE);

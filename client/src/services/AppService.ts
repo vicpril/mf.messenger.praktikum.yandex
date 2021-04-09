@@ -13,16 +13,16 @@ export class AppService {
       return account;
    }
 
-   static getSelectedUser(): string | null {
+   static getSelectedChat(): TChat {
       const userlogin = getUrlParameter("user");
       if (!userlogin) {
          return null;
       }
-      const user: TUser = first(
+      const chat: TChat = first(
          AppService.getChats().filter(
             (chat: TChat) => chat.user.login === userlogin
          )
-      ).user;
-      return user ? user.login : null;
+      );
+      return chat || null;
    }
 }
