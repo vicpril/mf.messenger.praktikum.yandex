@@ -1,6 +1,6 @@
-import { IContext } from "./templator";
-import { get } from "../../utils/pure-functions";
 import { v4 as uuidv4 } from "uuid";
+import { IContext } from "./templatorInterface";
+import { get } from "../../utils/pure-functions";
 
 declare global {
    interface Window {

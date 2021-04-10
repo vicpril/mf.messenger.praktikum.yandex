@@ -6,11 +6,11 @@
  * Group 2  parentProp
  */
 
-import { IContext } from "./templator";
+import { IContext } from "./templatorInterface";
 import { get } from "../../utils/pure-functions";
 
 export class TemplatorProps {
-   TEMPLATE_REGEXP = /bind:(\w+)=\"([\w\.]+[\[\d+\]]*?)\"/gis;
+   TEMPLATE_REGEXP = /bind:(\w+)="([\w.]+[[\d+\]]*?)"/gis;
 
    constructor(private template: string) {}
 

@@ -12,14 +12,14 @@
 
 import { get, isUndefined, trimQuotes } from "../../utils/pure-functions";
 
-import { IContext } from "./templator";
+import { IContext } from "./templatorInterface";
 import { MapCompiler } from "./map-compiler";
 import { TagsMapBuilder } from "./tags-map-builder";
 import { compare } from "../../utils/compare";
 
 export class TemplatorIf {
    TEMPLATE_REGEXP = /<v-if(="(.*?)")>(.*?)(<v-else>(.*?))?<\/v-if>/gis;
-   COMPARE_REGEXP = /\!?([\w\.]+)((.*?)(\'?!?[\w\.]+\'?))?/;
+   COMPARE_REGEXP = /!?([\w.]+)((.*?)('?!?[\w.]+'?))?/;
 
    constructor(private template: string) {}
 
@@ -135,6 +135,6 @@ export class TemplatorIf {
    }
 
    private escapeRegExp(str: string): string {
-      return str.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&");
+      return str.replace(/[-[\]/{}()*+?.\\^$|]/g, "\\$&");
    }
 }

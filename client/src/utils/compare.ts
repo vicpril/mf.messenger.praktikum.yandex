@@ -1,3 +1,4 @@
+/* eslint-disable eqeqeq */
 export function compare(post: any, operator: string, value?: any): boolean {
    // debugger
    switch (operator) {

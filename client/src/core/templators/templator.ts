@@ -1,10 +1,8 @@
+import { IContext } from "./templatorInterface";
 import { TemplatorFor } from "./templator-for";
 import { TemplatorIf } from "./templator-if";
 import { TemplatorVariables } from "./templator-variables";
 
-export interface IContext {
-   [key: string]: any;
-}
 export class Templator {
    constructor(private template: string) {}
 

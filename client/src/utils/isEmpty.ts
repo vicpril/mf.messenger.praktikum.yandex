@@ -1,4 +1,5 @@
 export function isEmpty(value: any): boolean {
+   // eslint-disable-next-line eqeqeq
    if (value == 0) {
       return true;
    } // 0 ""

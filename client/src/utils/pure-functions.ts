@@ -37,11 +37,12 @@ export function get(obj: any, str: string, defaultValue?: any): any {
    const keys = str.split(".");
    let result = obj;
 
+   // eslint-disable-next-line no-restricted-syntax
    for (const key of keys) {
       let value;
       // check on array with index
       // like chats[2]
-      const split = key.split(/[\[\]]+/gi);
+      const split = key.split(/[[\]]+/gi);
 
       if (split.length > 1) {
          value = result[split[0]][split[1]]; // get from array
@@ -82,12 +83,14 @@ function hashCode(str: string): number {
    // java String#hashCode
    let hash = 0;
    for (let i = 0; i < str.length; i++) {
+      // eslint-disable-next-line no-bitwise
       hash = str.charCodeAt(i) + ((hash << 5) - hash);
    }
    return hash;
 }
 
 function intToRGB(i: number): TColor {
+   // eslint-disable-next-line no-bitwise
    const c = (i & 0x00ffffff).toString(16).toUpperCase();
    return `#${"00000".substring(0, 6 - c.length) + c}`;
 }
@@ -98,6 +101,7 @@ export function first<T>(list: T[]): T {
 }
 
 export function getUrlParameter(key: string): string | null {
+   // eslint-disable-next-line no-restricted-globals
    const url = new URL(location.href);
    return url.searchParams.get(key);
 }

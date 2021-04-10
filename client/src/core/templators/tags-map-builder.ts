@@ -17,7 +17,7 @@ export class TagsMapBuilder {
    }
 
    private _buildOpen() {
-      let key = null;
+      let key;
       while ((key = this.OPEN_REGEXP.exec(this.highstack))) {
          this.result.set(key.index, "open");
       }

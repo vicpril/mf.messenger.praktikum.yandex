@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-loop-func */
 /**
  * <v-for :item :index in array">
  *     {{content}}
@@ -8,7 +9,7 @@
  *  <v-for-end>
  */
 
-import { IContext } from "./templator";
+import { IContext } from "./templatorInterface";
 import { TemplatorVariables } from "./templator-variables";
 import { get } from "../../utils/pure-functions";
 
@@ -80,6 +81,6 @@ export class TemplatorFor {
    }
 
    private escapeRegExp(str: string): string {
-      return str.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&");
+      return str.replace(/[-[\]/{}()*+?.\\^$|]/g, "\\$&");
    }
 }

@@ -26,15 +26,19 @@ export const RightSidebar = {
          case "avatar-edit":
             // this.components = [ChangeAvatar];
             this.template = switchContentTag("ChangeAvatar", this.template);
+            break;
          case "settings-edit":
             // this.components = [AccountSettings];
             this.template = switchContentTag("AccountSettings", this.template);
+            break;
          case "password-change":
             // this.components = [ChangePassword];
             this.template = switchContentTag("ChangePassword", this.template);
+            break;
          case "contact-info":
             // this.components = [InfoContact];
             this.template = switchContentTag("InfoContact", this.template);
+            break;
          case "account":
          default:
             this.components = [InfoAccount];

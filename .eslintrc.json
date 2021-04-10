@@ -8,12 +8,7 @@
    "parserOptions": {
       "project": "./tsconfig.json"
    },
-   "extends": [
-      "airbnb-typescript",
-      "prettier"
-      // "plugin:@typescript-eslint/recommended"
-      // "plugin:@typescript-eslint/recommended-requiring-type-checking"
-   ],
+   "extends": ["airbnb-typescript", "prettier"],
    "plugins": ["prettier", "@typescript-eslint"],
    "rules": {
       "prettier/prettier": [
@@ -34,11 +29,14 @@
       "no-underscore-dangle": "off",
       "@typescript-eslint/lines-between-class-members": "off",
       "no-param-reassign": "off",
-      "no-shadow": "warn",
-      "@typescript-eslint/no-shadow": "warn",
+      "no-shadow": "off",
+      "@typescript-eslint/no-shadow": "off",
       "object-shorthand": "off",
       "import/prefer-default-export": "off",
-      "@typescript-eslint/no-use-before-define": "off"
+      "@typescript-eslint/no-use-before-define": "off",
+      "no-plusplus": "off",
+      "no-cond-assign": "off",
+      "no-continue": "off"
    },
    "globals": {
       "ChildNode": true
