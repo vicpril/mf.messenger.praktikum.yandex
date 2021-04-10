@@ -4,13 +4,14 @@ import { $ } from "../../../utils/dom-abstraction";
 import { InfoAccount } from "../../pages/InfoAccount/InfoAccount";
 import template from "./RightSidebar.tmpl";
 import { FormChangeAvatar } from "../../pages/FormChangeAvatar/FormChangeAvatar";
+import { FormAccountSettings } from "../../pages/FormAccountSettings/FormAccountSettings";
 
 export const RightSidebar = {
    name: "RightSidebar",
    template: template,
    components: [],
    props: {
-      page: "avatar-edit",
+      page: "settings-edit",
    },
    listeners: ["click"],
    subscribers: {},
@@ -29,8 +30,11 @@ export const RightSidebar = {
             this.template = switchContentTag("FormChangeAvatar", this.template);
             break;
          case "settings-edit":
-            // this.components = [AccountSettings];
-            this.template = switchContentTag("AccountSettings", this.template);
+            this.components = [FormAccountSettings];
+            this.template = switchContentTag(
+               "FormAccountSettings",
+               this.template
+            );
             break;
          case "password-change":
             // this.components = [ChangePassword];

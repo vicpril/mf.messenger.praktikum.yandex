@@ -124,3 +124,12 @@ export function getFormData(formData: FormData): Object {
       {}
    );
 }
+
+export function strToLodash(string: string): string {
+   return string.toLowerCase().replace(/\s/gi, "_");
+}
+
+export function lodashToStr(string: string): string {
+   string = string.replace(/_/gi, " ");
+   return string.charAt(0).toUpperCase() + string.slice(1);
+}
