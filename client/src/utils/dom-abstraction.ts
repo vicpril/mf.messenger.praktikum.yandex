@@ -23,6 +23,19 @@ class DomAbstraction {
       return this.$el.outerHTML.trim();
    }
 
+   text(): string;
+   text(text: string): DomAbstraction;
+   text(text?: string): string | DomAbstraction {
+      if (typeof text === "string") {
+         this.$el.textContent = text;
+         return this;
+      }
+      if (this.$el.tagName.toLowerCase() === "input") {
+         return (this.$el as HTMLInputElement).value.trim();
+      }
+      return (this.$el.textContent as string).trim();
+   }
+
    get data(): DOMStringMap {
       return this.$el.dataset;
    }
