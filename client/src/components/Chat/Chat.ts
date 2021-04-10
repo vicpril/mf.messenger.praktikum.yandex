@@ -3,7 +3,6 @@ import "./Chat.scss";
 import { $ } from "../../utils/dom-abstraction";
 import { AppService } from "../../services/AppService";
 import { Avatar } from "../Avatar/Avatar";
-import { ChatSearch } from "../ChatSearch/ChatSearch";
 import { DateCustom } from "../../utils/date";
 import { TMessage } from "../../models/types";
 import { isEmpty } from "../../utils/isEmpty";

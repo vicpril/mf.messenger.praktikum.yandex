@@ -1,22 +1,35 @@
-export type Subscription = {
-   unsubscribe: () => void;
-};
+import { isEmpty } from "../utils/isEmpty";
 
+export interface ISubscription {
+   unsubscribe: TSubscriberMethod;
+}
 export type TEmmiter = InstanceType<typeof Emmiter>;
 
+interface IListeners {
+   [key: string]: TSubscriberMethod[];
+}
+
+export type TSubscriberMethod = (...args: any) => void;
+export interface ISubscriberMethods {
+   [key: string]: TSubscriberMethod;
+}
+
 class Emmiter {
-   static _instance = null;
+   static _instance = {} as Emmiter;
 
-   private listeners: {} = {};
+   private listeners: IListeners = {};
 
-   subscribe(event: string, fn): Subscription {
+   subscribe<T extends string, K extends TSubscriberMethod>(
+      event: T,
+      fn: K
+   ): ISubscription {
       this.listeners[event] = this.listeners[event] || [];
       this.listeners[event].push(fn);
       return {
          unsubscribe() {
             return function () {
                this.listeners[event] = this.listeners[event].filter(
-                  (listener) => listener !== fn
+                  (listener: TSubscriberMethod) => listener !== fn
                );
             }.bind(getEmmiter());
          },
@@ -39,7 +52,7 @@ class Emmiter {
 }
 
 export function getEmmiter(): Emmiter {
-   if (!Emmiter._instance) {
+   if (!Emmiter._instance || isEmpty(Emmiter._instance)) {
       Emmiter._instance = new Emmiter();
    }
    return Emmiter._instance;

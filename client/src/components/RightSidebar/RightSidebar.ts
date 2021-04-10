@@ -1,7 +1,6 @@
 import "./RightSidebar.scss";
 
-import { $, TDomAbstraction } from "../../utils/dom-abstraction";
-
+import { $ } from "../../utils/dom-abstraction";
 import { InfoAccount } from "../InfoAccount/InfoAccount";
 import template from "./RightSidebar.tmpl";
 

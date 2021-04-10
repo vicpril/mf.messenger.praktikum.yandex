@@ -1,5 +1,15 @@
 import { $, TDomAbstraction } from "../utils/dom-abstraction";
-import { Subscription, TEmmiter, getEmmiter } from "./Emmiter";
+import {
+   IComponentLifeCycleNames,
+   IIngredients,
+   IMethods,
+} from "./ComponentInterfaces";
+import {
+   ISubscriberMethods,
+   ISubscription,
+   TEmmiter,
+   getEmmiter,
+} from "./Emmiter";
 
 import { ComponentDOMListenrt } from "./ComponentDOMListener";
 import { Templator } from "./templators/templator";
@@ -8,47 +18,22 @@ import { get } from "../utils/pure-functions";
 import { isEmpty } from "../utils/isEmpty";
 import { v4 as uuidv4 } from "uuid";
 
-type TIngredients = {
-   name: string;
-   template?: string;
-   components: TIngredients[];
-   listeners?: string[];
-   subscribers?: Object;
-   props?: Object;
-   methods?: Object;
-   beforePrepare?: () => void;
-   beforeCreate?: () => void;
-   beforeMount?: () => void;
-   beforeInit?: () => void;
-   afterInit?: () => void;
-   beforeUpdate?: () => void;
-   beforeDestroy?: () => void;
-};
-
-type ComponentLifeCycleNames = {
-   BEFORE_CREATE: string;
-   BEFORE_MOUNT: string;
-   BEFORE_INIT: string;
-   AFTER_INIT: string;
-   UPDATE: string;
-   DESTROY: string;
-};
-
 export class Component extends ComponentDOMListenrt {
-   EVENTS: ComponentLifeCycleNames;
-   emmiter: TEmmiter;
-   emmiterSubscriptions: Subscription[] = [];
-   components: TIngredients[] = [];
+   EVENTS: IComponentLifeCycleNames;
+   emmiter: TEmmiter = getEmmiter();
+   emmiterSubscriptions: ISubscription[] = [];
+   components: IIngredients[] = [];
    componentsInst: Component[] = [];
    template: string = "";
-   subscribers?: Object;
-   options?: TIngredients;
+   subscribers?: ISubscriberMethods = {};
+   options?: IIngredients;
    props: any;
    id: string = uuidv4();
+   methods: IMethods = {};
 
    constructor(
       private $targetEl: TDomAbstraction,
-      options: TIngredients,
+      options: IIngredients,
       public parentComponent: Component | null = null
    ) {
       super(options.listeners);
@@ -58,28 +43,28 @@ export class Component extends ComponentDOMListenrt {
       if (!options.name) {
          throw new Error(`No name defined in Component`);
       }
-      this.name = options.name || (Component.name as string);
-      this.components = options.components || [];
-      this.template = options.template || "";
-      this.props = options.props || {};
-      this.subscribers = options.subscribers || {};
+      this.name = options.name ?? (Component.name as string);
+      this.components = options.components ?? [];
+      this.template = options.template ?? "";
+      this.props = options.props ?? {};
+      this.subscribers = options.subscribers ?? {};
 
       this.initMethods(options);
-
-      this.emmiter = getEmmiter();
 
       this.prepare();
    }
 
-   private initMethods(options: TIngredients) {
-      this.methods = options.methods || {};
-      Object.getOwnPropertyNames(this.methods).forEach((key) => {
-         Object.defineProperty(this, key, {
-            configurable: false,
-            writable: false,
-            value: this.methods[key].bind(this),
+   private initMethods(options: IIngredients): void {
+      if (options.methods) {
+         this.methods = options.methods;
+         Object.getOwnPropertyNames(this.methods).forEach((key) => {
+            Object.defineProperty(this, key, {
+               configurable: false,
+               writable: false,
+               value: this.methods[key].bind(this),
+            });
          });
-      });
+      }
 
       const BaseMethods = [
          "beforePrepare",
@@ -91,7 +76,7 @@ export class Component extends ComponentDOMListenrt {
          "beforeDestroy",
       ];
 
-      BaseMethods.forEach((key) => {
+      BaseMethods.forEach((key: string) => {
          if (options[key]) {
             Object.defineProperty(this, key, {
                configurable: false,
@@ -115,7 +100,7 @@ export class Component extends ComponentDOMListenrt {
    }
 
    getPropsFromTemplate(): void {
-      if (isEmpty(this.parentComponent)) return;
+      if (!this.parentComponent || isEmpty(this.parentComponent)) return;
       if (!get(this.parentComponent, "props", false)) {
          this.props = {};
          return;
@@ -185,7 +170,7 @@ export class Component extends ComponentDOMListenrt {
    }
 
    private initChildren(): void {
-      this.components.forEach((Ingredients: TIngredients) => {
+      this.components.forEach((Ingredients: IIngredients) => {
          const $tags: TDomAbstraction[] = this.findAllTags(Ingredients.name);
          $tags.forEach(($targetEl) => {
             const component = new Component($targetEl, Ingredients, this);
@@ -220,7 +205,9 @@ export class Component extends ComponentDOMListenrt {
 
    private initSubscribers(): void {
       Object.getOwnPropertyNames(this.subscribers).forEach((key: string) => {
-         this.$on(key, this.subscribers[key].bind(this));
+         if (this.subscribers) {
+            this.$on(key, this.subscribers[key].bind(this));
+         }
       });
    }
 
@@ -259,7 +246,7 @@ export class Component extends ComponentDOMListenrt {
       this.emmiter.emit(event, ...params);
    }
 
-   $on(event: string, fn): void {
+   $on(event: string, fn: () => {}): void {
       const subscription = this.emmiter.subscribe(event, fn);
       this.emmiterSubscriptions.push(subscription);
    }

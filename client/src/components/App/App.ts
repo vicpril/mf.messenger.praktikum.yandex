@@ -3,7 +3,6 @@ import "./App.scss";
 import { AppService } from "../../services/AppService";
 import { LeftSidebar } from "../LeftSidebar/LeftSidebar";
 import { MainWindow } from "../MainWindow/MainWindow";
-import { TUser } from "../../models/types";
 import template from "./App.tmpl";
 
 export const App = {

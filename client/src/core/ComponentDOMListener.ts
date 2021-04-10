@@ -4,7 +4,7 @@ import { capitalize } from "../utils/pure-functions";
 export class ComponentDOMListenrt {
    name: string = "";
    $root: TDomAbstraction;
-   methods: Object;
+   methods?: any;
    id: string;
 
    constructor(private listeners: string[] = []) {}
@@ -44,6 +44,6 @@ export class ComponentDOMListenrt {
 }
 
 // click => onClick
-function getMethodName(eventName: string) {
+function getMethodName(eventName: string): string {
    return `on${capitalize(eventName)}`;
 }
