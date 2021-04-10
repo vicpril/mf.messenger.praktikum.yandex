@@ -5,13 +5,14 @@ import { InfoAccount } from "../../pages/InfoAccount/InfoAccount";
 import template from "./RightSidebar.tmpl";
 import { FormChangeAvatar } from "../../pages/FormChangeAvatar/FormChangeAvatar";
 import { FormAccountSettings } from "../../pages/FormAccountSettings/FormAccountSettings";
+import { FormPasswordChange } from "../../pages/FormPasswordChange/FormPasswordChange";
 
 export const RightSidebar = {
    name: "RightSidebar",
    template: template,
    components: [],
    props: {
-      page: "settings-edit",
+      page: "password-change",
    },
    listeners: ["click"],
    subscribers: {},
@@ -37,8 +38,11 @@ export const RightSidebar = {
             );
             break;
          case "password-change":
-            // this.components = [ChangePassword];
-            this.template = switchContentTag("ChangePassword", this.template);
+            this.components = [FormPasswordChange];
+            this.template = switchContentTag(
+               "FormPasswordChange",
+               this.template
+            );
             break;
          case "contact-info":
             // this.components = [InfoContact];
