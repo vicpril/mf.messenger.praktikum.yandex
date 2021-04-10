@@ -1,5 +1,5 @@
-import template from "./SignIn.tmpl";
-import "./SignIn.scss";
+import template from "./SignUp.tmpl";
+import "./SignUp.scss";
 import {
    InputGroup,
    TInputGroup,
@@ -7,29 +7,31 @@ import {
 import { getFormData, lodashToStr } from "../../../utils/pure-functions";
 import { $ } from "../../../utils/dom-abstraction";
 
-export const SignIn = {
-   name: "SignIn",
+export const SignUp = {
+   name: "SignUp",
    template: template,
    components: [InputGroup],
    props: {
-      fields: ["login", "password"],
+      fields: [
+         "login",
+         "email",
+         "first_name",
+         "last_name",
+         "password",
+         "phone",
+      ],
    },
-   listeners: ["click", "submit"],
+   listeners: ["submit"],
    subscribers: {},
    methods: {
       onSubmit(e: Event & { target: Element }): void {
-         if ($(e.target).hasClass("form__sign_in")) {
+         if ($(e.target).hasClass("form__sign_up")) {
             e.preventDefault();
             const form = e.target as HTMLFormElement;
             const formData = new FormData(form);
             const data = getFormData(formData);
 
-            console.log("Form SignIn:", data);
-         }
-      },
-      onClick(e: Event & { target: HTMLElement }) {
-         if (e.target.dataset.action === "signup") {
-            document.location.href = "/signup.html";
+            console.log("Form SignUp:", data);
          }
       },
    },
@@ -40,7 +42,12 @@ export const SignIn = {
                title: lodashToStr(key),
                id: key,
                name: key,
-               type: key === "password" ? "password" : "text",
+               type:
+                  key === "password"
+                     ? "password"
+                     : key === "email"
+                     ? "email"
+                     : "text",
             } as TInputGroup)
       );
    },

@@ -36,7 +36,8 @@
       "@typescript-eslint/no-use-before-define": "off",
       "no-plusplus": "off",
       "no-cond-assign": "off",
-      "no-continue": "off"
+      "no-continue": "off",
+      "no-nested-ternary": "off"
    },
    "globals": {
       "ChildNode": true
