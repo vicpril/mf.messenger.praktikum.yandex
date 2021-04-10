@@ -1,5 +1,5 @@
 export default /* html */ `
-<main class="main right_sidebar__close1">
+<main class="main right_sidebar__close">
 
    <v-if="is_selected">
 

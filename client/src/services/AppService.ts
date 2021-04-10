@@ -25,4 +25,17 @@ export class AppService {
       );
       return chat || null;
    }
+
+   static getChatInfo(): TChat | null {
+      const userlogin = getUrlParameter("info");
+      if (!userlogin) {
+         return null;
+      }
+      const chat: TChat = first(
+         AppService.getChats().filter(
+            (chat: TChat) => chat.user.login === userlogin
+         )
+      );
+      return chat || null;
+   }
 }
