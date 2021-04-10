@@ -37,7 +37,8 @@
       "no-plusplus": "off",
       "no-cond-assign": "off",
       "no-continue": "off",
-      "no-nested-ternary": "off"
+      "no-nested-ternary": "off",
+      "no-new": "off"
    },
    "globals": {
       "ChildNode": true

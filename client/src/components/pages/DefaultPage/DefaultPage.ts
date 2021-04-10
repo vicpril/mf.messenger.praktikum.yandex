@@ -1,7 +1,5 @@
 import template from "./DefaultPage.tmpl";
 import "./DefaultPage.scss";
-import { ErrorPage404 } from "../ErrorPage/404";
-import { first } from "../../../utils/pure-functions";
 
 export const DefaultPage = {
    name: "DefaultPage",
@@ -18,27 +16,6 @@ export const DefaultPage = {
    beforeCreate() {
       this.template = switchContentTag(this.components[0].name, this.template);
    },
-   // beforePrepare() {
-   //    switch (this.props.page) {
-   //       case "404":
-   //          this.components = [ErrorPage404];
-   //          this.template = switchContentTag("ErrorPage404", this.template);
-   //          break;
-   //       case "500":
-   //          // this.components = [ErrorPage500];
-   //          this.template = switchContentTag("ErrorPage500", this.template);
-   //          break;
-   //       case "signup":
-   //          // this.components = [SignUpPage];
-   //          this.template = switchContentTag("SignUpPage", this.template);
-   //          break;
-   //       default:
-   //       case "signin":
-   //          // this.components = [SignInPage];
-   //          this.template = switchContentTag("SignInPage", this.template);
-   //          break;
-   //    }
-   // },
 };
 
 function switchContentTag(newTagName: string, template: string): string {
