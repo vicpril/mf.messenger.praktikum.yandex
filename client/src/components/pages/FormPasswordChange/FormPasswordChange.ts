@@ -31,7 +31,7 @@ export const FormPasswordChange = {
       },
       onClick(e: Event & { target: HTMLElement }) {
          if (e.target.dataset.action === "cancel") {
-            document.location.href = "/account-info.html";
+            document.location.href = "/account.html";
          }
       },
    },

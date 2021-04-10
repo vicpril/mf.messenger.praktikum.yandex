@@ -30,6 +30,7 @@ export class Component extends ComponentDOMListenrt {
    props: any;
    id: string = uuidv4();
    methods: IMethods = {};
+   page?: string;
 
    constructor(
       private $targetEl: TDomAbstraction,
@@ -46,6 +47,7 @@ export class Component extends ComponentDOMListenrt {
       }
 
       Object.assign(options, ...args);
+      Object.assign(this, ...args);
 
       this.name = options.name ?? (Component.name as string);
       this.components = options.components ?? [];
@@ -54,7 +56,6 @@ export class Component extends ComponentDOMListenrt {
       this.subscribers = options.subscribers ?? {};
 
       this.initMethods(options);
-      console.log(args, options);
 
       this.prepare();
    }

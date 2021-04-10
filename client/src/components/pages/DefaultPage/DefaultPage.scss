@@ -1,6 +1,10 @@
 @import "../../structural/App/App.scss";
 @import "../../structural/RightSidebar/RightSidebar.scss";
 
+.fluid-container {
+   height: 100%;
+}
+
 .main__default {
    display: flex;
    flex-flow: row nowrap;

@@ -20,7 +20,7 @@ export default /* html */ `
    </v-if>
 
    <!-- Right-sidebar -->
-   <RightSidebar></RightSidebar>
+   <RightSidebar bind:page="page"></RightSidebar>
    <!-- end Right-sidebar -->
 </main>
 `;

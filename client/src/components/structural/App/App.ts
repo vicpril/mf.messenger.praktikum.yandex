@@ -13,8 +13,9 @@ export const App = {
       account: AppService.getAccount(),
       chats: AppService.getChats(),
    },
-   // listeners: [],
-   // subscribers: {},
-   // methods: {},
-   // afterInit() {},
+   afterInit() {
+      if (this.page) {
+         this.$emit("pageChange", this.page);
+      }
+   },
 };

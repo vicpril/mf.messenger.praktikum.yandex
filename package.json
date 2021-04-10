@@ -3,9 +3,9 @@
    "version": "1.0.0",
    "description": "",
    "scripts": {
-      "start": "(npm run clear && parcel build client/src/*.html --out-dir build && npm run copy) && npm run server",
-      "dev": "parcel ./client/src/pages/signup.html --out-dir ./build/",
-      "build": "parcel build client/src/*.html --out-dir build",
+      "start": "(npm run clear && parcel build client/src/pages/*.html --out-dir build && npm run copy) && npm run server",
+      "dev": "parcel ./client/src/index.html --out-dir ./build/",
+      "build": "parcel build client/src/pages*.html --out-dir build",
       "clear": "rm -f ./static/* ./build/*",
       "copy": "mkdir -p ./static/ && cp ./build/* ./static/",
       "server": "node ./server/index.js",
