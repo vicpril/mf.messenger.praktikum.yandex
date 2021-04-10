@@ -1,3 +1,3 @@
-export default /*html*/ `
+export default /* html */ `
 
 `;

@@ -4,7 +4,6 @@ import { AppService } from "../../services/AppService";
 import { Messager } from "../Messager/Messager";
 import { MessagerMenu } from "../MessagerMenu/MessagerMenu";
 import { RightSidebar } from "../RightSidebar/RightSidebar";
-import { TDomAbstraction } from "../../utils/dom-abstraction";
 import { isEmpty } from "../../utils/isEmpty";
 import template from "./MainWindow.tmpl";
 

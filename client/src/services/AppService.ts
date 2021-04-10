@@ -1,8 +1,8 @@
-import account = require("../models/modelAccount.json");
-import chats = require("../models/modelChats.json");
-
 import { TChat, TUser } from "../models/types";
 import { first, getUrlParameter } from "../utils/pure-functions";
+
+import account = require("../models/modelAccount.json");
+import chats = require("../models/modelChats.json");
 
 export class AppService {
    static getChats(): TChat[] {
@@ -13,7 +13,7 @@ export class AppService {
       return account;
    }
 
-   static getSelectedChat(): TChat {
+   static getSelectedChat(): TChat | null {
       const userlogin = getUrlParameter("user");
       if (!userlogin) {
          return null;

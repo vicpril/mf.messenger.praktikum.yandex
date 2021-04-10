@@ -1,4 +1,4 @@
-export default /*html*/ `
+export default /* html */ `
     <div class="account__wrapper">
       <div class="user__wrapper account__user">
          <Avatar bind:user="account"></Avatar>

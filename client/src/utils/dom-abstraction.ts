@@ -2,13 +2,10 @@ export type TDomAbstraction = InstanceType<typeof DomAbstraction>;
 
 class DomAbstraction {
    $el: HTMLElement;
-   constructor(
-      selector: HTMLElement | Element | string,
-      $root: HTMLElement | Document = document
-   ) {
+   constructor(selector: HTMLElement | Element | string) {
       this.$el =
          typeof selector === "string"
-            ? document.querySelector(selector)
+            ? (document.querySelector(selector) as HTMLElement)
             : (selector as HTMLElement);
    }
 
@@ -17,8 +14,8 @@ class DomAbstraction {
    }
 
    html(): string;
-   html(html): DomAbstraction;
-   html(html?): string | DomAbstraction {
+   html(html: string): DomAbstraction;
+   html(html?: string): string | DomAbstraction {
       if (typeof html === "string") {
          this.$el.innerHTML = html.trim();
          return this;
@@ -40,11 +37,11 @@ class DomAbstraction {
       return this;
    }
 
-   on(eventType: string, callback) {
+   on(eventType: string, callback: () => {}) {
       this.$el.addEventListener(eventType, callback);
    }
 
-   off(eventType: string, callback) {
+   off(eventType: string, callback: () => {}) {
       this.$el.removeEventListener(eventType, callback);
    }
 
@@ -57,9 +54,9 @@ class DomAbstraction {
       return Array.from(this.$el.querySelectorAll(selector));
    }
 
-   css(styles = {}): TDomAbstraction {
+   css(styles: { [name: string]: any }): TDomAbstraction {
       Object.keys(styles).forEach((key) => {
-         this.$el.style[key] = styles[key];
+         this.$el.style[<any>key] = styles[key];
       });
       return this;
    }
@@ -105,7 +102,7 @@ class DomAbstraction {
          node = node.$el;
       }
 
-      if (Element.prototype.append) {
+      if (typeof Element.prototype.append !== "undefined") {
          this.$el.append(node);
       } else {
          this.$el.appendChild(node);
@@ -123,10 +120,7 @@ class DomAbstraction {
    }
 }
 
-export function $(
-   selector: HTMLElement | Element | string,
-   $root: HTMLElement | Document = document
-): DomAbstraction {
+export function $(selector: HTMLElement | Element | string): DomAbstraction {
    return new DomAbstraction(selector);
 }
 

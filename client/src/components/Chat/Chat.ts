@@ -23,12 +23,12 @@ export const Chat = {
       onClick(e: Event & { target: Element }): void {
          // Click on active Avatar
          if ($(e.target).hasClass("pulse")) {
-            const login = this.props.chat.user.login;
+            const { login } = this.props.chat.user;
             document.location.href = `/contact-info.html?info=${login}`;
          }
          // Click on wrapper
          else if (checkSwitchUserPossible(e.target)) {
-            const login = this.props.chat.user.login;
+            const { login } = this.props.chat.user;
             document.location.href = `/?user=${login}`;
          }
       },

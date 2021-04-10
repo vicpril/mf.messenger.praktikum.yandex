@@ -1,4 +1,4 @@
-export default /*html*/ `
+export default /* html */ `
 <div class="messager__menu">
    <form class="form messager__form" 
    <v-if="action">    

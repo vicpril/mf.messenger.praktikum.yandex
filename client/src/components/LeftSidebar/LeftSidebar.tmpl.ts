@@ -1,4 +1,4 @@
-export default /*html*/ `
+export default /* html */ `
 <div class="left_sidebar">
 
     <ChatAccount bind:account="account"></ChatAccount>

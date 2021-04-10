@@ -1,11 +1,14 @@
-import { TemplatorIf } from "./templator-if";
 import { TemplatorFor } from "./templator-for";
+import { TemplatorIf } from "./templator-if";
 import { TemplatorVariables } from "./templator-variables";
 
+export interface IContext {
+   [key: string]: any;
+}
 export class Templator {
    constructor(private template: string) {}
 
-   compile(context: Object) {
+   compile(context: IContext) {
       const templatorFor = new TemplatorFor(this.template);
       this.template = templatorFor.compile(context);
       const templatorIf = new TemplatorIf(this.template);

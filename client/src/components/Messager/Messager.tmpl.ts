@@ -1,4 +1,4 @@
-export default /*html*/ `
+export default /* html */ `
 <div class="messager">
    <!-- messager__wrapper -->
    <div class="messager__wrapper messager_scrollable scroll_style">

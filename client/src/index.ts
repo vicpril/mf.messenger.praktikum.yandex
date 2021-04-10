@@ -5,4 +5,4 @@ import { App } from "./components/App/App";
 import { Component } from "./core/Component";
 
 const $app = $("#app");
-const app = new Component($app, App);
+new Component($app, App);

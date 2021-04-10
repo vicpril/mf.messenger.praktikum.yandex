@@ -1,3 +1,5 @@
+import { DateCustom } from "../utils/date";
+
 export type TUser = {
    login: string;
    email: string;
@@ -9,7 +11,7 @@ export type TUser = {
 };
 
 export type TMessage = {
-   time: string;
+   time: string | DateCustom;
    user: string;
    type: "text" | "attachment";
    unread: boolean;

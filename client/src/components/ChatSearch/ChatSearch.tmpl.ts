@@ -1,4 +1,4 @@
-export default /*html*/ `
+export default /* html */ `
 <div class="chats__search">
    <form class="form search__wrapper" 
    <v-if="action">    

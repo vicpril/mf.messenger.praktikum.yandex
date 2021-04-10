@@ -5,11 +5,7 @@ export class TagsMapBuilder {
    OPEN_REGEXP: RegExp;
    CLOSE_REGEXP: RegExp;
    result: TMap = new Map();
-   constructor(
-      private highstack: string,
-      private open: string,
-      private close: string
-   ) {
+   constructor(private highstack: string, open: string, private close: string) {
       this.OPEN_REGEXP = new RegExp(open, "g");
       this.CLOSE_REGEXP = new RegExp(close, "g");
    }

@@ -8,6 +8,7 @@
  *  <v-for-end>
  */
 
+import { IContext } from "./templator";
 import { TemplatorVariables } from "./templator-variables";
 import { get } from "../../utils/pure-functions";
 
@@ -16,13 +17,13 @@ export class TemplatorFor {
 
    constructor(private template: string) {}
 
-   compile(context: Object) {
+   compile(context: IContext) {
       return this._compileTemplate(context);
    }
 
-   _compileTemplate(context) {
+   _compileTemplate(context: IContext) {
       const regExp = this.TEMPLATE_REGEXP; // avoid from infinity loop
-      let template = this.template;
+      let { template } = this;
       let result = "";
       let key = null;
 
@@ -34,25 +35,25 @@ export class TemplatorFor {
          const templatorVariables = new TemplatorVariables(content);
 
          if (Array.isArray(target)) {
-            target.forEach((value, index) => {
-               let context = this.createContext(
+            target.forEach((value: string, index) => {
+               const context = this.createContext(
                   indexKey,
                   index,
                   valueKey,
                   value
                );
-               let contextTemplate = templatorVariables.compile(context);
+               const contextTemplate = templatorVariables.compile(context);
                result += contextTemplate;
             });
          } else if (typeof target === "object") {
             Object.getOwnPropertyNames(target).forEach((key) => {
-               let context = this.createContext(
+               const context = this.createContext(
                   indexKey,
                   key,
                   valueKey,
                   target[key]
                );
-               let contextTemplate = templatorVariables.compile(context);
+               const contextTemplate = templatorVariables.compile(context);
                result += contextTemplate;
             });
          }
@@ -66,8 +67,13 @@ export class TemplatorFor {
       return template;
    }
 
-   private createContext(indexKey, index, valueKey, value): Object {
-      const obj = {};
+   private createContext(
+      indexKey: string,
+      index: string | number,
+      valueKey: string,
+      value: string
+   ): Object {
+      const obj: { [key: string]: string | number } = {};
       obj[indexKey] = index;
       obj[valueKey] = value;
       return obj;

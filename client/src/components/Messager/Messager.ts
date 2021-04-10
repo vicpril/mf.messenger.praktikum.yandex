@@ -3,7 +3,6 @@ import "./Messager.scss";
 import { Block, TBlock, TBlockDate, TBlockMessage } from "../Block/Block";
 import { TChat, TMessage, TUser } from "../../models/types";
 
-import { $ } from "../../utils/dom-abstraction";
 import { AppService } from "../../services/AppService";
 import { isUndefined } from "../../utils/pure-functions";
 import { sortByTime } from "../../utils/sortMessages";
@@ -38,10 +37,10 @@ export const Messager = {
 function* buildBlocksHistory(chat: TChat, account: TUser): Iterable<TBlock> {
    const messages = sortByTime(chat.data.messages, "asc");
    let i: number = 0;
-   let block: TBlock = null;
+   let block: Partial<TBlock> = {};
 
    while (i < messages.length) {
-      let message: TMessage = messages[i];
+      const message: TMessage = messages[i];
 
       // check date - may be create BlockDate
       if (
@@ -49,7 +48,7 @@ function* buildBlocksHistory(chat: TChat, account: TUser): Iterable<TBlock> {
          new Date(+message.time).toLocaleDateString() !==
             new Date(+messages[i - 1].time).toLocaleDateString()
       ) {
-         let dateTime = new Date(+message.time);
+         const dateTime = new Date(+message.time);
          block = {
             type: "date",
             content: dateTime.toLocaleDateString(),
@@ -67,7 +66,7 @@ function* buildBlocksHistory(chat: TChat, account: TUser): Iterable<TBlock> {
          // add message to list
          block.content.messages.push(message);
       } else {
-         //return block & create new
+         // return block & create new
          yield block as TBlockMessage;
          block = createBlockUserMessages(message.user, chat.user, account);
          block.content.messages.push(message);

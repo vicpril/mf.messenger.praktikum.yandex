@@ -24,19 +24,19 @@ export const Block = {
    },
 };
 
-export type TBlock = {
+export interface TBlock {
    type: "date" | "message";
    content: any;
-};
-export type TBlockDate = TBlock & {
+}
+export interface TBlockDate extends TBlock {
    type: "date";
    content: string;
-};
-export type TBlockMessage = TBlock & {
+}
+export interface TBlockMessage extends TBlock {
    type: "message";
    content: {
       user: TUser;
       isforeign: boolean;
       messages: TMessage[];
    };
-};
+}

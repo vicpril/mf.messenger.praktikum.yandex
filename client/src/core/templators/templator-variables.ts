@@ -1,22 +1,28 @@
+import { IContext } from "./templator";
 import { get } from "../../utils/pure-functions";
 import { v4 as uuidv4 } from "uuid";
 
+declare global {
+   interface Window {
+      [key: string]: any;
+   }
+}
 export class TemplatorVariables {
    TEMPLATE_REGEXP = /\{\{(.*?)\}\}/i;
 
    constructor(private template: string) {}
 
-   compile(context: Object) {
+   compile(context: IContext) {
       return this._compileTemplate(context);
    }
 
-   _compileTemplate(context) {
-      let template = this.template;
+   _compileTemplate(context: IContext) {
+      let { template } = this;
       const regExp = this.TEMPLATE_REGEXP; // avoid from infinity loop
       let key = null;
       while ((key = regExp.exec(template))) {
          if (key[1]) {
-            const templValue: string = key[1].trim();
+            const templValue: string = key[1].trim() as string;
             const value: any = get(context, templValue);
 
             // check if value defined
@@ -27,8 +33,8 @@ export class TemplatorVariables {
 
             // handle function
             if (typeof value === "function") {
-               const salt = "_" + uuidv4();
-               window[templValue + salt] = value;
+               const salt: string = `_${uuidv4()}`;
+               window[templValue + salt] = "value";
                template = template.replace(
                   new RegExp(key[0], "gi"),
                   `window.${key[1].trim()}${salt}()`

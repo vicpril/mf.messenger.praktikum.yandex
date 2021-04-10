@@ -12,6 +12,7 @@
 
 import { get, isUndefined, trimQuotes } from "../../utils/pure-functions";
 
+import { IContext } from "./templator";
 import { MapCompiler } from "./map-compiler";
 import { TagsMapBuilder } from "./tags-map-builder";
 import { compare } from "../../utils/compare";
@@ -22,7 +23,7 @@ export class TemplatorIf {
 
    constructor(private template: string) {}
 
-   compile(context: Object) {
+   compile(context: IContext) {
       /**
        * We need to compile recursive this templator
        * So I use TagsMapBuilder and MapCompiler to build intervals^
@@ -32,20 +33,18 @@ export class TemplatorIf {
        * Next I define and compile local templates
        *       and replece them in the global template.
        */
-      const template = this.template;
       const mapBuilder = new TagsMapBuilder(
          this.template,
          `<v-if(="(.*?)")>`,
          `</v-if>`
       );
-      let tagMap = mapBuilder.build();
+      const tagMap = mapBuilder.build();
 
-      const combiner = new MapCompiler(this.template, tagMap);
+      const combiner = new MapCompiler(tagMap);
       const intervals = combiner.combineMap();
 
-      const toLocalTemplates = (int: [number, number]) => {
-         return this.template.slice(int[0], int[1]);
-      };
+      const toLocalTemplates = (int: [number, number]) =>
+         this.template.slice(int[0], int[1]);
       const toLocalTemplatesCompiled = (template: string) => {
          const templator = new TemplatorIf(template);
          return templator._compileAtoms(context);
@@ -59,16 +58,12 @@ export class TemplatorIf {
          );
       });
 
-      intervals.forEach((int) => {
-         const locaTemplate = template.slice(int[0], int[1]);
-      });
-
       return this._compileAtoms(context);
    }
 
-   private _compileAtoms(context, newTemplate: string = null) {
+   private _compileAtoms(context: IContext, newTemplate: string | null = null) {
       const regExp = this.TEMPLATE_REGEXP; // avoid from infinity loop
-      let template = newTemplate ?? this.template;
+      const template = newTemplate ?? this.template;
       let result = template;
       let key = null;
 
@@ -77,7 +72,7 @@ export class TemplatorIf {
          const partIf = key[3].trim();
          const partElse = isUndefined(key[5]) ? "" : key[5].trim();
 
-         let [postString, operator, valueString] = this._parseCondition(
+         const [postString, operator, valueString] = this._parseCondition(
             condition
          );
 
@@ -129,15 +124,14 @@ export class TemplatorIf {
    _parseCondition(string: string) {
       const regExp = this.COMPARE_REGEXP;
       const keys = regExp.exec(string);
-      if (!isUndefined(keys[3])) {
+      if (keys && !isUndefined(keys[3])) {
          const post = trimQuotes(keys[1]);
          const value = trimQuotes(keys[4]);
          const operator = keys[3].trim();
          return [post, operator, value];
-      } else {
-         const post = trimQuotes(string);
-         return [post]; // set a variable only
       }
+      const post = trimQuotes(string);
+      return [post]; // set a variable only
    }
 
    private escapeRegExp(str: string): string {

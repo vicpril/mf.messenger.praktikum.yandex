@@ -1,4 +1,4 @@
-export default /*html*/ `
+export default /* html */ `
 <section class="info__section">
    <div class="info__content">
    <h3>Account Info</h3>

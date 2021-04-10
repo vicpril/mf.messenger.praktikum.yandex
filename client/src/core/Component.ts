@@ -1,3 +1,4 @@
+import { v4 as uuidv4 } from "uuid";
 import { $, TDomAbstraction } from "../utils/dom-abstraction";
 import {
    IComponentLifeCycleNames,
@@ -16,7 +17,6 @@ import { Templator } from "./templators/templator";
 import { TemplatorProps } from "./templators/templator-props";
 import { get } from "../utils/pure-functions";
 import { isEmpty } from "../utils/isEmpty";
-import { v4 as uuidv4 } from "uuid";
 
 export class Component extends ComponentDOMListenrt {
    EVENTS: IComponentLifeCycleNames;

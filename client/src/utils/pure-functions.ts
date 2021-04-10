@@ -30,14 +30,14 @@ function firstToUpper(string: string): string {
  * @param  {String} str
  * @param  {any} defaultValue
  */
-export function get(obj, str: string, defaultValue?: any): any {
+export function get(obj: any, str: string, defaultValue?: any): any {
    if (!str || isEmpty(obj)) {
       return defaultValue;
    }
    const keys = str.split(".");
    let result = obj;
 
-   for (let key of keys) {
+   for (const key of keys) {
       let value;
       // check on array with index
       // like chats[2]
@@ -80,24 +80,24 @@ export function strToColor(str: string): TColor {
 function hashCode(str: string): number {
    if (!str) return 0;
    // java String#hashCode
-   var hash = 0;
-   for (var i = 0; i < str.length; i++) {
+   let hash = 0;
+   for (let i = 0; i < str.length; i++) {
       hash = str.charCodeAt(i) + ((hash << 5) - hash);
    }
    return hash;
 }
 
 function intToRGB(i: number): TColor {
-   var c = (i & 0x00ffffff).toString(16).toUpperCase();
-   return "#" + ("00000".substring(0, 6 - c.length) + c);
+   const c = (i & 0x00ffffff).toString(16).toUpperCase();
+   return `#${"00000".substring(0, 6 - c.length) + c}`;
 }
 
 export function first<T>(list: T[]): T {
-   if (!Array.isArray(list) || list.length === 0) return undefined;
+   if (!Array.isArray(list) || list.length === 0) return {} as T;
    return list[0];
 }
 
-export function getUrlParameter(key: string): string {
+export function getUrlParameter(key: string): string | null {
    const url = new URL(location.href);
    return url.searchParams.get(key);
 }

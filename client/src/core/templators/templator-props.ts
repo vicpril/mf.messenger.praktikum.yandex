@@ -6,6 +6,7 @@
  * Group 2  parentProp
  */
 
+import { IContext } from "./templator";
 import { get } from "../../utils/pure-functions";
 
 export class TemplatorProps {
@@ -19,9 +20,9 @@ export class TemplatorProps {
 
    private _compileTemplate(context: Object) {
       const regExp = this.TEMPLATE_REGEXP; // avoid from infinity loop
-      let template = this.template;
+      const { template } = this;
       let key = null;
-      const result = {};
+      const result: IContext = {};
 
       while ((key = regExp.exec(template))) {
          const value = get(context, key[2], key[2]);

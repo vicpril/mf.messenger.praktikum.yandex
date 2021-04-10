@@ -4,7 +4,7 @@ interface IBase {
    [key: string]: any;
 }
 
-export type TMethod = () => void;
+export type TMethod = (e?: Event) => void;
 
 export interface IMethods {
    [key: string]: TMethod;

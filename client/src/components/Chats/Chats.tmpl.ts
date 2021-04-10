@@ -1,4 +1,4 @@
-export default /*html*/ `
+export default /* html */ `
 <div class="chats ">
    <v-for :chat :index in chatsFiltered>
    <!-- User -->

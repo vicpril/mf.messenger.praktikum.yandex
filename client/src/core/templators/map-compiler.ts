@@ -1,10 +1,7 @@
-import { TMap, TTag } from "./tags-map-builder";
-
-type start = string;
-type end = string;
+import { TMap } from "./tags-map-builder";
 
 export class MapCompiler {
-   constructor(private templte: string, private map: TMap) {}
+   constructor(private map: TMap) {}
 
    combineMap(): [number, number][] {
       const result = [];
@@ -24,6 +21,6 @@ export class MapCompiler {
          }
       }
 
-      return result;
+      return result as [number, number][];
    }
 }

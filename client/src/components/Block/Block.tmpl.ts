@@ -1,4 +1,4 @@
-export default /*html*/ `
+export default /* html */ `
 <v-if="block.type === 'date'">
    <section class="block block__date">
       <span class="date__title">{{block.content}}</span>

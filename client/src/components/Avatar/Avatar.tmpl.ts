@@ -1,4 +1,4 @@
-export default /*html*/ `
+export default /* html */ `
    <img 
       src="{{user.avatar}}"
       class="user__avatar <v-if="css">{{css}}</v-if> "

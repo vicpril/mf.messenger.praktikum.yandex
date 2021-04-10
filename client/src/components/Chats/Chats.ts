@@ -14,9 +14,9 @@ export const Chats = {
    methods: {},
    subscribers: {
       "ChatSearch:input": function (s: string) {
-         this.props.chatsFiltered = this.props.chats.filter((chat: TChat) => {
-            return strContains(s, chat.user.display_name, false);
-         });
+         this.props.chatsFiltered = this.props.chats.filter((chat: TChat) =>
+            strContains(s, chat.user.display_name, false)
+         );
          this.$emit(this.EVENTS.UPDATE);
       },
    },

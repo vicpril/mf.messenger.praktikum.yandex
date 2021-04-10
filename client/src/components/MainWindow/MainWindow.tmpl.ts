@@ -1,4 +1,4 @@
-export default /*html*/ `
+export default /* html */ `
 <main class="main right_sidebar__close1">
 
    <v-if="is_selected">

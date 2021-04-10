@@ -2,7 +2,6 @@ import "./Avatar.scss";
 
 import { strToColor } from "../../utils/pure-functions";
 import template from "./Avatar.tmpl";
-import { v4 as uuidv4 } from "uuid";
 
 export const Avatar = {
    name: "Avatar",

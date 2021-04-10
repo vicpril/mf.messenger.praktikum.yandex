@@ -1,4 +1,4 @@
-export default /*html*/ `
+export default /* html */ `
 <div class="chats__user">
    <div class="user__wrapper {{css}} 
    <v-if="is_selected">
