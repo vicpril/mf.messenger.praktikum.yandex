@@ -22,7 +22,7 @@ export interface IBaseMethods extends IBase {
 export interface IIngredients extends IBaseMethods {
    name: string;
    template?: string;
-   components: IIngredients[];
+   components?: IIngredients[];
    listeners?: string[];
    subscribers?: ISubscriberMethods;
    props?: {};

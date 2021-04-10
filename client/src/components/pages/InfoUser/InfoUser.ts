@@ -29,6 +29,7 @@ export const InfoUser = {
       },
    },
    beforePrepare() {
-      this.props.user = AppService.getChatInfo()?.user;
+      this.props.user =
+         AppService.getChatInfo()?.user ?? AppService.getAccount();
    },
 };

@@ -34,7 +34,8 @@ export class Component extends ComponentDOMListenrt {
    constructor(
       private $targetEl: TDomAbstraction,
       options: IIngredients,
-      public parentComponent: Component | null = null
+      public parentComponent: Component | null = null,
+      ...args: object[]
    ) {
       super(options.listeners);
       if (isEmpty(options)) {
@@ -43,6 +44,9 @@ export class Component extends ComponentDOMListenrt {
       if (!options.name) {
          throw new Error(`No name defined in Component`);
       }
+
+      Object.assign(options, ...args);
+
       this.name = options.name ?? (Component.name as string);
       this.components = options.components ?? [];
       this.template = options.template ?? "";
@@ -50,6 +54,7 @@ export class Component extends ComponentDOMListenrt {
       this.subscribers = options.subscribers ?? {};
 
       this.initMethods(options);
+      console.log(args, options);
 
       this.prepare();
    }
