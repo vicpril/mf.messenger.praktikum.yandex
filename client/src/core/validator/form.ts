@@ -21,7 +21,6 @@ export const verify = function (componentForm: Component) {
    return (target?: HTMLElement) => {
       const verifyField = (target: HTMLElement) => {
          const form = useForm(componentForm.props.form);
-         console.log("~ form", form);
          const name = target.id;
          form[name].touched = true;
 
