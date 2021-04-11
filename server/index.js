@@ -8,5 +8,4 @@ app.use(express.static(distFolder));
 
 app.listen(PORT, () => {
    console.log(`Server running at http://localhost:${PORT} !`);
-   console.log(`Example app listening on port ${PORT}!`);
 });
