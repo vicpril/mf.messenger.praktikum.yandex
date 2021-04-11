@@ -1,6 +1,7 @@
+import { TInputGroup } from "../../components/structural/InputGroup/InputGroup";
 import { $ } from "../../utils/dom-abstraction";
 import { isEmpty } from "../../utils/isEmpty";
-import { first } from "../../utils/pure-functions";
+import { first, lodashToStr } from "../../utils/pure-functions";
 import { Component } from "../Component";
 import { useControl } from "./control";
 import { IFormControls, IFormField } from "./validator-interfaces";
@@ -40,7 +41,6 @@ export const verify = function (componentForm: Component) {
          Object.getOwnPropertyNames(componentForm.props.form).forEach(
             (id: string) => {
                const target = componentForm.$root.find(`#${id}`).$el;
-               console.log("~ target", target);
                verifyField(target);
             }
          );
@@ -57,4 +57,16 @@ export function checkInputForm(target: HTMLElement, form: {}): boolean {
       }
    });
    return hasId;
+}
+
+export function prepareFormFields(form: IFormField) {
+   return Object.getOwnPropertyNames(form).map(
+      (key: string) =>
+         ({
+            title: lodashToStr(key),
+            id: key,
+            name: key,
+            type: key === "password" ? "password" : "text",
+         } as TInputGroup)
+   );
 }

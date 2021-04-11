@@ -1,11 +1,15 @@
 import template from "./SignUp.tmpl";
 import "./SignUp.scss";
-import {
-   InputGroup,
-   TInputGroup,
-} from "../../structural/InputGroup/InputGroup";
-import { getFormData, lodashToStr } from "../../../utils/pure-functions";
+import { InputGroup } from "../../structural/InputGroup/InputGroup";
 import { $ } from "../../../utils/dom-abstraction";
+import { Validators } from "../../../core/validator/validators";
+import {
+   checkInputForm,
+   prepareFormFields,
+   verify,
+} from "../../../core/validator/form";
+
+const { required, minLength, email } = Validators;
 
 export const SignUp = {
    name: "SignUp",
@@ -20,35 +24,52 @@ export const SignUp = {
          "password",
          "phone",
       ],
+      form: {
+         login: {
+            value: "",
+            validators: { required },
+         },
+         email: {
+            value: "",
+            validators: { required, email },
+         },
+         first_name: {
+            value: "",
+            validators: { required },
+         },
+         last_name: {
+            value: "",
+            validators: { required },
+         },
+         password: {
+            value: "",
+            validators: { required, minLength: minLength(5) },
+         },
+         phone: {
+            value: "",
+            validators: { required },
+         },
+      },
+      form_control: {},
    },
-   listeners: ["submit"],
+   listeners: ["submit", "blur"],
    subscribers: {},
    methods: {
+      onBlur(e: Event & { target: HTMLElement }) {
+         if (checkInputForm(e.target, this.props.form)) {
+            verify(this)(e.target);
+         }
+      },
+
       onSubmit(e: Event & { target: Element }): void {
          if ($(e.target).hasClass("form__sign_up")) {
             e.preventDefault();
-            const form = e.target as HTMLFormElement;
-            const formData = new FormData(form);
-            const data = getFormData(formData);
-
-            console.log("Form SignUp:", data);
+            verify(this)();
+            console.log("Form SignUp:", this.props.form);
          }
       },
    },
    beforeCreate() {
-      this.props.fields = this.props.fields.map(
-         (key: string) =>
-            ({
-               title: lodashToStr(key),
-               id: key,
-               name: key,
-               type:
-                  key === "password"
-                     ? "password"
-                     : key === "email"
-                     ? "email"
-                     : "text",
-            } as TInputGroup)
-      );
+      this.props.fields = prepareFormFields(this.props.form);
    },
 };

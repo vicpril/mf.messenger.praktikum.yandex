@@ -1,12 +1,12 @@
 import template from "./SignIn.tmpl";
 import "./SignIn.scss";
-import {
-   InputGroup,
-   TInputGroup,
-} from "../../structural/InputGroup/InputGroup";
-import { lodashToStr } from "../../../utils/pure-functions";
+import { InputGroup } from "../../structural/InputGroup/InputGroup";
 import { $ } from "../../../utils/dom-abstraction";
-import { checkInputForm, verify } from "../../../core/validator/form";
+import {
+   checkInputForm,
+   prepareFormFields,
+   verify,
+} from "../../../core/validator/form";
 import { Validators } from "../../../core/validator/validators";
 
 const { required, minLength } = Validators;
@@ -23,7 +23,7 @@ export const SignIn = {
          },
          password: {
             value: "",
-            validators: { required, minLength: minLength(3) },
+            validators: { required, minLength: minLength(5) },
          },
       },
       form_control: {},
@@ -51,14 +51,6 @@ export const SignIn = {
       },
    },
    beforePrepare() {
-      this.props.fields = Object.getOwnPropertyNames(this.props.form).map(
-         (key: string) =>
-            ({
-               title: lodashToStr(key),
-               id: key,
-               name: key,
-               type: key === "password" ? "password" : "text",
-            } as TInputGroup)
-      );
+      this.props.fields = prepareFormFields(this.props.form);
    },
 };

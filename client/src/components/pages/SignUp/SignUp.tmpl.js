@@ -8,8 +8,10 @@ export default /* html */ `
 </v-if>
 >
     <div class="info__content" >
-      <h3>Sign In</h3>
-        <v-for :field :index in fields><InputGroup bind:obj="fields[{{index}}]"></InputGroup></v-for>
+      <h3>Sign Up</h3>
+        <v-for :field :index in fields>
+        <InputGroup bind:property="form.{{field.id}}" bind:control="form_control.{{field.id}}" bind:options="fields[{{index}}]"></InputGroup>
+        </v-for>
     </div>
     
     <div class="info__actions">
