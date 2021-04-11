@@ -16,14 +16,6 @@ export const SignUp = {
    template: template,
    components: [InputGroup],
    props: {
-      fields: [
-         "login",
-         "email",
-         "first_name",
-         "last_name",
-         "password",
-         "phone",
-      ],
       form: {
          login: {
             value: "",

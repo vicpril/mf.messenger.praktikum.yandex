@@ -133,6 +133,8 @@ export class Component extends ComponentDOMListenrt {
                },
             });
             proxies[key] = proxy;
+         } else {
+            proxies[key] = prop[key];
          }
       });
 

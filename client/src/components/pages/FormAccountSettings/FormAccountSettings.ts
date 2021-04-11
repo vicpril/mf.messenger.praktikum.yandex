@@ -1,12 +1,16 @@
 import template from "./FormAccountSettings.tmpl";
 import "./FormAccountSettings.scss";
 import { AppService } from "../../../services/AppService";
-import {
-   InputGroup,
-   TInputGroup,
-} from "../../structural/InputGroup/InputGroup";
-import { getFormData, lodashToStr } from "../../../utils/pure-functions";
+import { InputGroup } from "../../structural/InputGroup/InputGroup";
 import { $ } from "../../../utils/dom-abstraction";
+import {
+   checkInputForm,
+   prepareFormFields,
+   verify,
+} from "../../../core/validator/form";
+import { Validators } from "../../../core/validator/validators";
+
+const { required, email } = Validators;
 
 export const FormAccountSettings = {
    name: "FormAccountSettings",
@@ -14,19 +18,23 @@ export const FormAccountSettings = {
    components: [InputGroup],
    props: {
       account: AppService.getAccount(),
-      fields: ["login", "email", "first_name", "last_name", "display_name"],
+      form: {},
+      form_control: {},
    },
-   listeners: ["click", "submit"],
+   listeners: ["click", "submit", "blur"],
    subscribers: {},
    methods: {
+      onBlur(e: Event & { target: HTMLElement }) {
+         if (checkInputForm(e.target, this.props.form)) {
+            verify(this)(e.target);
+         }
+      },
+
       onSubmit(e: Event & { target: Element }): void {
          if ($(e.target).hasClass("form__account_settings")) {
             e.preventDefault();
-            const form = e.target as HTMLFormElement;
-            const formData = new FormData(form);
-            const data = getFormData(formData);
-
-            console.log("Form account settings data:", data);
+            verify(this)();
+            console.log("Form Account settings:", this.props.form);
          }
       },
       onClick(e: Event & { target: HTMLElement }) {
@@ -35,16 +43,31 @@ export const FormAccountSettings = {
          }
       },
    },
+   beforePrepare() {
+      this.props.form = {
+         login: {
+            value: this.props.account.login,
+            validators: { required },
+         },
+         email: {
+            value: this.props.account.email,
+            validators: { required, email },
+         },
+         first_name: {
+            value: this.props.account.first_name,
+            validators: { required },
+         },
+         last_name: {
+            value: this.props.account.last_name,
+            validators: { required },
+         },
+         display_name: {
+            value: this.props.account.display_name,
+            validators: { required },
+         },
+      };
+   },
    beforeCreate() {
-      this.props.fields = this.props.fields.map(
-         (key: string) =>
-            ({
-               title: lodashToStr(key),
-               id: key,
-               name: key,
-               type: key === "email" ? "email" : "text",
-               value: this.props.account[key],
-            } as TInputGroup)
-      );
+      this.props.fields = prepareFormFields(this.props.form);
    },
 };

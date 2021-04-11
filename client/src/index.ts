@@ -3,11 +3,11 @@ import "regenerator-runtime/runtime";
 
 import { $ } from "./utils/dom-abstraction";
 import { Component } from "./core/Component";
-import { DefaultPage } from "./components/pages/DefaultPage/DefaultPage";
 import { SignUp } from "./components/pages/SignUp/SignUp";
+import { App } from "./components/structural/App/App";
 
 const $app = $("#app");
-new Component($app, DefaultPage, null, { components: [SignUp] });
+new Component($app, App, null, { page: "settings-edit" });
 // const app = new Component($app, App);
 
 // console.log(app);
