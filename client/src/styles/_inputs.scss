@@ -7,3 +7,8 @@
    border-radius: 12px;
    outline: none;
 }
+
+.input.invalid {
+   background-color: lighten($danger, 50%);
+   border-color: $danger;
+}
