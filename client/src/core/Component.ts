@@ -17,6 +17,7 @@ import { Templator } from "./templators/templator";
 import { TemplatorProps } from "./templators/templator-props";
 import { get } from "../utils/pure-functions";
 import { isEmpty } from "../utils/isEmpty";
+import { IContext } from "./templators/templatorInterface";
 
 export class Component extends ComponentDOMListenrt {
    EVENTS: IComponentLifeCycleNames;
@@ -28,6 +29,7 @@ export class Component extends ComponentDOMListenrt {
    subscribers?: ISubscriberMethods = {};
    options?: IIngredients;
    props: any;
+   models: any;
    id: string = uuidv4();
    methods: IMethods = {};
    page?: string;
@@ -53,6 +55,7 @@ export class Component extends ComponentDOMListenrt {
       this.components = options.components ?? [];
       this.template = options.template ?? "";
       this.props = options.props ?? {};
+      this.models = options.models ?? [];
       this.subscribers = options.subscribers ?? {};
 
       this.initMethods(options);
@@ -105,17 +108,35 @@ export class Component extends ComponentDOMListenrt {
       this.$emit(this.EVENTS.BEFORE_CREATE);
    }
 
-   getPropsFromTemplate(): void {
+   private getPropsFromTemplate(): void {
       if (!this.parentComponent || isEmpty(this.parentComponent)) return;
       if (!get(this.parentComponent, "props", false)) {
          this.props = {};
          return;
       }
       const templator = new TemplatorProps(this.$targetEl.html());
-      this.props = {
-         ...this.props,
-         ...templator.compile(this.parentComponent.props),
-      };
+      const propsFromParent = templator.compile(this.parentComponent.props);
+      this.props = { ...this.props, ...this.makePropsProxy(propsFromParent) };
+   }
+
+   private makePropsProxy(prop: IContext): object {
+      const proxies: IContext = {};
+      Object.getOwnPropertyNames(prop).forEach((key: string) => {
+         if (this.parentComponent && typeof prop[key] === "object") {
+            const proxy = new Proxy(prop[key], {
+               get(target, prop) {
+                  return target[prop];
+               },
+               set(target, prop, value) {
+                  target[prop] = value;
+                  return true;
+               },
+            });
+            proxies[key] = proxy;
+         }
+      });
+
+      return proxies;
    }
 
    private initEventsNames(): void {
@@ -147,11 +168,44 @@ export class Component extends ComponentDOMListenrt {
       this.beforeCreate();
       // CREATE: create $root
       this.initRoot();
+      this.bindModels();
 
       // RENDER all children components
       this.initChildren();
 
       this.$emit(this.EVENTS.BEFORE_MOUNT);
+   }
+
+   private bindModels(): void {
+      if (this.models) {
+         this.models.forEach((modelName: string) => {
+            const elements = [...this.$root.findAll(`[model="${modelName}"]`)];
+
+            let value: string = "";
+
+            Object.defineProperty(this.props, modelName, {
+               configurable: true,
+               get() {
+                  return value;
+               },
+               set(newValue: string) {
+                  value = newValue;
+                  elements.forEach((el) => {
+                     if (el.tagName === "INPUT") {
+                        (el as HTMLInputElement).value = newValue;
+                     } else {
+                        el.textContent = value;
+                     }
+                  });
+               },
+            });
+
+            this.$root.findAll(`input[model="${modelName}"]`);
+            this.addSingleListener("keyup", (e) => {
+               this.props[modelName] = (e.target as HTMLInputElement).value;
+            });
+         });
+      }
    }
 
    private initRoot(): void {

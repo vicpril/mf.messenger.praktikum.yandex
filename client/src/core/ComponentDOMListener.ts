@@ -9,6 +9,15 @@ export class ComponentDOMListenrt {
 
    constructor(private listeners: string[] = []) {}
 
+   addSingleListener(
+      listener: string,
+      callback: (e: Event & { target: HTMLElement }) => void
+   ) {
+      const uniqueName = `${listener}_${this.id}`;
+      this.methods[uniqueName] = callback.bind(this);
+      this.$root.on(listener, this.methods[uniqueName]);
+   }
+
    initDOMListeners(): void {
       this.checkRoot();
       this.listeners.forEach((listener) => {
@@ -21,7 +30,8 @@ export class ComponentDOMListenrt {
          const uniqueName = `${method}_${this.id}`;
          // to avoid unremoving callbacks, becouse `bind` creates new function
          this.methods[uniqueName] = this.methods[method].bind(this);
-         this.$root.on(listener, this.methods[uniqueName]);
+         const useCapture = ["focus", "blur"].includes(listener);
+         this.$root.on(listener, this.methods[uniqueName], useCapture);
       });
    }
 

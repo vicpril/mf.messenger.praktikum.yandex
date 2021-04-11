@@ -42,6 +42,15 @@ export class TemplatorVariables {
                continue;
             }
 
+            // handle object
+            if (typeof value === "object") {
+               template = template.replace(
+                  new RegExp(key[0], "gi"),
+                  JSON.stringify(value, null, 2)
+               );
+               continue;
+            }
+
             template = template.replace(new RegExp(key[0], "gi"), value);
          }
       }

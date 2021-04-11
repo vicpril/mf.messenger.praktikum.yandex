@@ -15,4 +15,19 @@
    input {
       flex-grow: 1;
    }
+
+   small {
+      visibility: hidden;
+   }
+}
+
+.input_group.invalid {
+   input {
+      background-color: lighten($danger, 50%);
+      border-color: $danger;
+   }
+   small {
+      color: $danger;
+      visibility: visible;
+   }
 }

@@ -4,27 +4,44 @@ import {
    InputGroup,
    TInputGroup,
 } from "../../structural/InputGroup/InputGroup";
-import { getFormData, lodashToStr } from "../../../utils/pure-functions";
+import { lodashToStr } from "../../../utils/pure-functions";
 import { $ } from "../../../utils/dom-abstraction";
+import { checkInputForm, verify } from "../../../core/validator/form";
+import { Validators } from "../../../core/validator/validators";
+
+const { required, minLength } = Validators;
 
 export const SignIn = {
    name: "SignIn",
    template: template,
    components: [InputGroup],
    props: {
-      fields: ["login", "password"],
+      form: {
+         login: {
+            value: "",
+            validators: { required },
+         },
+         password: {
+            value: "",
+            validators: { required, minLength: minLength(3) },
+         },
+      },
+      form_control: {},
    },
-   listeners: ["click", "submit"],
+   listeners: ["click", "submit", "blur"],
    subscribers: {},
    methods: {
+      onBlur(e: Event & { target: HTMLElement }) {
+         if (checkInputForm(e.target, this.props.form)) {
+            verify(this)(e.target);
+         }
+      },
+
       onSubmit(e: Event & { target: Element }): void {
          if ($(e.target).hasClass("form__sign_in")) {
             e.preventDefault();
-            const form = e.target as HTMLFormElement;
-            const formData = new FormData(form);
-            const data = getFormData(formData);
-
-            console.log("Form SignIn:", data);
+            verify(this)();
+            console.log("Form SignIn:", this.props.form);
          }
       },
       onClick(e: Event & { target: HTMLElement }) {
@@ -33,8 +50,8 @@ export const SignIn = {
          }
       },
    },
-   beforeCreate() {
-      this.props.fields = this.props.fields.map(
+   beforePrepare() {
+      this.props.fields = Object.getOwnPropertyNames(this.props.form).map(
          (key: string) =>
             ({
                title: lodashToStr(key),

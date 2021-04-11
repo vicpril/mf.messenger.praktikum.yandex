@@ -50,8 +50,8 @@ class DomAbstraction {
       return this;
    }
 
-   on(eventType: string, callback: () => {}) {
-      this.$el.addEventListener(eventType, callback);
+   on(eventType: string, callback: () => {}, useCapture: boolean = false) {
+      this.$el.addEventListener(eventType, callback, useCapture);
    }
 
    off(eventType: string, callback: () => {}) {
@@ -76,6 +76,10 @@ class DomAbstraction {
 
    hasClass(niddle: string): boolean {
       return this.$el.classList.contains(niddle);
+   }
+
+   hasId(niddle: string): boolean {
+      return this.$el.id === niddle;
    }
 
    addClass(niddle: string): TDomAbstraction {

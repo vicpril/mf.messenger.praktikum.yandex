@@ -38,7 +38,8 @@
       "no-cond-assign": "off",
       "no-continue": "off",
       "no-nested-ternary": "off",
-      "no-new": "off"
+      "no-new": "off",
+      "consistent-return": "warn"
    },
    "globals": {
       "ChildNode": true
