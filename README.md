@@ -12,7 +12,7 @@
 
 ## Для ревьювера
 
-[Pull-request](https://github.com/vicpril/middle.messenger.praktikum.yandex/pull/2)
+[Pull-request](https://github.com/vicpril/middle.messenger.praktikum.yandex/pull/3)
 
 На данный момент готовы страницы:
 - Оснавная страница чатов и сообщений
