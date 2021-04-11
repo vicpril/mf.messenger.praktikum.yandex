@@ -1,5 +1,5 @@
 {
-   "include": ["./client/src/**/*"],
+   "include": ["./client/src/**/*", "./server/index.js"],
    "exclude": ["node_modules", "**/*.spec.ts"],
 
    "compilerOptions": {
