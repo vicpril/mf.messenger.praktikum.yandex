@@ -27,7 +27,7 @@ export class Component extends ComponentDOMListener {
    componentsInst: Component[] = [];
    template: string = "";
    subscribers?: ISubscriberMethods = {};
-   options?: IIngredients;
+   options: IIngredients;
    props: any;
    models: any;
    id: string = uuidv4();
