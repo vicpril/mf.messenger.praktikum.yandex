@@ -133,3 +133,7 @@ export function lodashToStr(string: string): string {
    string = string.replace(/_/gi, " ");
    return string.charAt(0).toUpperCase() + string.slice(1);
 }
+
+export function removeNonCSSSymbolsFromStr(highstack: string): string {
+   return highstack.replace(/[;:.,&%@#]/, "");
+}

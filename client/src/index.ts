@@ -7,6 +7,3 @@ import { App } from "./components/structural/App/App";
 
 const $app = $("#app");
 new Component($app, App);
-// const app = new Component($app, App);
-
-// console.log(app);

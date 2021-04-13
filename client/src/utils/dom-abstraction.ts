@@ -1,3 +1,5 @@
+import { removeNonCSSSymbolsFromStr } from "./pure-functions";
+
 export type TDomAbstraction = InstanceType<typeof DomAbstraction>;
 
 class DomAbstraction {
@@ -144,7 +146,12 @@ export function $(selector: HTMLElement | Element | string): DomAbstraction {
 $.create = (tagName: string, className?: string): DomAbstraction => {
    const el = document.createElement(tagName);
    if (className) {
-      el.classList.add(className);
+      const classes = className.split(" ");
+      classes.forEach((cName) => {
+         if (cName.length === removeNonCSSSymbolsFromStr(cName).length) {
+            el.classList.add(cName);
+         }
+      });
    }
    return $(el);
 };
