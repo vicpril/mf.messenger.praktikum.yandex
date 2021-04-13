@@ -1,7 +1,7 @@
 import { TDomAbstraction } from "../utils/dom-abstraction";
 import { capitalize } from "../utils/pure-functions";
 
-export class ComponentDOMListenrt {
+export class ComponentDOMListener {
    name: string = "";
    $root: TDomAbstraction;
    methods?: any;

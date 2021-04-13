@@ -12,14 +12,14 @@ import {
    getEmmiter,
 } from "./Emmiter";
 
-import { ComponentDOMListenrt } from "./ComponentDOMListener";
+import { ComponentDOMListener } from "./ComponentDOMListener";
 import { Templator } from "./templators/templator";
 import { TemplatorProps } from "./templators/templator-props";
 import { get } from "../utils/pure-functions";
 import { isEmpty } from "../utils/isEmpty";
 import { IContext } from "./templators/templatorInterface";
 
-export class Component extends ComponentDOMListenrt {
+export class Component extends ComponentDOMListener {
    EVENTS: IComponentLifeCycleNames;
    emmiter: TEmmiter = getEmmiter();
    emmiterSubscriptions: ISubscription[] = [];
