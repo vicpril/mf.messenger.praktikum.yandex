@@ -75,7 +75,8 @@ export class Component extends ComponentDOMListener {
          });
       }
 
-      const BaseMethods = [
+      // class Base Methods
+      [
          "beforePrepare",
          "beforeCreate",
          "beforeMount",
@@ -83,9 +84,7 @@ export class Component extends ComponentDOMListener {
          "afterInit",
          "beforeUpdate",
          "beforeDestroy",
-      ];
-
-      BaseMethods.forEach((key: string) => {
+      ].forEach((key: string) => {
          if (options[key]) {
             Object.defineProperty(this, key, {
                configurable: false,
