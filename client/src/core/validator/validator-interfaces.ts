@@ -1,5 +1,8 @@
 export interface IFormControls {
-   [key: string]: IControl;
+   controls: {
+      [key: string]: IControl;
+   };
+   valid: boolean;
 }
 
 export interface IControl {

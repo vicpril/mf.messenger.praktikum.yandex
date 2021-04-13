@@ -40,8 +40,9 @@ export const SignIn = {
       onSubmit(e: Event & { target: Element }): void {
          if ($(e.target).hasClass("form__sign_in")) {
             e.preventDefault();
-            verify(this)();
-            console.log("Form SignIn:", this.props.form);
+            if (verify(this)()) {
+               console.log("Form SignIn:", this.props.form);
+            }
          }
       },
       onClick(e: Event & { target: HTMLElement }) {

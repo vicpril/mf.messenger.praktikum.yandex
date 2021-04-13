@@ -33,8 +33,9 @@ export const FormAccountSettings = {
       onSubmit(e: Event & { target: Element }): void {
          if ($(e.target).hasClass("form__account_settings")) {
             e.preventDefault();
-            verify(this)();
-            console.log("Form Account settings:", this.props.form);
+            if (verify(this)()) {
+               console.log("Form Account settings:", this.props.form);
+            }
          }
       },
       onClick(e: Event & { target: HTMLElement }) {

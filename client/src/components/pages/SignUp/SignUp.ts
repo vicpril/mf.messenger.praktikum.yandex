@@ -56,8 +56,10 @@ export const SignUp = {
       onSubmit(e: Event & { target: Element }): void {
          if ($(e.target).hasClass("form__sign_up")) {
             e.preventDefault();
-            verify(this)();
-            console.log("Form SignUp:", this.props.form);
+
+            if (verify(this)()) {
+               console.log("Form SignUp:", this.props.form);
+            }
          }
       },
    },
