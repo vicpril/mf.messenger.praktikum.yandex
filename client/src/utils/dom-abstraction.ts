@@ -71,7 +71,7 @@ class DomAbstraction {
 
    css(styles: { [name: string]: any }): TDomAbstraction {
       Object.keys(styles).forEach((key) => {
-         this.$el.style[key as any] = styles[key];
+         this.$el.setAttribute("style", `${key}: ${styles[key]};`);
       });
       return this;
    }
