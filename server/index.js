@@ -1,13 +1,11 @@
-const express = require('express');
-
-const { controller } = require('./controller');
+const express = require("express");
 
 const app = express();
 const PORT = 3000;
-const dist_folder = (__dirname + '/../dist/');
+const distFolder = `${__dirname}/../static/`;
 
-app.use(express.static(dist_folder));
+app.use(express.static(distFolder));
 
-app.listen(PORT, function () {
+app.listen(PORT, () => {
    console.log(`Example app listening on port ${PORT}!`);
 });

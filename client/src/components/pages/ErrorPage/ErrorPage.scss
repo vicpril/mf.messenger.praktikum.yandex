@@ -1,0 +1,13 @@
+@import "../DefaultPage/DefaultPage.scss";
+
+.error_page__title {
+   color: #fff;
+   color: rgba(rgb(202, 202, 202), 0.1);
+   font-weight: bold;
+   font-size: 10rem;
+   text-shadow: 0 2px 8px rgba(255, 255, 255, 1);
+   background-color: rgba(#565656, 0.15);
+   -webkit-background-clip: text;
+   -moz-background-clip: text;
+   background-clip: text;
+}

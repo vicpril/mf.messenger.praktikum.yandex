@@ -1,0 +1,38 @@
+@import "../../../styles/variables";
+
+.chats__wrapper {
+   flex-direction: column;
+   align-content: stretch;
+   margin-top: 10px;
+   background-color: $light;
+   border-radius: 0 20px 0 0;
+}
+
+.chats_scrollable {
+   position: fixed;
+   top: 80px;
+   bottom: 73px;
+   left: 0;
+   flex: 1;
+   width: 330px;
+   min-height: 50px;
+   overflow-y: hidden;
+
+   &:hover {
+      position: fixed;
+      top: 320;
+      bottom: 73px;
+      left: 0;
+      z-index: 3999;
+      overflow-y: auto;
+   }
+}
+
+.chats {
+   flex-direction: column;
+   padding: 0 10px;
+}
+
+.chats__user {
+   padding: 10px;
+}

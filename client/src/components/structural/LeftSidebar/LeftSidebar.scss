@@ -1,0 +1,19 @@
+@import "../../../styles/_variables.scss";
+
+.left_sidebar {
+   position: absolute;
+   top: 0;
+   left: 0;
+   flex-direction: column;
+   width: 330px !important;
+}
+
+.account__wrapper {
+   position: fixed;
+   top: 0;
+   left: 0;
+   width: 310px;
+   padding: 5px 10px;
+   background-color: $light;
+   border-radius: 0 0 20px 0;
+}

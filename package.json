@@ -1,28 +1,63 @@
 {
-  "name": "first-module",
-  "version": "1.0.0",
-  "description": "Easy conversation",
-  "scripts": {
-    "start": "parcel build client/src/index.html && node ./server/index.js",
-    "dev": "parcel client/src/index.html",
-    "build": "parcel build client/src/index.html"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/vicpril/middle.messenger.praktikum.yandex.git"
-  },
-  "author": "Viktor Prilepin",
-  "license": "ISC",
-  "devDependencies": {
-    "parcel-bundler": "^1.12.5",
-    "sass": "^1.32.8"
-  },
-  "dependencies": {
-    "@fortawesome/fontawesome-free": "^5.15.3",
-    "express": "^4.17.1"
-  },
-  "bugs": {
-    "url": "https://github.com/vicpril/middle.messenger.praktikum.yandex/issues"
-  },
-  "homepage": "https://github.com/vicpril/middle.messenger.praktikum.yandex#readme"
+   "name": "sprint-2",
+   "version": "1.0.0",
+   "description": "",
+   "scripts": {
+      "start": "(npm run clear && parcel build client/src/pages/*.html --out-dir build && npm run copy) && npm run server",
+      "dev": "parcel ./client/src/index.html --out-dir ./build/",
+      "build": "parcel build client/src/pages*.html --out-dir build",
+      "clear": "rm -rf ./static/* ./build/*",
+      "copy": "mkdir -p ./static/ && cp ./build/* ./static/",
+      "server": "node ./server/index.js",
+      "eslint": "eslint ./client/src --ext .js,.jsx,.ts,.tsx",
+      "eslint:fix": "eslint ./client/src --ext .js,.jsx,.ts,.tsx --fix",
+      "tslint": "npx tslint --project .",
+      "tslint:fix": "npx tslint --project . --fix",
+      "stylelint": "stylelint './client/src/**/*{.css,.scss}'",
+      "stylelint:fix": "stylelint './client/src/**/*{.css,.scss}' --fix"
+   },
+   "keywords": [],
+   "author": "",
+   "license": "ISC",
+   "devDependencies": {
+      "@types/uuid": "^8.3.0",
+      "@typescript-eslint/eslint-plugin": "^4.20.0",
+      "@typescript-eslint/parser": "^4.20.0",
+      "eslint": "^7.23.0",
+      "eslint-config-airbnb": "^18.2.1",
+      "eslint-config-airbnb-typescript": "^12.3.1",
+      "eslint-config-prettier": "^8.1.0",
+      "eslint-plugin-import": "^2.22.1",
+      "eslint-plugin-node": "^11.1.0",
+      "eslint-plugin-prettier": "^3.3.1",
+      "husky": "^6.0.0",
+      "lint-staged": "^10.5.4",
+      "parcel-bundler": "^1.12.5",
+      "prettier": "^2.2.1",
+      "sass": "^1.32.8",
+      "stylelint": "^13.12.0",
+      "stylelint-config-prettier": "^8.0.2",
+      "stylelint-config-rational-order": "^0.0.3",
+      "stylelint-config-standard": "^21.0.0",
+      "stylelint-order": "^4.1.0",
+      "stylelint-prettier": "^1.2.0",
+      "stylelint-scss": "^3.19.0",
+      "ts-node": "^9.1.1",
+      "typescript": "^4.2.3"
+   },
+   "dependencies": {
+      "@fortawesome/fontawesome-free": "^5.15.3",
+      "express": "^4.17.1",
+      "uuid": "^3.4.0"
+   },
+   "husky": {
+      "hooks": {
+         "pre-commit": "lint-staged"
+      }
+   },
+   "lint-staged": {
+      "*.(css|scss)": [
+         "stylelint --fix"
+      ]
+   }
 }
