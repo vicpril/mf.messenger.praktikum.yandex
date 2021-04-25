@@ -4,6 +4,7 @@
    flex-direction: column;
    align-content: stretch;
    margin-top: 10px;
+   overflow-x: hidden;
    background-color: $light;
    border-radius: 0 20px 0 0;
 }
@@ -30,6 +31,7 @@
 
 .chats {
    flex-direction: column;
+   min-width: 310px !important;
    padding: 0 10px;
 }
 
