@@ -1,8 +1,8 @@
 import template from "./FormChangeAvatar.tmpl";
 import "./FormChangeAvatar.scss";
-import { Avatar } from "../../structural/Avatar/Avatar";
+import { Avatar } from "../Avatar/Avatar";
 import { AppService } from "../../../services/AppService";
-import { InputFileGroup } from "../../structural/InputFileGroup/InputFileGroup";
+import { InputFileGroup } from "../InputFileGroup/InputFileGroup";
 import { $ } from "../../../utils/dom-abstraction";
 import { getFormData } from "../../../utils/pure-functions";
 

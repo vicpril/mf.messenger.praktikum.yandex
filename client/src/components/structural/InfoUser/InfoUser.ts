@@ -1,6 +1,6 @@
 import "./InfoUser.scss";
 
-import { Avatar } from "../../structural/Avatar/Avatar";
+import { Avatar } from "../Avatar/Avatar";
 import template from "./InfoUser.tmpl";
 import { RightSidebarController } from "../../../controllers/RightSidebar/RightSidebarController";
 

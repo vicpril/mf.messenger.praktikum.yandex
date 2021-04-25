@@ -1,12 +1,12 @@
 import "./RightSidebar.scss";
 
 import { $ } from "../../../utils/dom-abstraction";
-import { InfoAccount } from "../../pages/InfoAccount/InfoAccount";
+import { InfoAccount } from "../InfoAccount/InfoAccount";
 import template from "./RightSidebar.tmpl";
-import { FormChangeAvatar } from "../../pages/FormChangeAvatar/FormChangeAvatar";
-import { FormAccountSettings } from "../../pages/FormAccountSettings/FormAccountSettings";
-import { FormPasswordChange } from "../../pages/FormPasswordChange/FormPasswordChange";
-import { InfoUser } from "../../pages/InfoUser/InfoUser";
+import { FormChangeAvatar } from "../FormChangeAvatar/FormChangeAvatar";
+import { FormAccountSettings } from "../FormAccountSettings/FormAccountSettings";
+import { FormPasswordChange } from "../FormPasswordChange/FormPasswordChange";
+import { InfoUser } from "../InfoUser/InfoUser";
 import { RightSidebarController } from "../../../controllers/RightSidebar/RightSidebarController";
 import { RightSidebarDecorator } from "../../../controllers/RightSidebar/RightSidebarDecorators";
 

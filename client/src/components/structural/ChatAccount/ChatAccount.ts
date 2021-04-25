@@ -3,7 +3,7 @@ import "./ChatAccount.scss";
 import { $ } from "../../../utils/dom-abstraction";
 import { Avatar } from "../Avatar/Avatar";
 import template from "./ChatAccount.tmpl";
-import { InfoAccount } from "../../pages/InfoAccount/InfoAccount";
+import { InfoAccount } from "../InfoAccount/InfoAccount";
 import { AccountController } from "../../../controllers/AccountController/AccountController";
 
 export const ChatAccount = {

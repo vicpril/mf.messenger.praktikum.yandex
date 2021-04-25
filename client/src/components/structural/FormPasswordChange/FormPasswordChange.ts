@@ -1,7 +1,7 @@
 import template from "./FormPasswordChange.tmpl";
 import "./FormPasswordChange.scss";
 import { AppService } from "../../../services/AppService";
-import { InputGroup } from "../../structural/InputGroup/InputGroup";
+import { InputGroup } from "../InputGroup/InputGroup";
 import { $ } from "../../../utils/dom-abstraction";
 import { Validators } from "../../../core/validator/validators";
 import {

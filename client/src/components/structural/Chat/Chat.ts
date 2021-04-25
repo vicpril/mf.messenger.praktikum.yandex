@@ -8,7 +8,7 @@ import { TMessage } from "../../../models/types";
 import { isEmpty } from "../../../utils/isEmpty";
 import { sortByTime } from "../../../utils/sortMessages";
 import template from "./Chat.tmpl";
-import { InfoUser } from "../../pages/InfoUser/InfoUser";
+import { InfoUser } from "../InfoUser/InfoUser";
 
 export const Chat = {
    name: "Chat",

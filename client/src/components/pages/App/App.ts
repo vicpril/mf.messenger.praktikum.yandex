@@ -1,8 +1,8 @@
 import "./App.scss";
 
 import { AppService } from "../../../services/AppService";
-import { LeftSidebar } from "../LeftSidebar/LeftSidebar";
-import { MainWindow } from "../MainWindow/MainWindow";
+import { LeftSidebar } from "../../structural/LeftSidebar/LeftSidebar";
+import { MainWindow } from "../../structural/MainWindow/MainWindow";
 import template from "./App.tmpl";
 
 export const App = {
