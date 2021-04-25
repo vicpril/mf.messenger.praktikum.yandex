@@ -31,7 +31,7 @@ export class AccountController {
          this.component.props.form
       );
       const { new_password: password } = getFormData(form) as Indexed;
-      const data = mergeDeep(this.component.props.account, { password });
+      const data = { password };
       this.component.$dispatch(actions.accountPasswordChange(data));
    }
 

@@ -17,7 +17,7 @@ export function accountSettingsUpdate(data: any): TAction {
 
 export function accountPasswordChange(data: any): TAction {
    return {
-      type: Actions.ACCOUNT_SETTINGS_UPDATE,
+      type: Actions.ACCOUNT_PASSWORD_CHANGE,
       data,
    };
 }
