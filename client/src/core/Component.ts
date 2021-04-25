@@ -35,8 +35,8 @@ export class Component extends ComponentStoreSubscriber {
    page?: string;
 
    constructor(
-      private $targetEl: TDomAbstraction,
       options: IIngredients,
+      private $targetEl?: TDomAbstraction,
       public parentComponent: Component | null = null,
       ...args: object[]
    ) {
@@ -112,7 +112,12 @@ export class Component extends ComponentStoreSubscriber {
    }
 
    private getPropsFromTemplate(): void {
-      if (!this.parentComponent || isEmpty(this.parentComponent)) return;
+      if (
+         !this.$targetEl ||
+         !this.parentComponent ||
+         isEmpty(this.parentComponent)
+      )
+         return;
       if (!get(this.parentComponent, "props", false)) {
          this.props = {};
          return;
@@ -170,7 +175,7 @@ export class Component extends ComponentStoreSubscriber {
 
    beforeCreate(): void {}
    beforeInitChildren(): void {}
-   private _beforeCreate(): void {
+   protected _beforeCreate(): void {
       this.beforeCreate();
 
       // CREATE: create $root
@@ -184,7 +189,7 @@ export class Component extends ComponentStoreSubscriber {
       this.$emit(this.EVENTS.BEFORE_MOUNT);
    }
 
-   private bindModels(): void {
+   protected bindModels(): void {
       if (this.models) {
          this.models.forEach((modelName: string) => {
             const elements = [...this.$root.findAll(`[model="${modelName}"]`)];
@@ -216,7 +221,7 @@ export class Component extends ComponentStoreSubscriber {
       }
    }
 
-   private initRoot(): void {
+   protected initRoot(): void {
       const templateCompiled = this.compileTemplate(this.template);
       this.$root = this.buildDomAbstraction(templateCompiled);
    }
@@ -236,11 +241,11 @@ export class Component extends ComponentStoreSubscriber {
          .firstChild() as TDomAbstraction;
    }
 
-   private initChildren(): void {
+   protected initChildren(): void {
       this.components.forEach((Ingredients: IIngredients) => {
          const $tags: TDomAbstraction[] = this.findAllTags(Ingredients.name);
          $tags.forEach(($targetEl) => {
-            const component = new Component($targetEl, Ingredients, this);
+            const component = new Component(Ingredients, $targetEl, this);
             this.componentsInst.push(component);
          });
       });
@@ -255,9 +260,9 @@ export class Component extends ComponentStoreSubscriber {
       this.beforeMount();
       // MOUNT: replace $targetEl on $root
       if (!this.$root.isEmpty()) {
-         this.$targetEl.parent().replaceChild(this.$root, this.$targetEl);
+         this.$targetEl?.parent().replaceChild(this.$root, this.$targetEl);
       } else {
-         this.$targetEl.remove();
+         this.$targetEl?.remove();
       }
 
       this.$emit(this.EVENTS.BEFORE_INIT);

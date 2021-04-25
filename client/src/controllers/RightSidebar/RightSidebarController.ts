@@ -31,8 +31,8 @@ export class RightSidebarController {
          this.component.$root.find("section").append($targetElContent);
 
          const newComponent = new Component(
-            $targetElContent,
             getContentComponent.call(this.component, newComponentName),
+            $targetElContent,
             this.component
          );
          this.component.componentsInst = [];
