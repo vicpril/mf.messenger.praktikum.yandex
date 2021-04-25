@@ -1,7 +1,7 @@
 export default /* html */ `
 <div class="left_sidebar">
 
-    <ChatAccount bind:account="account"></ChatAccount>
+    <ChatAccount></ChatAccount>
 
     <!-- Chats wrapper-->
     <div class="chats__wrapper chats_scrollable scroll_style">

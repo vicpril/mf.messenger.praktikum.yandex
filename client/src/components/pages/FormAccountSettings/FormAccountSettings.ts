@@ -9,6 +9,7 @@ import {
    verify,
 } from "../../../core/validator/form";
 import { Validators } from "../../../core/validator/validators";
+import { AccountController } from "../../../controllers/AccountController/AccountController";
 
 const { required, email } = Validators;
 
@@ -21,7 +22,7 @@ export const FormAccountSettings = {
       form: {},
       form_control: {},
    },
-   listeners: ["click", "submit", "blur"],
+   listeners: ["submit", "blur"],
    subscribers: {},
    methods: {
       onBlur(e: Event & { target: HTMLElement }) {
@@ -34,17 +35,13 @@ export const FormAccountSettings = {
          if ($(e.target).hasClass("form__account_settings")) {
             e.preventDefault();
             if (verify(this)()) {
-               console.log("Form Account settings:", this.props.form);
+               new AccountController(this).update(new FormData(e.target));
             }
-         }
-      },
-      onClick(e: Event & { target: HTMLElement }) {
-         if (e.target.dataset.action === "cancel") {
-            document.location.href = "/account.html";
          }
       },
    },
    beforePrepare() {
+      this.props.account = AccountController.getAccount();
       this.props.form = {
          login: {
             value: this.props.account.login,

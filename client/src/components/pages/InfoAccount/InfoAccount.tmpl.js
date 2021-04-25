@@ -1,3 +1,5 @@
+import { RightSidebarViews } from "../../../controllers/RightSidebar/RightSidebarViews";
+
 export default /* html */ `
 <section class="info__section">
    <div class="info__content">
@@ -7,9 +9,9 @@ export default /* html */ `
    <span class="info__displayname">{{user.display_name}}</span>
    </div>
    <div class="info__actions">
-   <button type="button" class="button info__button button_outline_primary" data-action="change-avatar">Change Avatar</button>
-   <button type="button" class="button info__button button_outline_primary" data-action="account-settings">Account Settings</button>
-   <button type="button" class="button info__button button_outline_primary" data-action="change-password">Change Password</button>
+   <button type="button" class="button info__button button_outline_primary" data-view="${RightSidebarViews.FormChangeAvatar}">Change Avatar</button>
+   <button type="button" class="button info__button button_outline_primary" data-view="${RightSidebarViews.FormAccountSettings}">Account Settings</button>
+   <button type="button" class="button info__button button_outline_primary" data-view="${RightSidebarViews.FormPasswordChange}">Change Password</button>
    </div>
 </section>
 `;

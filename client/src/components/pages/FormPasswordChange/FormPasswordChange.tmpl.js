@@ -1,3 +1,5 @@
+import { RightSidebarViews } from "../../../controllers/RightSidebar/RightSidebarViews";
+
 export default /* html */ `
 <form class="info__section form__change_password"
 <v-if="action">    
@@ -10,12 +12,14 @@ export default /* html */ `
     <div class="info__content" >
         <h3>Change your password</h3>
 
-        <v-for :field :index in fields><InputGroup bind:obj="fields[{{index}}]"></InputGroup></v-for>
+        <v-for :field :index in fields>
+        <InputGroup bind:property="form.{{field.id}}" bind:control="form_control.{{field.id}}" bind:options="fields[{{index}}]"></InputGroup>
+        </v-for>
     </div>
     
     <div class="info__actions">
     <button type="submit" class="button info__button button_outline_primary" data-action="submit">Update</button>
-    <button type="button" class="button info__button button_outline_primary" data-action="cancel">Cancel</button>        
+    <button type="button" class="button info__button button_outline_primary" data-view="${RightSidebarViews.InfoAccount}">Cancel</button>        
     </div>
 </form>
 `;

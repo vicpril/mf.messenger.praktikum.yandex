@@ -137,3 +137,55 @@ export function lodashToStr(string: string): string {
 export function removeNonCSSSymbolsFromStr(highstack: string): string {
    return highstack.replace(/[;:.,&%@#]/, "");
 }
+
+export function arrayUnique(arr: any[]): any[] {
+   const set = new Set(arr);
+   return Array.from(set);
+}
+
+export function isArray(value: unknown): value is [] {
+   return Array.isArray(value);
+}
+
+type PlainObject<T = unknown> = {
+   [k in string]: T;
+};
+
+export function isPlainObject(value: unknown): value is PlainObject {
+   return (
+      typeof value === "object" &&
+      value !== null &&
+      value.constructor === Object &&
+      Object.prototype.toString.call(value) === "[object Object]"
+   );
+}
+
+export function isArrayOrObject(value: unknown): value is [] | PlainObject {
+   return isPlainObject(value) || isArray(value);
+}
+
+export type Indexed<T = unknown> = {
+   [key in string]: T;
+};
+
+export function isEqual(a: Indexed, b: Indexed): boolean {
+   const isObject = (obj: any) => !!obj && obj.constructor === Object;
+
+   if (!isObject(a) || !isObject(b)) {
+      if (!Array.isArray(a) || !Array.isArray(b)) return a === b;
+   }
+
+   if (
+      Object.getOwnPropertyNames(a).length !==
+      Object.getOwnPropertyNames(b).length
+   )
+      return false;
+
+   let result = true;
+   Object.getOwnPropertyNames(a).forEach((key: string) => {
+      if (!isEqual(a[key] as Indexed, b[key] as Indexed)) {
+         result = false;
+      }
+   });
+   return result;
+}

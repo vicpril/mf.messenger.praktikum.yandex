@@ -23,4 +23,8 @@ export const Chats = {
    beforePrepare() {
       this.props.chatsFiltered = this.props.chats;
    },
+   afterInit() {
+      window.chats = this;
+      window.emmiter = this.emmiter;
+   },
 };

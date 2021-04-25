@@ -12,6 +12,8 @@ export type TUser = {
    password?: string;
 };
 
+export type TAccount = TUser;
+
 export type TMessage = {
    time: string | DateCustom;
    user: string;

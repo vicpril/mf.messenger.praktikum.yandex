@@ -26,8 +26,10 @@ export class AppService {
       return chat || null;
    }
 
-   static getChatInfo(): TChat | null {
-      const userlogin = getUrlParameter("info");
+   static getChatInfo(userlogin?: string): TChat | null {
+      if (!userlogin) {
+         userlogin = getUrlParameter("info") ?? undefined;
+      }
       if (!userlogin) {
          return null;
       }

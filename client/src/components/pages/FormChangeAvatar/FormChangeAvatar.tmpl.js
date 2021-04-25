@@ -1,3 +1,5 @@
+import { RightSidebarViews } from "../../../controllers/RightSidebar/RightSidebarViews";
+
 export default /* html */ `
 <form class="info__section form__avatar_change"
 <v-if="action">    
@@ -18,7 +20,7 @@ export default /* html */ `
     
     <div class="info__actions">
     <button type="submit" class="button info__button button_outline_primary" data-action="submit">Update</button>
-    <button type="button" class="button info__button button_outline_primary" data-action="cancel">Cancel</button>
+    <button type="button" class="button info__button button_outline_primary" data-view="${RightSidebarViews.InfoAccount}">Cancel</button>
     </div>
 </form>
 `;

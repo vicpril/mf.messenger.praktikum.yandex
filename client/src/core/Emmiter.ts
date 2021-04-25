@@ -26,13 +26,11 @@ class Emmiter {
       this.listeners[event] = this.listeners[event] || [];
       this.listeners[event].push(fn);
       return {
-         unsubscribe() {
-            return function () {
-               this.listeners[event] = this.listeners[event].filter(
-                  (listener: TSubscriberMethod) => listener !== fn
-               );
-            }.bind(getEmmiter());
-         },
+         unsubscribe: function () {
+            this.listeners[event] = this.listeners[event].filter(
+               (listener: TSubscriberMethod) => listener !== fn
+            );
+         }.bind(getEmmiter()),
       };
    }
 

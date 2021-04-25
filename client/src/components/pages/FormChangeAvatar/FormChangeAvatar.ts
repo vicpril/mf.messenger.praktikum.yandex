@@ -13,7 +13,7 @@ export const FormChangeAvatar = {
    props: {
       account: AppService.getAccount(),
    },
-   listeners: ["change", "submit", "click"],
+   listeners: ["change", "submit"],
    subscribers: {},
    methods: {
       onChange(e: Event & { target: HTMLInputElement }) {
@@ -33,11 +33,6 @@ export const FormChangeAvatar = {
             const data = getFormData(formData);
 
             console.log("Change Avatar data:", data);
-         }
-      },
-      onClick(e: Event & { target: HTMLElement }) {
-         if (e.target.dataset.action === "cancel") {
-            document.location.href = "/account.html";
          }
       },
    },

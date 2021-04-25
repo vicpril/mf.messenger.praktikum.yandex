@@ -24,6 +24,9 @@ export const InputGroup = {
    beforeCreate() {
       this.props.value = this.props.property.value;
    },
+   afterInit() {
+      console.log(this.props);
+   },
 };
 
 export type TInputGroup = {

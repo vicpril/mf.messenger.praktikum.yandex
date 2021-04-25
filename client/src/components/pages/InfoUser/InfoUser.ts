@@ -1,8 +1,8 @@
 import "./InfoUser.scss";
 
-import { AppService } from "../../../services/AppService";
 import { Avatar } from "../../structural/Avatar/Avatar";
 import template from "./InfoUser.tmpl";
+import { RightSidebarController } from "../../../controllers/RightSidebar/RightSidebarController";
 
 export const InfoUser = {
    name: "InfoUser",
@@ -29,7 +29,6 @@ export const InfoUser = {
       },
    },
    beforePrepare() {
-      this.props.user =
-         AppService.getChatInfo()?.user ?? AppService.getAccount();
+      this.props.user = RightSidebarController.getUser();
    },
 };

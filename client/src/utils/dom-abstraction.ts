@@ -38,6 +38,24 @@ class DomAbstraction {
       return (this.$el.textContent as string).trim();
    }
 
+   val(): string;
+   val(val: string): DomAbstraction;
+   val(val?: string): string | DomAbstraction {
+      if (typeof val === "string") {
+         if (this.$el.tagName.toLowerCase() === "textarea") {
+            this.$el.textContent = val;
+         }
+         if (this.$el.tagName.toLowerCase() === "input") {
+            (this.$el as HTMLInputElement).value = val;
+         }
+         return this;
+      }
+      if (this.$el.tagName.toLowerCase() === "input") {
+         return (this.$el as HTMLInputElement).value.trim();
+      }
+      return (this.$el.textContent as string).trim();
+   }
+
    get data(): DOMStringMap {
       return this.$el.dataset;
    }
@@ -60,7 +78,7 @@ class DomAbstraction {
       this.$el.removeEventListener(eventType, callback);
    }
 
-   find(selector: string) {
+   find(selector: string): TDomAbstraction {
       // eslint-disable-next-line @typescript-eslint/no-use-before-define
       return $(this.$el.querySelector(selector) as HTMLElement);
    }

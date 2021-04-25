@@ -8,6 +8,7 @@ import { TMessage } from "../../../models/types";
 import { isEmpty } from "../../../utils/isEmpty";
 import { sortByTime } from "../../../utils/sortMessages";
 import template from "./Chat.tmpl";
+import { InfoUser } from "../../pages/InfoUser/InfoUser";
 
 export const Chat = {
    name: "Chat",
@@ -24,7 +25,8 @@ export const Chat = {
          // Click on active Avatar
          if ($(e.target).hasClass("pulse")) {
             const { login } = this.props.chat.user;
-            document.location.href = `/contact-info.html?info=${login}`;
+            const data = { componentName: InfoUser.name, login };
+            this.$emit("openRightSidebar", data);
          }
          // Click on wrapper
          else if (checkSwitchUserPossible(e.target)) {

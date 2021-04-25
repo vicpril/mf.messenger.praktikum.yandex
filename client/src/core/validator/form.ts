@@ -74,14 +74,18 @@ export function checkInputForm(target: HTMLElement, form: {}): boolean {
    return hasId;
 }
 
-export function prepareFormFields(form: IFormField) {
+export function prepareFormFields<
+   T extends IFormField,
+   K extends keyof IFormField
+>(form: T): TInputGroup[] {
    return Object.getOwnPropertyNames(form).map(
-      (key: string) =>
+      (slug: K) =>
          ({
-            title: lodashToStr(key),
-            id: key,
-            name: key,
-            type: key === "password" ? "password" : "text",
+            title: lodashToStr(slug),
+            id: slug,
+            name: slug,
+            type: form[slug].type ?? "text",
+            errorReason: form[slug].errorReason ?? undefined,
          } as TInputGroup)
    );
 }

@@ -1,8 +1,8 @@
 import "./InfoAccount.scss";
 
-import { AppService } from "../../../services/AppService";
 import { Avatar } from "../../structural/Avatar/Avatar";
 import template from "./InfoAccount.tmpl";
+import { AccountController } from "../../../controllers/AccountController/AccountController";
 
 export const InfoAccount = {
    name: "InfoAccount",
@@ -11,20 +11,11 @@ export const InfoAccount = {
    props: {
       user: {},
    },
-   listeners: ["click"],
+   listeners: [],
    subscribers: {},
-   methods: {
-      onClick(e: Event & { target: HTMLElement }) {
-         if (e.target.dataset.action === "change-avatar") {
-            document.location.href = "/avatar-edit.html";
-         } else if (e.target.dataset.action === "account-settings") {
-            document.location.href = "/settings-edit.html";
-         } else if (e.target.dataset.action === "change-password") {
-            document.location.href = "/password-change.html";
-         }
-      },
-   },
+
+   methods: {},
    beforePrepare() {
-      this.props.user = AppService.getAccount();
+      this.props.user = AccountController.getAccount();
    },
 };
