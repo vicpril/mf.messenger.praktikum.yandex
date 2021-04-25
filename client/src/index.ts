@@ -8,6 +8,7 @@ import { createStore } from "./core/store/Store";
 import { rootReducer } from "./core/store/rootReducer";
 import { storage } from "./utils/storage";
 import { Router } from "./core/router/Router";
+import { AppController } from "./controllers/AppController/AppController";
 
 const store = createStore(rootReducer, {
    title: "Welcome to Chats",
@@ -19,7 +20,7 @@ store.subscribe((state) => {
    storage("ec-app-state", state);
 });
 
-// const router = new Router("#app");
+const router = new Router("#app");
+router.use("", AppController.index());
 
-const $app = $("#app");
-new Component(App, $app, null);
+router.init();

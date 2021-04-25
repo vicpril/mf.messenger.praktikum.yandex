@@ -17,6 +17,7 @@ export class PageComponent extends Component {
       this.$emit(this.EVENTS.DESTROY);
    }
 
+   /* Have to override parent method */
    protected _beforeCreate(): void {
       this.beforeCreate();
 
