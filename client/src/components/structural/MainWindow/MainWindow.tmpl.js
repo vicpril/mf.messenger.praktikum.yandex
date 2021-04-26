@@ -4,11 +4,11 @@ export default /* html */ `
    <v-if="is_selected">
 
          <!-- messager -->
-         <Messager bind:chat="chat"></Messager>
+         <Messager></Messager>
          <!-- end messager -->
 
          <!-- messager form -->
-         <MessagerMenu bind:chat="chat"></MessagerMenu>
+         <MessagerMenu></MessagerMenu>
          <!-- end form -->
 
    <v-else>

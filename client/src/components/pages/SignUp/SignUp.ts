@@ -8,6 +8,7 @@ import {
    prepareFormFields,
    verify,
 } from "../../../core/validator/form";
+import { Router } from "../../../core/router/Router";
 
 const { required, minLength, email } = Validators;
 
@@ -44,7 +45,7 @@ export const SignUp = {
       },
       form_control: {},
    },
-   listeners: ["submit", "blur"],
+   listeners: ["submit", "blur", "click"],
    subscribers: {},
    methods: {
       onBlur(e: Event & { target: HTMLElement }) {
@@ -60,6 +61,12 @@ export const SignUp = {
             if (verify(this)()) {
                console.log("Form SignUp:", this.props.form);
             }
+         }
+      },
+      onClick(e: Event & { target: HTMLElement }) {
+         if (e.target.dataset.action === "to-signin") {
+            e.preventDefault();
+            Router.navigate("signin");
          }
       },
    },

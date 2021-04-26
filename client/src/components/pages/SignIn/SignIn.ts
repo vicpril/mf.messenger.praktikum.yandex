@@ -8,6 +8,7 @@ import {
    verify,
 } from "../../../core/validator/form";
 import { Validators } from "../../../core/validator/validators";
+import { Router } from "../../../core/router/Router";
 
 const { required, minLength } = Validators;
 
@@ -47,7 +48,7 @@ export const SignIn = {
       },
       onClick(e: Event & { target: HTMLElement }) {
          if (e.target.dataset.action === "signup") {
-            document.location.href = "/signup.html";
+            Router.navigate("signup");
          }
       },
    },

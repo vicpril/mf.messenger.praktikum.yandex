@@ -73,6 +73,14 @@ export function trimQuotes(text: string): string {
    return text.replace(regExp, "$1");
 }
 
+export function trim(str: string, niddle = ""): string {
+   if (!niddle) {
+      return str.trim();
+   }
+   const regExp = new RegExp(`^[${niddle}]+|[${niddle}]+$`, "g");
+   return str.replace(regExp, "");
+}
+
 type TColor = string;
 export function strToColor(str: string): TColor {
    return intToRGB(hashCode(str));

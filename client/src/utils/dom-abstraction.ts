@@ -70,12 +70,14 @@ class DomAbstraction {
       return this;
    }
 
-   on(eventType: string, callback: () => {}, useCapture: boolean = false) {
+   on(eventType: string, callback: () => any, useCapture: boolean = false) {
       this.$el.addEventListener(eventType, callback, useCapture);
+      return this;
    }
 
-   off(eventType: string, callback: () => {}) {
+   off(eventType: string, callback: (...args: any) => any) {
       this.$el.removeEventListener(eventType, callback);
+      return this;
    }
 
    find(selector: string): TDomAbstraction {
@@ -95,7 +97,7 @@ class DomAbstraction {
    }
 
    hasClass(niddle: string): boolean {
-      return this.$el.classList.contains(niddle);
+      return this.$el?.classList.contains(niddle);
    }
 
    hasId(niddle: string): boolean {

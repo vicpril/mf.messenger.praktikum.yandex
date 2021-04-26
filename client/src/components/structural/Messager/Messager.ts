@@ -26,6 +26,9 @@ export const Messager = {
       },
    },
    methods: {},
+   beforePrepare() {
+      this.props.chat = AppService.getSelectedChat();
+   },
 
    beforeCreate() {
       this.props.blocks = [

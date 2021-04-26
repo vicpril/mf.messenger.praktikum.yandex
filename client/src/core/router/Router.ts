@@ -1,64 +1,111 @@
 import { $, TDomAbstraction } from "../../utils/dom-abstraction";
-import { PageComponent } from "../PageComponent";
-import { ActiveRoute } from "./ActiveRoute";
+import { trim } from "../../utils/pure-functions";
+import { IIngredients } from "../ComponentInterfaces";
 import { Route } from "./Route";
 
 export class Router {
-   private static instance: Router | null = null;
-   private routes: Route[] = [];
+   static getRouter() {
+      return new Router();
+   }
+
+   private static __instance: Router | null = null;
+   private routes = new Map();
    private history = window.history;
-   private currentRoute = null;
+   private currentRoute: Route;
    $placeholder: TDomAbstraction;
 
-   constructor(selector: string) {
-      if (Router.instance) {
-         return Router.instance;
+   constructor() {
+      if (Router.__instance) {
+         return Router.__instance;
       }
-
-      if (!selector) {
-         throw new Error("Selector is not provided in Router");
-      }
-
-      this.$placeholder = $(selector);
 
       this.changePageHandler = this.changePageHandler.bind(this);
 
-      // this.init();
+      Router.__instance = this;
    }
 
-   private changePageHandler(pathname: string = "") {
-      // this.$placeholder.html(ActiveRoute.path);
-      const route = this.getRoute(pathname);
-      if (!route) {
+   init(selector: string) {
+      this.$placeholder = $(selector);
+
+      window.addEventListener(
+         "popstate",
+         (event: Event & { target: Window }) => {
+            this.changePageHandler(event.target.location.pathname);
+         }
+      );
+      const { pathname } = window.location;
+      if (pathname === "/") {
+         this.navigate("chats");
          return;
       }
+      this.changePageHandler(window.location.pathname);
+   }
 
-      // if (this._currentRoute) {
-      //   this._currentRoute.leave();
-      // }
+   private changePageHandler(pathname: string) {
+      let route = this.getRoute(pathname);
+      if (!route) {
+         route = this.getRoute("404");
+      }
 
+      if (this.currentRoute) {
+         this.currentRoute.leave();
+         this.$placeholder.html("");
+      }
+
+      this.currentRoute = route;
       route.render(this.$placeholder);
    }
 
-   init() {
-      window.addEventListener("hashchange", this.changePageHandler);
-      this.changePageHandler();
+   use(pathname: string, options: IIngredients) {
+      if (pathname.charAt(0) !== "/") {
+         pathname = `/${pathname}`;
+      }
+      this.routes.set(pathname, new Route(pathname, options));
+      return this;
    }
 
-   use(pathname: string, page: PageComponent) {
-      this.routes.push(new Route(pathname, page));
+   back() {
+      this.history.back();
+      return false;
+   }
+
+   forward() {
+      this.history.forward();
+      return false;
    }
 
    destroy() {
-      window.removeEventListener("hashchange", this.changePageHandler);
+      if (this.currentRoute) {
+         this.currentRoute.leave();
+      }
+      this.$placeholder.off("popstate", this.changePageHandler);
    }
 
-   // go(pathname) {
-   //    this.history.pushState({}, "", pathname);
-   //    this.changePageHandler;
-   // }
+   navigate(pathname: string, param: string = "") {
+      if (pathname.charAt(0) !== "/") {
+         pathname = `/${pathname}`;
+      }
+      if (param) {
+         pathname = `${pathname}/${param}`;
+      }
+
+      this.history.pushState({}, "", `${pathname}`);
+      this.changePageHandler(pathname);
+      return false;
+   }
+
+   static navigate(pathname: string, param = "") {
+      Router.getRouter().navigate(pathname, param);
+   }
+   static back() {
+      Router.getRouter().back();
+   }
+   static forward() {
+      Router.getRouter().forward();
+   }
 
    getRoute(pathname: string) {
-      return this.routes.find((route) => route.match(pathname));
+      const routname = trim(pathname, "/").split("/")[0];
+      return this.routes.get(`/${routname}`);
    }
 }

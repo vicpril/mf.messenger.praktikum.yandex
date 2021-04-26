@@ -1,10 +1,6 @@
 import { Component } from "./Component";
 
 export class PageComponent extends Component {
-   // constructor(options: IIngredients) {
-   //    super($.create("div"), options);
-   // }
-
    getRoot() {
       return this.$root;
    }

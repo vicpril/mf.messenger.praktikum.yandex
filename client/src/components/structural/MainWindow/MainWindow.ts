@@ -13,9 +13,7 @@ export const MainWindow = {
    name: "MainWindow",
    template: template,
    components: [Messager, MessagerMenu, RightSidebar],
-   props: {
-      chat: AppService.getSelectedChat(),
-   },
+   props: {},
    listeners: [],
    subscribers: {
       pageChange: function (page: string) {
@@ -40,6 +38,7 @@ export const MainWindow = {
    },
    methods: {},
    beforePrepare() {
+      this.props.chat = AppService.getSelectedChat();
       this.props.is_selected = !isEmpty(this.props.chat);
    },
    afterInit() {

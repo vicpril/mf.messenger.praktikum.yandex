@@ -1,21 +1,16 @@
 import { TDomAbstraction } from "../../utils/dom-abstraction";
+import { IIngredients } from "../ComponentInterfaces";
 import { PageComponent } from "../PageComponent";
 
 export class Route {
-   constructor(private pathname: string, private page: PageComponent) {}
-
-   navigate(pathname: string) {
-      if (this.match(pathname)) {
-         this.pathname = pathname;
-         // this.render();
-      }
-   }
+   private page: PageComponent | null = null;
+   constructor(private pathname: string, private options: IIngredients) {}
 
    leave() {
-      // if (!this.page) {
-      //    return;
-      // }
-      // this.page.hide();
+      if (!this.page) {
+         return;
+      }
+      this.page.destroy();
    }
 
    match(pathname: string) {
@@ -23,14 +18,8 @@ export class Route {
    }
 
    render($placeholder: TDomAbstraction) {
-      // if (!this._block) {
-      //    this._block = new this._blockClass();
-      //    render(this._props.rootQuery, this._block);
-      //    return;
-      // }
-      // this._block.show();
+      this.page = new PageComponent(this.options);
       $placeholder.append(this.page.getRoot());
-
       this.page.afterRender();
    }
 }

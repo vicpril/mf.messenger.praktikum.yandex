@@ -16,7 +16,7 @@ export default /* html */ `
     
     <div class="info__actions">
     <button type="submit" class="button info__button button_primary" data-action="signup">Sign up</button>
-    <a href="/signin.html">Back to Sign in</a>       
+    <a href="#" data-action="to-signin">Back to Sign in</a>       
     </div>
 </form>
 `;
