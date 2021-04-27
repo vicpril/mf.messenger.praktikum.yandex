@@ -5,9 +5,8 @@ import { createStore } from "./core/store/Store";
 import { rootReducer } from "./core/store/rootReducer";
 import { storage } from "./utils/storage";
 import { Router } from "./core/router/Router";
-import { AppController } from "./controllers/AppController/AppController";
-import { SigninController } from "./controllers/SigninController/SigninController";
-import { SignupController } from "./controllers/SignupController/SignupController";
+import { AppController } from "./controllers/App/AppController";
+import { AuthController } from "./controllers/Auth/AuthController";
 
 const store = createStore(rootReducer, {
    title: "Welcome to Chats",
@@ -21,8 +20,8 @@ store.subscribe((state) => {
 
 new Router()
    .use("chats", AppController.index())
-   .use("signin", SigninController.index())
-   .use("signup", SignupController.index())
+   .use("signin", AuthController.indexSignIn())
+   .use("signup", AuthController.indexSignUp())
    .use("404", AppController.error404())
    .use("500", AppController.error500())
    .init("#app");

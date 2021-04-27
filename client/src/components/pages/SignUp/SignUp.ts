@@ -36,7 +36,7 @@ export const SignUp = {
          },
          password: {
             value: "",
-            validators: { required, minLength: minLength(5) },
+            validators: { required, minLength: minLength(3) },
          },
          phone: {
             value: "",

@@ -1,6 +1,11 @@
 import { $, TDomAbstraction } from "../../utils/dom-abstraction";
+import { isEmpty } from "../../utils/isEmpty";
 import { trim } from "../../utils/pure-functions";
 import { IIngredients } from "../ComponentInterfaces";
+import { LoaderInit } from "../loader/loader";
+import { rootReducer } from "../store/rootReducer";
+import { createStore } from "../store/Store";
+// eslint-disable-next-line import/no-cycle
 import { Route } from "./Route";
 
 export class Router {
@@ -34,11 +39,31 @@ export class Router {
          }
       );
       const { pathname } = window.location;
+
+      this.auth(pathname);
+
       if (pathname === "/") {
          this.navigate("chats");
          return;
       }
       this.changePageHandler(window.location.pathname);
+
+      LoaderInit();
+   }
+
+   private auth(pathname: string) {
+      const authPages = ["signin", "signup"];
+
+      const { session } = createStore(rootReducer).getState();
+
+      const routname = this.getRouteName(pathname);
+      if (!isEmpty(session) && session?.login) {
+         if (authPages.includes(routname)) {
+            Router.navigate("chats");
+         }
+      } else if (!authPages.includes(routname)) {
+         Router.navigate("signin");
+      }
    }
 
    private changePageHandler(pathname: string) {
@@ -104,8 +129,12 @@ export class Router {
       Router.getRouter().forward();
    }
 
-   getRoute(pathname: string) {
-      const routname = trim(pathname, "/").split("/")[0];
+   getRoute(pathname: string): Route {
+      const routname = this.getRouteName(pathname);
       return this.routes.get(`/${routname}`);
+   }
+
+   getRouteName(pathname: string): string {
+      return trim(pathname, "/").split("/")[0];
    }
 }

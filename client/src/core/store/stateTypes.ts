@@ -4,6 +4,7 @@ export type TState = {
    title?: string;
    rightSidebar?: TRightSidebarState;
    accountSettings?: TAccountState;
+   session?: { login?: string };
 };
 
 export type TRightSidebarState = {

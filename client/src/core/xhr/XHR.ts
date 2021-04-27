@@ -1,4 +1,4 @@
-enum METHOD {
+export enum METHOD {
    GET = "GET",
    POST = "POST",
    PUT = "PUT",
@@ -22,8 +22,8 @@ function queryStringify(data: { [key: string]: any }): string {
    return `?${Object.getOwnPropertyNames(data).map(paramToStr).join("&")}`;
 }
 
-type Options = {
-   method: METHOD;
+export type XHROptions = {
+   method?: METHOD;
    headers?: {
       [key: string]: any;
    };
@@ -37,16 +37,21 @@ type Options = {
    onProgress?: (event: ProgressEvent) => void;
    onUploadProgress?: (event: ProgressEvent) => void;
    beforeRequest?: (event?: ProgressEvent) => void;
+   afterRequest?: (event?: ProgressEvent) => void;
    withCredentials?: boolean;
 };
 
 // Тип Omit принимает два аргумента: первый — тип, второй — строка
 // и удаляет из первого типа ключ, переданный вторым аргументом
-type OptionsWithoutMethod = Omit<Options, "method">;
+type OptionsWithoutMethod = Omit<XHROptions, "method">;
 
-export default class XHR {
-   private static request(url: string, options: Options, timeout = 5000) {
-      const { method, data, headers } = options;
+export class XHR {
+   private static request(
+      url: string,
+      options: XHROptions,
+      timeout = 5000
+   ): Promise<XMLHttpRequestResponseType> {
+      const { method = METHOD.GET, data, headers } = options;
 
       return new Promise<XMLHttpRequestResponseType>((resolve, reject) => {
          const xhr = new XMLHttpRequest();

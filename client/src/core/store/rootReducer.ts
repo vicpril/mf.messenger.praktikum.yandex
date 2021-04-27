@@ -33,6 +33,22 @@ export function rootReducer(state: TState, action: TAction): TState {
             } as TAccount,
          };
 
+      case Actions.AUTH_SIGN_IN:
+         prevState = state.session || {};
+         return {
+            ...state,
+            session: {
+               ...mergeDeep(prevState, { login: action.data }),
+            },
+         };
+
+      case Actions.AUTH_LOGOUT:
+         prevState = state.session || {};
+         return {
+            ...state,
+            session: {},
+         };
+
       default:
          return state;
    }

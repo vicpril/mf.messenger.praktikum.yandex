@@ -11,7 +11,7 @@ import {
 } from "../../../core/validator/form";
 import { AccountController } from "../../../controllers/AccountController/AccountController";
 
-const { required, same } = Validators;
+const { required, same, minLength } = Validators;
 
 export const FormPasswordChange = {
    name: "FormPasswordChange",
@@ -48,6 +48,7 @@ export const FormPasswordChange = {
             type: "password",
             validators: {
                required,
+               minLength: minLength(3),
                same: same(this.props.account.password),
             },
             errorReason: {
@@ -57,13 +58,14 @@ export const FormPasswordChange = {
          new_password: {
             value: "",
             type: "password",
-            validators: { required },
+            validators: { required, minLength: minLength(3) },
          },
          confirm_new_password: {
             value: "",
             type: "password",
             validators: {
                required,
+               minLength: minLength(3),
                same: same("#new_password", true),
             },
             errorReason: {

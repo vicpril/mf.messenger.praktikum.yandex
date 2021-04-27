@@ -12,6 +12,7 @@ export default /* html */ `
    <button type="button" class="button info__button button_outline_primary" data-view="${RightSidebarViews.FormChangeAvatar}">Change Avatar</button>
    <button type="button" class="button info__button button_outline_primary" data-view="${RightSidebarViews.FormAccountSettings}">Account Settings</button>
    <button type="button" class="button info__button button_outline_primary" data-view="${RightSidebarViews.FormPasswordChange}">Change Password</button>
+   <button type="button" class="button info__button button_outline_danger" data-action="logout">Log Out <i class="fas fa-sign-out-alt"></i></button>
    </div>
 </section>
 `;

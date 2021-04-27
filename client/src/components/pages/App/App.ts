@@ -13,9 +13,4 @@ export const App = {
       account: AppService.getAccount(),
       chats: AppService.getChats(),
    },
-   afterInit() {
-      if (this.page) {
-         this.$emit("pageChange", this.page);
-      }
-   },
 };

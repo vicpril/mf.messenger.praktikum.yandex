@@ -201,3 +201,7 @@ export function isEqual(lhs: PlainObject, rhs: PlainObject) {
 
    return true;
 }
+
+export function isSuccess(status: string): boolean {
+   return status === "success";
+}
