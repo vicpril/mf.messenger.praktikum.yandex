@@ -4,6 +4,7 @@ import { Chat } from "../Chat/Chat";
 import { TChat } from "../../../models/types";
 import { strContains } from "../../../utils/pure-functions";
 import template from "./Chats.tmpl";
+import { UsersController } from "../../../controllers/Users/UsersController";
 
 export const Chats = {
    name: "Chats",
@@ -22,5 +23,10 @@ export const Chats = {
    },
    beforePrepare() {
       this.props.chatsFiltered = this.props.chats;
+   },
+   async afterInit() {
+      // const user = await UsersController.search("clownde");
+      const user = await UsersController.get(37768);
+      console.log("~ user", user);
    },
 };

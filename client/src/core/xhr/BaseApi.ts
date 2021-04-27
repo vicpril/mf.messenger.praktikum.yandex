@@ -1,19 +1,24 @@
+export type ApiResponse = {
+   status: "success" | "failed";
+   data?: any;
+};
+
 export class BaseAPI {
    protected basehost: string = "https://ya-praktikum.tech/api/v2";
 
-   create() {
+   create(...args: any): Promise<ApiResponse> {
       throw new Error("Not implemented");
    }
 
-   request() {
+   request(...args: any): Promise<ApiResponse> {
       throw new Error("Not implemented");
    }
 
-   update() {
+   update(...args: any): Promise<ApiResponse> {
       throw new Error("Not implemented");
    }
 
-   delete() {
+   delete(...args: any): Promise<ApiResponse> {
       throw new Error("Not implemented");
    }
 }

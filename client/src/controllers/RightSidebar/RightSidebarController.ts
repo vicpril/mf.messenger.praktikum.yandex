@@ -1,8 +1,7 @@
 import { Component } from "../../core/Component";
 import { IIngredients } from "../../core/ComponentInterfaces";
-import { rootReducer } from "../../core/store/rootReducer";
 import { TRightSidebarState } from "../../core/store/stateTypes";
-import { createStore } from "../../core/store/Store";
+import { Store } from "../../core/store/Store";
 import { TUser } from "../../models/types";
 import { AppService } from "../../services/AppService";
 import { $, TDomAbstraction } from "../../utils/dom-abstraction";
@@ -14,7 +13,7 @@ export class RightSidebarController {
    constructor(private component: Component) {}
 
    static getState(): TRightSidebarState {
-      return createStore(rootReducer).getState().rightSidebar ?? {};
+      return Store.get().getState().rightSidebar ?? {};
    }
 
    changeContent(): void {

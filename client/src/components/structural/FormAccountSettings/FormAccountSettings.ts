@@ -11,14 +11,14 @@ import {
 import { Validators } from "../../../core/validator/validators";
 import { AccountController } from "../../../controllers/AccountController/AccountController";
 
-const { required, email } = Validators;
+const { required, email, minLength } = Validators;
 
 export const FormAccountSettings = {
    name: "FormAccountSettings",
    template: template,
    components: [InputGroup],
    props: {
-      account: AppService.getAccount(),
+      account: {},
       form: {},
       form_control: {},
    },
@@ -34,9 +34,7 @@ export const FormAccountSettings = {
       onSubmit(e: Event & { target: HTMLFormElement }): void {
          if ($(e.target).hasClass("form__account_settings")) {
             e.preventDefault();
-            if (verify(this)()) {
-               new AccountController(this).update(new FormData(e.target));
-            }
+            new AccountController(this).update(new FormData(e.target));
          }
       },
    },
@@ -55,13 +53,17 @@ export const FormAccountSettings = {
             value: this.props.account.first_name,
             validators: { required },
          },
-         last_name: {
-            value: this.props.account.last_name,
+         second_name: {
+            value: this.props.account.second_name,
             validators: { required },
          },
          display_name: {
             value: this.props.account.display_name,
             validators: { required },
+         },
+         phone: {
+            value: this.props.account.phone,
+            validators: { required, minLength: minLength(4) },
          },
       };
    },

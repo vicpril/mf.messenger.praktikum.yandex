@@ -21,3 +21,14 @@ export function accountPasswordChange(data: any): TAction {
       data,
    };
 }
+
+export function setSession(data: any = null): TAction {
+   return data
+      ? {
+           type: Actions.AUTH_SIGN_IN,
+           data: data?.login,
+        }
+      : {
+           type: Actions.AUTH_LOGOUT,
+        };
+}

@@ -7,6 +7,8 @@ import { AppService } from "../../../services/AppService";
 import { isUndefined } from "../../../utils/pure-functions";
 import { sortByTime } from "../../../utils/sortMessages";
 import template from "./Messager.tmpl";
+import { AuthController } from "../../../controllers/Auth/AuthController";
+import { AccountController } from "../../../controllers/AccountController/AccountController";
 
 export const Messager = {
    name: "Messager",
@@ -14,7 +16,7 @@ export const Messager = {
    components: [Block],
    props: {
       chat: {},
-      account: AppService.getAccount(),
+      account: {},
       blocks: [],
    },
    listeners: [],
@@ -28,8 +30,8 @@ export const Messager = {
    methods: {},
    beforePrepare() {
       this.props.chat = AppService.getSelectedChat();
+      this.props.account = AccountController.getAccount();
    },
-
    beforeCreate() {
       this.props.blocks = [
          ...buildBlocksHistory(this.props.chat, this.props.account),

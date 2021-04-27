@@ -14,3 +14,7 @@ export type TRightSidebarState = {
 };
 
 export type TAccountState = TAccount;
+
+export type TSessionState = {
+   login?: string | null;
+};

@@ -3,6 +3,7 @@ import { mergeDeep } from "../../utils/mergeDeep";
 import { mergeObjects } from "../../utils/mergeObjects";
 import { Actions } from "./actionTypes";
 import { TState } from "./stateTypes";
+// eslint-disable-next-line import/no-cycle
 import { TAction } from "./Store";
 
 export function rootReducer(state: TState, action: TAction): TState {
@@ -47,6 +48,8 @@ export function rootReducer(state: TState, action: TAction): TState {
          return {
             ...state,
             session: {},
+            rightSidebar: {},
+            accountSettings: {} as TAccount,
          };
 
       default:

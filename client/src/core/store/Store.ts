@@ -1,4 +1,6 @@
 import { isEmpty } from "../../utils/isEmpty";
+// eslint-disable-next-line import/no-cycle
+import { rootReducer } from "./rootReducer";
 import { TState } from "./stateTypes";
 
 export type StoreSubscriberMethod = (state: TState) => void;
@@ -12,7 +14,7 @@ export type TStore = InstanceType<typeof Store>;
 export type TAction = { type: string; data?: any };
 export type TReducer = (state: TState, action: TAction) => TState;
 
-class Store {
+export class Store {
    static _instance = {} as Store;
 
    private state: TState = {};
@@ -42,6 +44,11 @@ class Store {
 
    getState() {
       return this.state;
+   }
+
+   // alias for createStore(rootReducer)
+   static get(): Store {
+      return createStore(rootReducer);
    }
 }
 

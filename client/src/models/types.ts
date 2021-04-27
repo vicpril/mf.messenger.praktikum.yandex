@@ -6,7 +6,7 @@ export type TUser = {
    login: string;
    email: string;
    first_name: string;
-   last_name: string;
+   second_name: string;
    display_name: string;
    avatar?: string;
    password?: string;

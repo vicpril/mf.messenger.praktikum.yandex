@@ -3,8 +3,7 @@ import { isEmpty } from "../../utils/isEmpty";
 import { trim } from "../../utils/pure-functions";
 import { IIngredients } from "../ComponentInterfaces";
 import { LoaderInit } from "../loader/loader";
-import { rootReducer } from "../store/rootReducer";
-import { createStore } from "../store/Store";
+import { Store } from "../store/Store";
 // eslint-disable-next-line import/no-cycle
 import { Route } from "./Route";
 
@@ -54,10 +53,10 @@ export class Router {
    private auth(pathname: string) {
       const authPages = ["signin", "signup"];
 
-      const { session } = createStore(rootReducer).getState();
+      const { session } = Store.get().getState();
 
       const routname = this.getRouteName(pathname);
-      if (!isEmpty(session) && session?.login) {
+      if (!isEmpty(session) || session?.login) {
          if (authPages.includes(routname)) {
             Router.navigate("chats");
          }

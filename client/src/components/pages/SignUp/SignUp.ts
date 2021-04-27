@@ -9,6 +9,8 @@ import {
    verify,
 } from "../../../core/validator/form";
 import { Router } from "../../../core/router/Router";
+// eslint-disable-next-line import/no-cycle
+import { AuthController } from "../../../controllers/Auth/AuthController";
 
 const { required, minLength, email } = Validators;
 
@@ -30,13 +32,14 @@ export const SignUp = {
             value: "",
             validators: { required },
          },
-         last_name: {
+         second_name: {
             value: "",
             validators: { required },
          },
          password: {
             value: "",
             validators: { required, minLength: minLength(3) },
+            type: "password",
          },
          phone: {
             value: "",
@@ -54,13 +57,10 @@ export const SignUp = {
          }
       },
 
-      onSubmit(e: Event & { target: Element }): void {
+      onSubmit(e: Event & { target: HTMLFormElement }): void {
          if ($(e.target).hasClass("form__sign_up")) {
             e.preventDefault();
-
-            if (verify(this)()) {
-               console.log("Form SignUp:", this.props.form);
-            }
+            new AuthController(this).register(new FormData(e.target));
          }
       },
       onClick(e: Event & { target: HTMLElement }) {

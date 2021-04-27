@@ -1,6 +1,6 @@
-import { HideLoader } from "../loader/loader";
+import { HideLoader, ShowLoader } from "../loader/loader";
 import { notifyError } from "../notify/notify";
-import { BaseAPI } from "./BaseApi";
+import { ApiResponse, BaseAPI } from "./BaseApi";
 import { XHR, XHROptions, METHOD } from "./XHR";
 
 type LoginData = {
@@ -8,15 +8,22 @@ type LoginData = {
    password: string;
 };
 
-type ApiResponse = {
-   status: "success" | "failed";
-   data?: any;
+type RegisterData = {
+   first_name: string;
+   second_name: string;
+   login: string;
+   email: string;
+   password: string;
+   phone: string;
 };
 
 export type LoginOptions = XHROptions & {
    data: LoginData;
 };
 
+export type RegisterOptions = XHROptions & {
+   data: RegisterData;
+};
 export class AuthAPI extends BaseAPI {
    private host = `${this.basehost}/auth`;
 
@@ -26,10 +33,15 @@ export class AuthAPI extends BaseAPI {
          ...{
             withCredentials: true,
          },
+         beforeRequest: ShowLoader(),
       };
 
       return XHR.post(`${this.host}/signin`, options)
-         .then((): ApiResponse => ({ status: "success" }))
+         .then(
+            (): ApiResponse => ({
+               status: "success",
+            })
+         )
          .catch(
             (err): ApiResponse => {
                if (err.reason === "User already in system") {
@@ -44,21 +56,61 @@ export class AuthAPI extends BaseAPI {
          });
    }
 
-   logout() {
+   logout(): Promise<ApiResponse> {
       const options = {
          withCredentials: true,
       };
 
       return XHR.post(`${this.host}/logout`, options)
-         .then(() => ({ status: "success" }))
-         .catch((err) => {
-            notifyError(err.reason);
-            return { status: "failed" };
-         })
+         .then((): ApiResponse => ({ status: "success" }))
+         .catch(
+            (err): ApiResponse => {
+               notifyError(err.reason);
+               return { status: "failed" };
+            }
+         )
          .finally(() => {
             HideLoader();
          });
    }
 
-   register() {}
+   register(options: RegisterOptions): Promise<ApiResponse> {
+      options = {
+         ...options,
+         ...{
+            withCredentials: true,
+         },
+      };
+
+      return XHR.post(`${this.host}/signup`, options)
+         .then((): ApiResponse => ({ status: "success" }))
+         .catch(
+            (err): ApiResponse => {
+               notifyError(err.reason);
+               return { status: "failed" };
+            }
+         )
+         .finally(() => {
+            HideLoader();
+         });
+   }
+
+   account(): Promise<ApiResponse> {
+      const options = {
+         withCredentials: true,
+         beforeRequest: ShowLoader(),
+      };
+
+      return XHR.get(`${this.host}/user`, options)
+         .then((resp): ApiResponse => ({ status: "success", data: resp }))
+         .catch(
+            (err): ApiResponse => {
+               notifyError(err.reason);
+               return { status: "failed" };
+            }
+         )
+         .finally(() => {
+            HideLoader();
+         });
+   }
 }

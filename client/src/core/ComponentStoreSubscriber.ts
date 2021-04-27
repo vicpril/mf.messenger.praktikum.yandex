@@ -1,11 +1,8 @@
-import { Indexed } from "../utils/mergeDeep";
-import { isEqual } from "../utils/pure-functions";
 import { ComponentDOMListener } from "./ComponentDOMListener";
 import { IIngredients } from "./ComponentInterfaces";
-import { rootReducer } from "./store/rootReducer";
 import { TState } from "./store/stateTypes";
 import {
-   createStore,
+   Store,
    StoreSubscriberMethods,
    StoreSubscription,
    TAction,
@@ -13,7 +10,7 @@ import {
 } from "./store/Store";
 
 export class ComponentStoreSubscriber extends ComponentDOMListener {
-   private store: TStore = createStore(rootReducer);
+   private store: TStore = Store.get();
    protected storeSubscribers: StoreSubscriberMethods;
    private prevState: TState;
    private storeSubscriptions: StoreSubscription[] = [];
