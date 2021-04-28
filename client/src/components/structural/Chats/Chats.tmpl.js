@@ -35,7 +35,7 @@ export default /* html */ `
          <!-- end usersremote -->
       <v-else>
          <div class="remote_placeholder__wrapper">
-         <h4 class="remote_placeholder">For searching type 3 or more symbols</h4>
+            <h4 class="remote_placeholder">{{remotePlaceholder}}</h4>
          </div>
       </v-if>
 

@@ -6,14 +6,14 @@ import { strContains } from "../../../utils/pure-functions";
 import template from "./Chats.tmpl";
 import { LeftSidebarViews } from "../../../controllers/LeftSidebar/LeftSidebarViews";
 import { UserRemote } from "../UserRemote/UserRemote";
-import { User } from "../../../models/User";
+import { User, UserFields } from "../../../models/User";
 import { AppService } from "../../../services/AppService";
 import { LeftSidebarController } from "../../../controllers/LeftSidebar/LeftSidebarController";
 import {
    HideLeftSidebarLoader,
    LeftSidebarLoaderInit,
-   ShowLeftSidebarLoader,
 } from "../../../controllers/LeftSidebar/LeftSidebarLoader/LeftSidebarLoader";
+import { UsersController } from "../../../controllers/Users/UsersController";
 
 export const Chats = {
    name: "Chats",
@@ -24,6 +24,7 @@ export const Chats = {
       chats: [],
       chatsFiltered: [],
       usersRemote: [],
+      remotePlaceholder: getPlaceholder(),
    },
    listeners: [],
    methods: {},
@@ -32,20 +33,26 @@ export const Chats = {
          this.props.chatsFiltered = getChatsFiltered.call(this, s);
          this.$emit(this.EVENTS.UPDATE);
       },
-      "ChatSearch:input": function (s: string) {
+      "ChatSearch:input": async function (s: string) {
          if (s.length >= 3) {
-            ShowLeftSidebarLoader()();
+            const users = await getRemoteUsers(s);
+            this.props.usersRemote = users;
+            this.props.remotePlaceholder = getPlaceholder(s);
+            this.$emit(this.EVENTS.UPDATE);
          } else {
-            HideLeftSidebarLoader();
+            resetRemote.call(this);
          }
          this.$emit(this.EVENTS.UPDATE);
       },
       toggleLeftSidebarView: function (view: LeftSidebarViews) {
-         HideLeftSidebarLoader();
+         resetRemote.call(this);
          if (this.props.view !== view) {
             this.props.view = view;
             this.$emit(this.EVENTS.UPDATE);
          }
+      },
+      "App:destroy": () => {
+         HideLeftSidebarLoader();
       },
    },
    beforePrepare() {
@@ -66,9 +73,20 @@ function getChatsFiltered(s: string): TChat[] {
    );
 }
 
-function getRemoteUsers(): User[] {
-   return this.props.chats.map((c: TChat) => {
-      const u = c.user;
-      return new User(u);
-   });
+async function getRemoteUsers(search: string) {
+   const users = await UsersController.search(search);
+   return users.map((data: UserFields) => new User(data));
+}
+
+function getPlaceholder(s: string = "") {
+   if (s.length >= 3) {
+      return `No users found with login "${s}"`;
+   }
+   return "For searching type 3 or more symbols";
+}
+
+function resetRemote() {
+   this.props.usersRemote = [];
+   this.props.remotePlaceholder = getPlaceholder();
+   HideLeftSidebarLoader();
 }

@@ -1,3 +1,7 @@
+import {
+   HideLeftSidebarLoader,
+   ShowLeftSidebarLoader,
+} from "../../controllers/LeftSidebar/LeftSidebarLoader/LeftSidebarLoader";
 import { UserFields } from "../../models/User";
 import { HideLoader, ShowLoader } from "../loader/loader";
 import { notifyError } from "../notify/notify";
@@ -42,6 +46,7 @@ export class UsersAPI extends BaseAPI {
             login,
          },
          withCredentials: true,
+         beforeRequest: ShowLeftSidebarLoader(),
       };
 
       return XHR.post(`${this.host}/search`, options)
@@ -52,7 +57,9 @@ export class UsersAPI extends BaseAPI {
                return { status: "failed" };
             }
          )
-         .finally(() => {});
+         .finally(() => {
+            HideLeftSidebarLoader();
+         });
    }
 
    update(data: Omit<UserFields, "id" | "avatar">): Promise<ApiResponse> {
