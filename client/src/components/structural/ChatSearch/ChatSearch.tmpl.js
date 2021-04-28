@@ -8,7 +8,7 @@ export default /* html */ `
       method="{{method}}"
    </v-if>
    >
-   <input type="text" class="input input__search_chats" name="search" value="" placeholder="Search"
+   <input type="text" class="input input__search_chats" name="search" value="" placeholder="Search user by login"
    </form>
 </div>
 `;

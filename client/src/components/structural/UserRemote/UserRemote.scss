@@ -1,0 +1,99 @@
+@import "../../../styles/variables";
+
+.account__user {
+   padding: 10px;
+
+   &:hover {
+      background-color: $light !important;
+      transform: translate(0) !important;
+      cursor: default;
+   }
+}
+
+.user_remote__wrapper {
+   display: flex;
+   flex-flow: row nowrap;
+   padding: 10px;
+   border-radius: 10px;
+   // cursor: pointer;
+   transition: background-color 0.5s ease-out, transform 0.5s ease-out;
+
+   &:first-child {
+      margin-top: 0;
+   }
+
+   &:hover {
+      background-color: $hover;
+      transform: translate(5px);
+   }
+}
+
+.user__active {
+   background-color: $primary;
+   box-shadow: 3px 3px 10px 2px rgba(101, 136, 222, 0.51);
+   cursor: default;
+
+   &:hover {
+      background-color: $primary;
+      box-shadow: 3px 3px 10px 2px rgba(101, 136, 222, 0.51);
+      transform: translate(0);
+   }
+
+   .user__displayname,
+   .user__last_message,
+   .last_message_date {
+      color: $text-white;
+   }
+}
+
+.user__info {
+   display: flex;
+   flex: 1;
+   flex-flow: column;
+   max-width: 150px;
+   margin-left: 10px;
+}
+.user__displayname {
+   flex: 1;
+   padding-top: 5px;
+   color: $text-grey;
+   font-weight: 600;
+   font-size: 13px;
+   font-style: normal;
+}
+.user__last_message {
+   flex: 1;
+   overflow: hidden;
+   color: $text-light-grey;
+   font-weight: 300;
+   font-size: 11px;
+   line-height: 15px;
+   white-space: nowrap;
+   text-overflow: ellipsis;
+}
+.user_remote__actions {
+   display: flex;
+   flex-direction: column;
+   justify-content: center;
+   width: 60px;
+}
+
+.button__add_user {
+   font-size: 1.5em;
+}
+
+span.user_added {
+   display: none;
+   color: $success;
+   font-size: 1.5em;
+   text-align: center;
+}
+
+.user_remote__wrapper.added {
+   .button__add_user {
+      display: none;
+   }
+   span.user_added {
+      display: block;
+   }
+}

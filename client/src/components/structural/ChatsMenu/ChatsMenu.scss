@@ -1,0 +1,41 @@
+@import "../../../styles/variables";
+
+.menu__wrapper {
+   display: flex;
+   flex-direction: row;
+   justify-content: space-around;
+   align-items: center;
+   box-sizing: border-box;
+
+   .button {
+      padding: 18px 18px;
+      border-bottom: 4px solid transparent !important;
+      border-radius: 0;
+
+      &.active {
+         border-color: darken($primary, 20%) !important;
+         cursor: default;
+      }
+
+      i {
+         font-size: 1.5em;
+      }
+   }
+}
+
+.chats__menu {
+   position: fixed;
+   bottom: 0;
+   z-index: 3000;
+   width: 310px;
+   padding: 0 10px;
+   background-color: $light;
+   border-top: 1px solid $grey;
+}
+
+.input__search_chats {
+   flex-grow: 1;
+   align-self: stretch;
+   margin: 20px, 10px !important;
+   text-align: center;
+}

@@ -1,0 +1,32 @@
+@import "../../../styles/variables";
+
+.search__wrapper {
+   display: flex;
+   flex-direction: row;
+   align-content: center;
+   padding: 16px;
+}
+
+.chats__filter {
+   position: fixed;
+   bottom: 0;
+   z-index: 2000;
+   width: 310px;
+   padding: 0 10px;
+   background-color: $light;
+   border-top: 1px solid $grey;
+   opacity: 0;
+   transition: all 0.5s ease-out;
+
+   &.show {
+      transform: translateY(-60px);
+      opacity: 1;
+   }
+}
+
+.input__search_chats {
+   flex-grow: 1;
+   align-self: stretch;
+   margin: 20px, 10px !important;
+   text-align: center;
+}

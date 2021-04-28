@@ -1,3 +1,5 @@
+import { removeNonCSSSymbolsFromStr } from "./pure-functions";
+
 export type TDomAbstraction = InstanceType<typeof DomAbstraction>;
 
 class DomAbstraction {
@@ -36,6 +38,24 @@ class DomAbstraction {
       return (this.$el.textContent as string).trim();
    }
 
+   val(): string;
+   val(val: string): DomAbstraction;
+   val(val?: string): string | DomAbstraction {
+      if (typeof val === "string") {
+         if (this.$el.tagName.toLowerCase() === "textarea") {
+            this.$el.textContent = val;
+         }
+         if (this.$el.tagName.toLowerCase() === "input") {
+            (this.$el as HTMLInputElement).value = val;
+         }
+         return this;
+      }
+      if (this.$el.tagName.toLowerCase() === "input") {
+         return (this.$el as HTMLInputElement).value.trim();
+      }
+      return (this.$el.textContent as string).trim();
+   }
+
    get data(): DOMStringMap {
       return this.$el.dataset;
    }
@@ -50,15 +70,17 @@ class DomAbstraction {
       return this;
    }
 
-   on(eventType: string, callback: () => {}, useCapture: boolean = false) {
+   on(eventType: string, callback: () => any, useCapture: boolean = false) {
       this.$el.addEventListener(eventType, callback, useCapture);
+      return this;
    }
 
-   off(eventType: string, callback: () => {}) {
+   off(eventType: string, callback: (...args: any) => any) {
       this.$el.removeEventListener(eventType, callback);
+      return this;
    }
 
-   find(selector: string) {
+   find(selector: string): TDomAbstraction {
       // eslint-disable-next-line @typescript-eslint/no-use-before-define
       return $(this.$el.querySelector(selector) as HTMLElement);
    }
@@ -69,13 +91,13 @@ class DomAbstraction {
 
    css(styles: { [name: string]: any }): TDomAbstraction {
       Object.keys(styles).forEach((key) => {
-         this.$el.style[<any>key] = styles[key];
+         this.$el.setAttribute("style", `${key}: ${styles[key]};`);
       });
       return this;
    }
 
    hasClass(niddle: string): boolean {
-      return this.$el.classList.contains(niddle);
+      return this.$el?.classList.contains(niddle);
    }
 
    hasId(niddle: string): boolean {
@@ -144,7 +166,12 @@ export function $(selector: HTMLElement | Element | string): DomAbstraction {
 $.create = (tagName: string, className?: string): DomAbstraction => {
    const el = document.createElement(tagName);
    if (className) {
-      el.classList.add(className);
+      const classes = className.split(" ");
+      classes.forEach((cName) => {
+         if (cName.length === removeNonCSSSymbolsFromStr(cName).length) {
+            el.classList.add(cName);
+         }
+      });
    }
    return $(el);
 };

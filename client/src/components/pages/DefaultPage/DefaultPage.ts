@@ -1,5 +1,6 @@
 import template from "./DefaultPage.tmpl";
 import "./DefaultPage.scss";
+import { Router } from "../../../core/router/Router";
 
 export const DefaultPage = {
    name: "DefaultPage",
@@ -10,9 +11,16 @@ export const DefaultPage = {
       title: "Welcome to Easy conversation chats",
       content: "You will find a companion for any topic here",
    },
-   listeners: [],
    subscribers: {},
-   methods: {},
+   listeners: ["click"],
+   methods: {
+      onClick(e: Event & { target: HTMLElement }) {
+         if (e.target.dataset.action === "back") {
+            e.preventDefault();
+            Router.back();
+         }
+      },
+   },
    beforeCreate() {
       this.template = switchContentTag(this.components[0].name, this.template);
    },

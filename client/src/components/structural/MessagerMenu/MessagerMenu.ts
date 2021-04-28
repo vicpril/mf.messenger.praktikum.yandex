@@ -27,8 +27,8 @@ export const MessagerMenu = {
          const $input = $(e.target);
          if ($input.hasClass("input__message")) {
             this.props.form.message.value = e.target.value;
-            const control = useForm(this.props.form);
-            if (control.message.valid) {
+            const control = useForm(this.props.form).controls;
+            if (control && control.message.valid) {
                $input.removeClass("invalid");
             } else {
                $input.addClass("invalid");
@@ -40,8 +40,8 @@ export const MessagerMenu = {
          if ($input.hasClass("messager__form")) {
             e.preventDefault();
 
-            const control = useForm(this.props.form);
-            if (!control.message.valid) {
+            const control = useForm(this.props.form).controls;
+            if (control && !control.message.valid) {
                $input.addClass("invalid");
                if (control.message.errors) {
                   alert(control.message.errors.restrictedSymbols.message);

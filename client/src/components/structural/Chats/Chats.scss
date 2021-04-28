@@ -4,6 +4,7 @@
    flex-direction: column;
    align-content: stretch;
    margin-top: 10px;
+   overflow-x: hidden;
    background-color: $light;
    border-radius: 0 20px 0 0;
 }
@@ -11,7 +12,7 @@
 .chats_scrollable {
    position: fixed;
    top: 80px;
-   bottom: 73px;
+   bottom: 60px;
    left: 0;
    flex: 1;
    width: 330px;
@@ -21,7 +22,7 @@
    &:hover {
       position: fixed;
       top: 320;
-      bottom: 73px;
+      bottom: 60px;
       left: 0;
       z-index: 3999;
       overflow-y: auto;
@@ -30,9 +31,24 @@
 
 .chats {
    flex-direction: column;
+   min-width: 310px !important;
    padding: 0 10px;
 }
 
 .chats__user {
    padding: 10px;
+}
+
+.remote_placeholder__wrapper {
+   position: fixed;
+   top: 100px;
+   bottom: 124px;
+   display: flex;
+   flex-direction: column;
+   justify-content: center;
+   align-items: center;
+   width: 310px;
+}
+.remote_placeholder {
+   margin: 0;
 }

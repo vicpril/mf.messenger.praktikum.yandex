@@ -8,6 +8,8 @@ import { TMessage } from "../../../models/types";
 import { isEmpty } from "../../../utils/isEmpty";
 import { sortByTime } from "../../../utils/sortMessages";
 import template from "./Chat.tmpl";
+import { InfoUser } from "../InfoUser/InfoUser";
+import { Router } from "../../../core/router/Router";
 
 export const Chat = {
    name: "Chat",
@@ -15,7 +17,7 @@ export const Chat = {
    components: [Avatar],
    props: {
       chat: {},
-      selectedChat: AppService.getSelectedChat(),
+      selectedChat: {},
    },
    listeners: ["click"],
    subscribers: {},
@@ -24,17 +26,20 @@ export const Chat = {
          // Click on active Avatar
          if ($(e.target).hasClass("pulse")) {
             const { login } = this.props.chat.user;
-            document.location.href = `/contact-info.html?info=${login}`;
+            const data = { componentName: InfoUser.name, login };
+            this.$emit("openRightSidebar", data);
          }
          // Click on wrapper
          else if (checkSwitchUserPossible(e.target)) {
             const { login } = this.props.chat.user;
-            document.location.href = `/?user=${login}`;
+            // document.location.href = `/?user=${login}`;
+            Router.navigate("chats", login);
          }
       },
    },
    beforePrepare() {
       this.name = `${this.name}_${this.props.chat.user.login}`;
+      this.props.selectedChat = AppService.getSelectedChat();
    },
    beforeCreate() {
       const P = this.props; // just alias

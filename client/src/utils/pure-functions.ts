@@ -73,6 +73,14 @@ export function trimQuotes(text: string): string {
    return text.replace(regExp, "$1");
 }
 
+export function trim(str: string, niddle = ""): string {
+   if (!niddle) {
+      return str.trim();
+   }
+   const regExp = new RegExp(`^[${niddle}]+|[${niddle}]+$`, "g");
+   return str.replace(regExp, "");
+}
+
 type TColor = string;
 export function strToColor(str: string): TColor {
    return intToRGB(hashCode(str));
@@ -132,4 +140,68 @@ export function strToLodash(string: string): string {
 export function lodashToStr(string: string): string {
    string = string.replace(/_/gi, " ");
    return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
+export function removeNonCSSSymbolsFromStr(highstack: string): string {
+   return highstack.replace(/[;:.,&%@#]/, "");
+}
+
+export function arrayUnique(arr: any[]): any[] {
+   const set = new Set(arr);
+   return Array.from(set);
+}
+
+export function isArray(value: unknown): value is [] {
+   return Array.isArray(value);
+}
+
+type PlainObject<T = unknown> = {
+   [k in string]: T;
+};
+
+export function isPlainObject(value: unknown): value is PlainObject {
+   return (
+      typeof value === "object" &&
+      value !== null &&
+      value.constructor === Object &&
+      Object.prototype.toString.call(value) === "[object Object]"
+   );
+}
+
+export function isArrayOrObject(value: unknown): value is [] | PlainObject {
+   return isPlainObject(value) || isArray(value);
+}
+
+export type Indexed<T = unknown> = {
+   [key in string]: T;
+};
+
+export function isEqual(lhs: PlainObject, rhs: PlainObject) {
+   // Сравнение количества ключей объектов и массивов
+   if (Object.keys(lhs).length !== Object.keys(rhs).length) {
+      return false;
+   }
+
+   // eslint-disable-next-line no-restricted-syntax
+   for (const [key, value] of Object.entries(lhs)) {
+      const rightValue = rhs[key];
+      if (isArrayOrObject(value) && isArrayOrObject(rightValue)) {
+         // Здесь value и rightValue может быть только массивом или объектом
+         // И TypeScript это обрабатывает
+         if (isEqual(value as PlainObject, rightValue as PlainObject)) {
+            continue;
+         }
+         return false;
+      }
+
+      if (value !== rightValue) {
+         return false;
+      }
+   }
+
+   return true;
+}
+
+export function isSuccess(status: string): boolean {
+   return status === "success";
 }

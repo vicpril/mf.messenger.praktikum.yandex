@@ -31,6 +31,12 @@
    border-radius: 25px;
 }
 
+.right_sidebar__content {
+   display: flex;
+   flex-grow: 1;
+   flex-flow: column nowrap;
+}
+
 .info__section {
    display: flex;
    flex-grow: 1;

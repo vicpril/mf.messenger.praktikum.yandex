@@ -1,6 +1,7 @@
 @import "../../../styles/variables";
 
 img.user__avatar {
+   object-fit: cover;
    width: 44px;
    height: 44px;
    background-color: #fff;
@@ -17,9 +18,12 @@ img.user__avatar {
 
 /***** Pulse *****/
 
-.pulse:hover {
-   animation: pulse 0.5s infinite;
-   animation-timing-function: linear;
+.pulse {
+   cursor: pointer;
+   &:hover {
+      animation: pulse 0.5s infinite;
+      animation-timing-function: linear;
+   }
 }
 
 @keyframes pulse {

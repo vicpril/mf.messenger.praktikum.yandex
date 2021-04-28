@@ -1,5 +1,6 @@
 import { TChat, TUser } from "../models/types";
-import { first, getUrlParameter } from "../utils/pure-functions";
+import { first } from "../utils/pure-functions";
+import { ActiveRoute } from "../core/router/ActiveRoute";
 
 import account = require("../models/modelAccount.json");
 import chats = require("../models/modelChats.json");
@@ -14,7 +15,7 @@ export class AppService {
    }
 
    static getSelectedChat(): TChat | null {
-      const userlogin = getUrlParameter("user");
+      const userlogin = ActiveRoute.param ?? undefined;
       if (!userlogin) {
          return null;
       }
@@ -23,11 +24,15 @@ export class AppService {
             (chat: TChat) => chat.user.login === userlogin
          )
       );
+
       return chat || null;
    }
 
-   static getChatInfo(): TChat | null {
-      const userlogin = getUrlParameter("info");
+   static getChatInfo(userlogin?: string): TChat | null {
+      if (!userlogin) {
+         userlogin = ActiveRoute.param ?? undefined;
+         // userlogin = getUrlParameter("info") ?? undefined;
+      }
       if (!userlogin) {
          return null;
       }
