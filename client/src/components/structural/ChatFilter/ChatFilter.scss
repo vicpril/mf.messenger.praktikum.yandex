@@ -16,7 +16,7 @@
    background-color: $light;
    border-top: 1px solid $grey;
    opacity: 0;
-   transition: all 0.4s ease-out;
+   transition: all 0.5s ease-out;
 
    &.show {
       transform: translateY(-66px);

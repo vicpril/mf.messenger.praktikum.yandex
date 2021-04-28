@@ -16,11 +16,6 @@ export const MainWindow = {
    props: {},
    listeners: [],
    subscribers: {
-      pageChange: function (page: string) {
-         this.props.page = page;
-         this.$emit(this.EVENTS.UPDATE);
-         this.$emit("openRightSidebar");
-      },
       closeRightSidebar: function () {
          this.$root.addClass("right_sidebar__close");
          const actionData = { status: "close" };

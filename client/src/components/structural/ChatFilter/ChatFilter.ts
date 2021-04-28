@@ -1,18 +1,18 @@
-import "./ChatSearch.scss";
+import "./ChatFilter.scss";
 
 import { $ } from "../../../utils/dom-abstraction";
-import template from "./ChatSearch.tmpl";
+import template from "./ChatFilter.tmpl";
 import { LeftSidebarViews } from "../../../controllers/LeftSidebar/LeftSidebarViews";
 
-export const ChatSearch = {
-   name: "ChatSearch",
+export const ChatFilter = {
+   name: "ChatFilter",
    template: template,
    components: [],
    props: {},
    listeners: ["input"],
    subscribers: {
       toggleLeftSidebarView: function (view: LeftSidebarViews) {
-         if (view === LeftSidebarViews.ChatsSearch) {
+         if (view === LeftSidebarViews.ChatsFilter) {
             showPanel.call(this);
          } else {
             hidePanel.call(this);
@@ -22,7 +22,7 @@ export const ChatSearch = {
    methods: {
       onInput(e: Event & { target: HTMLInputElement }) {
          if ($(e.target).hasClass("input__search_chats")) {
-            this.$emit("ChatSearch:input", e.target.value);
+            this.$emit("ChatFilter:input", e.target.value);
          }
       },
    },

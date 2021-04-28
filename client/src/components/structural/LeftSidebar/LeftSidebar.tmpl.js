@@ -8,8 +8,15 @@ export default /* html */ `
         <!-- Chats -->
         <Chats bind:chats="chats"></Chats>
         <!-- end chats -->
-
+        <!-- ChatsFilter -->
+        <ChatFilter></ChatFilter>
+        <!-- end chatsFilter -->
+        <!-- ChatsSearch -->
         <ChatSearch></ChatSearch>
+        <!-- end chatsSearch -->
+        <!-- ChatsMenu -->
+        <ChatsMenu></ChatsMenu>
+        <!-- end chatsMenu -->
         
     </div>
     <!-- end Chats wrapper-->

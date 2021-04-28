@@ -7,6 +7,12 @@ export function rightSidebar(data: any): TAction {
       data,
    };
 }
+export function leftSidebar(data: any): TAction {
+   return {
+      type: Actions.LEFTSIDEBAR_CHANGE_VIEW,
+      data,
+   };
+}
 
 export function accountSettingsUpdate(data: any): TAction {
    return {

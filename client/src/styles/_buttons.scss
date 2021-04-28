@@ -71,6 +71,10 @@
    &:active {
       color: darken($color, 20%);
    }
+
+   &.active {
+      color: darken($color, 20%);
+   }
 }
 
 .button_empty_primary {

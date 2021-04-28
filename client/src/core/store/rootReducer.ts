@@ -16,6 +16,13 @@ export function rootReducer(state: TState, action: TAction): TState {
             rightSidebar: { ...mergeObjects(prevState, action.data) },
          };
 
+      case Actions.LEFTSIDEBAR_CHANGE_VIEW:
+         prevState = state.leftSidebar || {};
+         return {
+            ...state,
+            leftSidebar: { ...mergeObjects(prevState, action.data) },
+         };
+
       case Actions.ACCOUNT_SETTINGS_UPDATE:
          prevState = state.accountSettings || {};
          return {

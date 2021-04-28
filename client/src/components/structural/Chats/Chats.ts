@@ -14,7 +14,7 @@ export const Chats = {
    listeners: [],
    methods: {},
    subscribers: {
-      "ChatSearch:input": function (s: string) {
+      "ChatFilter:input": function (s: string) {
          this.props.chatsFiltered = this.props.chats.filter((chat: TChat) =>
             strContains(s, chat.user.display_name, false)
          );
@@ -23,9 +23,5 @@ export const Chats = {
    },
    beforePrepare() {
       this.props.chatsFiltered = this.props.chats;
-   },
-   async afterInit() {
-      // const user = await UsersController.get(37768);
-      // console.log("~ user", user);
    },
 };
