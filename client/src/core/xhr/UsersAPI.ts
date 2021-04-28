@@ -2,7 +2,7 @@ import { UserFields } from "../../models/User";
 import { HideLoader, ShowLoader } from "../loader/loader";
 import { notifyError } from "../notify/notify";
 import { BaseAPI } from "./BaseApi";
-import { XHR, XHROptions } from "./XHR";
+import { XHR } from "./XHR";
 
 type ApiResponse = {
    status: "success" | "failed";
@@ -75,7 +75,25 @@ export class UsersAPI extends BaseAPI {
          });
    }
 
-   updateAvatar() {}
+   changeAvatar(data: FormData): Promise<ApiResponse> {
+      const options = {
+         data,
+         withCredentials: true,
+         beforeRequest: ShowLoader(),
+      };
+
+      return XHR.put(`${this.host}/profile/avatar`, options)
+         .then((resp): ApiResponse => ({ status: "success", data: resp }))
+         .catch(
+            (err): ApiResponse => {
+               notifyError(err.reason);
+               return { status: "failed" };
+            }
+         )
+         .finally(() => {
+            HideLoader();
+         });
+   }
 
    changePassword(data: ChangePasswordData): Promise<ApiResponse> {
       const options = {

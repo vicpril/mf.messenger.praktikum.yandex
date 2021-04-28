@@ -1,17 +1,16 @@
 import template from "./FormChangeAvatar.tmpl";
 import "./FormChangeAvatar.scss";
 import { Avatar } from "../Avatar/Avatar";
-import { AppService } from "../../../services/AppService";
 import { InputFileGroup } from "../InputFileGroup/InputFileGroup";
 import { $ } from "../../../utils/dom-abstraction";
-import { getFormData } from "../../../utils/pure-functions";
+import { AccountController } from "../../../controllers/AccountController/AccountController";
 
 export const FormChangeAvatar = {
    name: "FormChangeAvatar",
    template: template,
    components: [Avatar, InputFileGroup],
    props: {
-      account: AppService.getAccount(),
+      account: {},
    },
    listeners: ["change", "submit"],
    subscribers: {},
@@ -22,18 +21,17 @@ export const FormChangeAvatar = {
                "user_info__avatar"
             ) as HTMLImageElement;
             const newSrc = e.target.value;
-            img.src = newSrc;
+            // img.src = newSrc;
          }
       },
-      onSubmit(e: Event & { target: Element }): void {
+      onSubmit(e: Event & { target: HTMLFormElement }): void {
          if ($(e.target).hasClass("form__avatar_change")) {
             e.preventDefault();
-            const form = e.target as HTMLFormElement;
-            const formData = new FormData(form);
-            const data = getFormData(formData);
-
-            console.log("Change Avatar data:", data);
+            new AccountController(this).changeAvatar(new FormData(e.target));
          }
       },
+   },
+   beforePrepare() {
+      this.props.account = AccountController.getAccount();
    },
 };

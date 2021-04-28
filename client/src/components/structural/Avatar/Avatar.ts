@@ -1,9 +1,10 @@
 import "./Avatar.scss";
 // @ts-ignore: Unreachable code error
-import avatar from "../../../assets/unknown_avatar.png";
+import unknownAvatar from "../../../assets/unknown_avatar.png";
 
 import { strToColor } from "../../../utils/pure-functions";
 import template from "./Avatar.tmpl";
+import { BaseAPI } from "../../../core/xhr/BaseApi";
 
 export const Avatar = {
    name: "Avatar",
@@ -17,7 +18,18 @@ export const Avatar = {
    subscribers: {},
    methods: {},
    beforePrepare() {
-      this.props.avatar = this.props.user.avatar ?? avatar;
+      const { avatar } = this.props.user;
+      let url = "";
+      if (avatar) {
+         if (avatar.startsWith("/")) {
+            url = new BaseAPI().getResourceURL(avatar);
+         } else {
+            url = avatar;
+         }
+      } else {
+         url = unknownAvatar;
+      }
+      this.props.avatar = url;
    },
    beforeCreate() {
       if (!this.props.user) {

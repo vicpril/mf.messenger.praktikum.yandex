@@ -14,7 +14,7 @@ export default /* html */ `
         <Avatar bind:user="account" bind:css="avatar__info" bind:id="user_info__avatar"></Avatar>
         <div class="upload_wrapper">
         <label>Upload picture</label>
-        <InputFileGroup bind:id="avatar_upload" name="avatar"></InputFileGroup>
+        <InputFileGroup bind:id="avatar_upload" bind:name="avatar"></InputFileGroup>
         </div>
     </div>
     

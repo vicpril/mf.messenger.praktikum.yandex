@@ -37,6 +37,9 @@ export class AccountController {
                   type: Actions.ACCOUNT_SETTINGS_UPDATE,
                   data: data,
                });
+               this.component.$dispatch(
+                  actions.setSession({ login: data.login })
+               );
                notify(
                   "Settings was updated successfuly",
                   NoticeStatus.SUCCESS,
@@ -71,6 +74,25 @@ export class AccountController {
          } catch (error) {
             console.warn(error);
          }
+      }
+   }
+
+   async changeAvatar(formData: FormData) {
+      try {
+         const { status, data } = await new UsersAPI().changeAvatar(formData);
+         if (isSuccess(status)) {
+            this.component.$dispatch({
+               type: Actions.ACCOUNT_SETTINGS_UPDATE,
+               data,
+            });
+            notify(
+               "Your avatar was updated successfuly",
+               NoticeStatus.SUCCESS,
+               3000
+            );
+         }
+      } catch (error) {
+         console.warn(error);
       }
    }
 

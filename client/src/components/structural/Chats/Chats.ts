@@ -25,8 +25,7 @@ export const Chats = {
       this.props.chatsFiltered = this.props.chats;
    },
    async afterInit() {
-      // const user = await UsersController.search("clownde");
-      const user = await UsersController.get(37768);
-      console.log("~ user", user);
+      // const user = await UsersController.get(37768);
+      // console.log("~ user", user);
    },
 };

@@ -21,4 +21,13 @@ export class BaseAPI {
    delete(...args: any): Promise<ApiResponse> {
       throw new Error("Not implemented");
    }
+
+   getBaseHost() {
+      return this.basehost;
+   }
+
+   getResourceURL(url: string) {
+      url = url.startsWith("/") ? url : `/${url}`;
+      return `${this.basehost}/resources${url}`;
+   }
 }

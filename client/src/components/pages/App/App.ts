@@ -4,7 +4,7 @@ import { AppService } from "../../../services/AppService";
 import { LeftSidebar } from "../../structural/LeftSidebar/LeftSidebar";
 import { MainWindow } from "../../structural/MainWindow/MainWindow";
 import template from "./App.tmpl";
-import { AccountController } from "../../../controllers/AccountController/AccountController";
+import { HideLoader, ShowLoader } from "../../../core/loader/loader";
 
 export const App = {
    name: "App",
@@ -15,7 +15,7 @@ export const App = {
       chats: AppService.getChats(),
    },
    // afterInit() {
-   //    const account = AccountController.fetch();
-   //    console.log("~ account", account);
+   //    window.showLoader = ShowLoader();
+   //    window.hideLoader = HideLoader;
    // },
 };

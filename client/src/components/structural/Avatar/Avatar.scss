@@ -1,6 +1,7 @@
 @import "../../../styles/variables";
 
 img.user__avatar {
+   object-fit: cover;
    width: 44px;
    height: 44px;
    background-color: #fff;

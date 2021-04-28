@@ -7,7 +7,6 @@ import { AppService } from "../../../services/AppService";
 import { isUndefined } from "../../../utils/pure-functions";
 import { sortByTime } from "../../../utils/sortMessages";
 import template from "./Messager.tmpl";
-import { AuthController } from "../../../controllers/Auth/AuthController";
 import { AccountController } from "../../../controllers/AccountController/AccountController";
 
 export const Messager = {
@@ -25,6 +24,12 @@ export const Messager = {
          setTimeout(() => {
             window.scrollTo(0, this.$root.$el.scrollHeight);
          }, 10);
+      },
+   },
+   storeSubscribers: {
+      accountSettings: function (changes: any) {
+         this.props.account = changes;
+         this.$emit(this.EVENTS.UPDATE);
       },
    },
    methods: {},
