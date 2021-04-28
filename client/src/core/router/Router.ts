@@ -39,30 +39,35 @@ export class Router {
       );
       const { pathname } = window.location;
 
-      this.auth(pathname);
-
-      if (pathname === "/") {
-         this.navigate("chats");
+      if (this.isAuthRedirect(pathname)) {
          return;
       }
+
       this.changePageHandler(window.location.pathname);
 
       LoaderInit();
    }
 
-   private auth(pathname: string) {
+   private isAuthRedirect(pathname: string): boolean {
       const authPages = ["signin", "signup"];
 
       const { session } = Store.get().getState();
-
       const routname = this.getRouteName(pathname);
       if (!isEmpty(session) || session?.login) {
          if (authPages.includes(routname)) {
             Router.navigate("chats");
+            return true;
          }
       } else if (!authPages.includes(routname)) {
          Router.navigate("signin");
+         return true;
       }
+
+      if (pathname === "/") {
+         Router.navigate("chats");
+         return true;
+      }
+      return false;
    }
 
    private changePageHandler(pathname: string) {
