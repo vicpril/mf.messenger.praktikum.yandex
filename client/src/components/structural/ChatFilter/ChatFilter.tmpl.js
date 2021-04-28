@@ -1,5 +1,5 @@
 export default /* html */ `
-<div class="chats__search">
+<div class="chats__filter">
    <form class="form search__wrapper" 
    <v-if="action">    
       action="{{action}}"

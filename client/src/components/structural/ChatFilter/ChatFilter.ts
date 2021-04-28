@@ -14,6 +14,8 @@ export const ChatFilter = {
       toggleLeftSidebarView: function (view: LeftSidebarViews) {
          if (view === LeftSidebarViews.ChatsFilter) {
             showPanel.call(this);
+            const niddle = this.$root.find(".input__search_chats").val();
+            this.$emit("ChatFilter:input", niddle);
          } else {
             hidePanel.call(this);
          }

@@ -6,7 +6,7 @@ export default /* html */ `
     <!-- Chats wrapper-->
     <div class="chats__wrapper chats_scrollable scroll_style">
         <!-- Chats -->
-        <Chats bind:chats="chats"></Chats>
+        <Chats></Chats>
         <!-- end chats -->
         <!-- ChatsFilter -->
         <ChatFilter></ChatFilter>

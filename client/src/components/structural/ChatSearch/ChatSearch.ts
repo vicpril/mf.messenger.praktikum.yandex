@@ -13,6 +13,7 @@ export const ChatSearch = {
    subscribers: {
       toggleLeftSidebarView: function (view: LeftSidebarViews) {
          if (view === LeftSidebarViews.ChatsSearch) {
+            this.$root.find("input").val("");
             showPanel.call(this);
          } else {
             hidePanel.call(this);

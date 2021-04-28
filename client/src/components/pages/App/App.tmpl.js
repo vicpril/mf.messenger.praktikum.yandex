@@ -1,6 +1,6 @@
 export default /* html */ `
    <div class="fluid-container">
-      <LeftSidebar bind:account="account" bind:chats="chats"></LeftSidebar>
+      <LeftSidebar></LeftSidebar>
       <MainWindow></MainWindow>
    </div>
 `;

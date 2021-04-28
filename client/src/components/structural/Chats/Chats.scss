@@ -12,7 +12,7 @@
 .chats_scrollable {
    position: fixed;
    top: 80px;
-   bottom: 67px;
+   bottom: 60px;
    left: 0;
    flex: 1;
    width: 330px;
@@ -22,7 +22,7 @@
    &:hover {
       position: fixed;
       top: 320;
-      bottom: 67px;
+      bottom: 60px;
       left: 0;
       z-index: 3999;
       overflow-y: auto;
@@ -37,4 +37,18 @@
 
 .chats__user {
    padding: 10px;
+}
+
+.remote_placeholder__wrapper {
+   position: fixed;
+   top: 100px;
+   bottom: 124px;
+   display: flex;
+   flex-direction: column;
+   justify-content: center;
+   align-items: center;
+   width: 310px;
+}
+.remote_placeholder {
+   margin: 0;
 }

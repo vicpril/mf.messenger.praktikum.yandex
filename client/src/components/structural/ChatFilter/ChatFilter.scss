@@ -7,7 +7,7 @@
    padding: 16px;
 }
 
-.chats__search {
+.chats__filter {
    position: fixed;
    bottom: 0;
    z-index: 2000;
@@ -19,7 +19,7 @@
    transition: all 0.5s ease-out;
 
    &.show {
-      transform: translateY(-66px);
+      transform: translateY(-60px);
       opacity: 1;
    }
 }
