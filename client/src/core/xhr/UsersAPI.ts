@@ -9,6 +9,11 @@ type ApiResponse = {
    data?: any;
 };
 
+type ChangePasswordData = {
+   oldPassword: string;
+   newPassword: string;
+};
+
 export class UsersAPI extends BaseAPI {
    private host = `${this.basehost}/user`;
 
@@ -54,6 +59,7 @@ export class UsersAPI extends BaseAPI {
       const options = {
          data,
          withCredentials: true,
+         beforeRequest: ShowLoader(),
       };
 
       return XHR.put(`${this.host}/profile`, options)
@@ -64,10 +70,30 @@ export class UsersAPI extends BaseAPI {
                return { status: "failed" };
             }
          )
-         .finally(() => {});
+         .finally(() => {
+            HideLoader();
+         });
    }
 
    updateAvatar() {}
 
-   changePassword() {}
+   changePassword(data: ChangePasswordData): Promise<ApiResponse> {
+      const options = {
+         data,
+         withCredentials: true,
+         beforeRequest: ShowLoader(),
+      };
+
+      return XHR.put(`${this.host}/password`, options)
+         .then((resp): ApiResponse => ({ status: "success", data: resp }))
+         .catch(
+            (err): ApiResponse => {
+               notifyError(err.reason);
+               return { status: "failed" };
+            }
+         )
+         .finally(() => {
+            HideLoader();
+         });
+   }
 }

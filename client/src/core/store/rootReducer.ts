@@ -27,12 +27,7 @@ export function rootReducer(state: TState, action: TAction): TState {
 
       case Actions.ACCOUNT_PASSWORD_CHANGE:
          prevState = state.accountSettings || {};
-         return {
-            ...state,
-            accountSettings: {
-               ...mergeDeep(prevState, action.data),
-            } as TAccount,
-         };
+         return { ...state };
 
       case Actions.AUTH_SIGN_IN:
          prevState = state.session || {};

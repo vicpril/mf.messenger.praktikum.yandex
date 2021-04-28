@@ -49,10 +49,6 @@ export const FormPasswordChange = {
             validators: {
                required,
                minLength: minLength(3),
-               same: same(this.props.account.password),
-            },
-            errorReason: {
-               same: "This field is not equal with your current password",
             },
          },
          new_password: {
