@@ -2,17 +2,11 @@ import {
    HideLeftSidebarLoader,
    ShowLeftSidebarLoader,
 } from "../../controllers/LeftSidebar/LeftSidebarLoader/LeftSidebarLoader";
-import { UserFields } from "../../models/User";
 import { HideLoader, ShowLoader } from "../loader/loader";
 import { notifyError } from "../notify/notify";
 import { ApiResponse, BaseAPI, ErrorResponse } from "./BaseApi";
 import { UserResponse } from "./UsersAPI";
 import { XHR } from "./XHR";
-
-type ChangePasswordData = {
-   oldPassword: string;
-   newPassword: string;
-};
 
 export type ChatResponse = {
    id: number;

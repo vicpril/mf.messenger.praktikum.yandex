@@ -19,6 +19,7 @@ import { ModalNewChat } from "../ModalNewChat/ModalNewChat";
 export const Chats = {
    name: "Chats",
    template: template,
+   templatorReverse: true,
    components: [Chat, UserRemote],
    props: {
       view: LeftSidebarViews.Chats,
@@ -54,9 +55,6 @@ export const Chats = {
       },
       toggleLeftSidebarView: function (view: LeftSidebarViews) {
          resetRemote.call(this);
-         if (view === LeftSidebarViews.Chats) {
-            this.props.chatsFiltered = this.props.chats;
-         }
          if (this.props.view !== view) {
             this.props.view = view;
             this.$emit(this.EVENTS.UPDATE);

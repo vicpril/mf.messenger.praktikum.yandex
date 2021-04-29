@@ -3,9 +3,19 @@ import { LeftSidebarViews } from "../../../controllers/LeftSidebar/LeftSidebarVi
 export default /* html */ `
 <div class="chats ">
 
-   <v-if="view !== '${LeftSidebarViews.ChatsSearch}'">
-   <!-- ChatsFiltered -->
-   <v-for :chatf :indexf in chatsFiltered>
+   <v-if="view === '${LeftSidebarViews.Chats}'">
+      <!-- Chats -->
+      <v-for :chat :index in chats>
+      <!-- User -->
+      <Chat bind:chat="chats[{{index}}]"></Chat>
+      <!-- end User -->
+      </v-for>
+      <!-- end chats -->
+   </v-if>
+
+   <v-if="view === '${LeftSidebarViews.ChatsFilter}'">
+      <!-- ChatsFiltered -->
+      <v-for :chatf :indexf in chatsFiltered>
       <!-- User -->
       <Chat bind:chat="chatsFiltered[{{indexf}}]"></Chat>
       <!-- end User -->
