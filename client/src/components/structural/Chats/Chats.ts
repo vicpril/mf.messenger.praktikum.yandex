@@ -14,6 +14,7 @@ import {
    LeftSidebarLoaderInit,
 } from "../../../controllers/LeftSidebar/LeftSidebarLoader/LeftSidebarLoader";
 import { UsersController } from "../../../controllers/Users/UsersController";
+import { ModalNewChat } from "../ModalNewChat/ModalNewChat";
 
 export const Chats = {
    name: "Chats",
@@ -26,8 +27,14 @@ export const Chats = {
       usersRemote: [],
       remotePlaceholder: getPlaceholder(),
    },
-   listeners: [],
-   methods: {},
+   listeners: ["click"],
+   methods: {
+      onClick: function (e: Event & { target: HTMLButtonElement }) {
+         if (e.target.dataset.action === "newChat") {
+            this.$emit("ShowNewChatModal");
+         }
+      },
+   },
    subscribers: {
       "ChatFilter:input": function (s: string) {
          this.props.chatsFiltered = getChatsFiltered.call(this, s);
@@ -36,6 +43,7 @@ export const Chats = {
       "ChatSearch:input": async function (s: string) {
          if (s.length >= 3) {
             const users = await getRemoteUsers(s);
+            console.log("~ users", users);
             this.props.usersRemote = users;
             this.props.remotePlaceholder = getPlaceholder(s);
             this.$emit(this.EVENTS.UPDATE);
@@ -46,6 +54,9 @@ export const Chats = {
       },
       toggleLeftSidebarView: function (view: LeftSidebarViews) {
          resetRemote.call(this);
+         if (view === LeftSidebarViews.Chats) {
+            this.props.chatsFiltered = this.props.chats;
+         }
          if (this.props.view !== view) {
             this.props.view = view;
             this.$emit(this.EVENTS.UPDATE);
@@ -59,7 +70,6 @@ export const Chats = {
       this.props.view = LeftSidebarController.getSidebarView();
       this.props.chats = AppService.getChats();
       this.props.chatsFiltered = this.props.chats;
-      // this.props.usersRemote = getRemoteUsers.call(this);
       this.props.usersRemote = [];
    },
    afterInit() {

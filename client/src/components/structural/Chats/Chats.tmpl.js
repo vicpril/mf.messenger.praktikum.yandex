@@ -3,17 +3,7 @@ import { LeftSidebarViews } from "../../../controllers/LeftSidebar/LeftSidebarVi
 export default /* html */ `
 <div class="chats ">
 
-   <v-if="view === '${LeftSidebarViews.Chats}'">
-      <!-- Chats -->
-      <v-for :chat :index in chats>
-      <!-- User -->
-      <Chat bind:chat="chats[{{index}}]"></Chat>
-      <!-- end User -->
-      </v-for>
-      <!-- end chats -->
-   </v-if>
-
-   <v-if="view === '${LeftSidebarViews.ChatsFilter}'">
+   <v-if="view !== '${LeftSidebarViews.ChatsSearch}'">
    <!-- ChatsFiltered -->
    <v-for :chatf :indexf in chatsFiltered>
       <!-- User -->
@@ -21,6 +11,7 @@ export default /* html */ `
       <!-- end User -->
       </v-for>
       <!-- end chatsfiltered -->
+      <button type="button" class="button button_new button_primary" data-action="newChat">Create a new Chat</button>
    </v-if>
 
    <v-if="view === '${LeftSidebarViews.ChatsSearch}'">
@@ -29,7 +20,7 @@ export default /* html */ `
          <!-- UsersRemote -->
          <v-for :user :index in usersRemote>
          <!-- User -->
-         <UserRemote bind:user="usersRemote[{{index}}]"></UserRemote>
+         <UserRemote bind:user="usersRemote[{{index}}]" bind:chats="chats"></UserRemote>
          <!-- end User -->
          </v-for>
          <!-- end usersremote -->

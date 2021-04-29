@@ -33,6 +33,7 @@ export const verify = function (
             )
          );
          field.props.control = control;
+         console.log("~ control", control);
 
          if (!isEmpty(field)) {
             componentForm.$emit(field.EVENTS.UPDATE);

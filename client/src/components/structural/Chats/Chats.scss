@@ -30,6 +30,7 @@
 }
 
 .chats {
+   display: flex;
    flex-direction: column;
    min-width: 310px !important;
    padding: 0 10px;
@@ -51,4 +52,8 @@
 }
 .remote_placeholder {
    margin: 0;
+}
+
+.button_new {
+   margin: 20px 10px;
 }

@@ -24,4 +24,6 @@ export class UsersController {
          console.warn(error);
       }
    }
+
+   static async addChat(user: User) {}
 }
