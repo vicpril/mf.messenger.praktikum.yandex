@@ -31,14 +31,7 @@ export class ChatsController {
             );
             if (isSuccess(status)) {
                this.component.$emit("HideNewChatModal");
-
-               // this.component.$dispatch({
-               //    type: Actions.ACCOUNT_SETTINGS_UPDATE,
-               //    data: data,
-               // });
-               // this.component.$dispatch(
-               //    actions.setSession({ login: data.login })
-               // );
+               this.component.$emit("Chat:updated");
                notify(
                   "New Chat was created successfuly",
                   NoticeStatus.SUCCESS,
@@ -55,14 +48,7 @@ export class ChatsController {
       try {
          const { status, data } = await new ChatsAPI().getChats();
          if (isSuccess(status)) {
-            // console.log("~ data", data);
             const chats = data.map((chat: ChatResponse) => new Chat(chat));
-            // this.component.$dispatch({
-            //    type: Actions.ACCOUNT_SETTINGS_UPDATE,
-            //    data: data,
-            // });
-            // this.component.$dispatch(actions.setSession({ login: data.login }));
-            // notify("Chats was fetched successfuly", NoticeStatus.SUCCESS, 3000);
             return chats;
          }
       } catch (error) {
@@ -83,6 +69,24 @@ export class ChatsController {
                3000
             );
             this.component.$emit("Chat:updated", data.id);
+         }
+      } catch (error) {
+         console.warn(error);
+      }
+   }
+
+   async delete(chatId: number) {
+      try {
+         const { status } = await new ChatsAPI().deleteChat(chatId);
+         if (isSuccess(status)) {
+            notify(
+               "The chat was deleted successfuly",
+               NoticeStatus.SUCCESS,
+               3000
+            );
+            this.component.$emit("Chat:updated");
+            this.component.$emit("closeRightSidebar");
+            this.component.$dispatch(actions.rightSidebar({ chat: {} }));
          }
       } catch (error) {
          console.warn(error);

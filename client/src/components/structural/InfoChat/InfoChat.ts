@@ -3,6 +3,7 @@ import "./InfoChat.scss";
 import { Avatar } from "../Avatar/Avatar";
 import template from "./InfoChat.tmpl";
 import { RightSidebarController } from "../../../controllers/RightSidebar/RightSidebarController";
+import { ChatsController } from "../../../controllers/Chats/ChatsController";
 
 export const InfoChat = {
    name: "InfoChat",
@@ -19,12 +20,15 @@ export const InfoChat = {
             console.log(
                `Notifications from ${this.props.user.display_name} muted!`
             );
-         } else if (e.target.dataset.action === "delete-user") {
-            console.log(
-               `${this.props.user.display_name} was deleted from your contact list!`
-            );
-         } else if (e.target.dataset.action === "change-password") {
-            document.location.href = "/password-change.html";
+         } else if (e.target.dataset.action === "delete") {
+            if (
+               // eslint-disable-next-line no-restricted-globals
+               confirm(
+                  `Are you sure you want to delete the chat "${this.props.chat.title}?"`
+               )
+            ) {
+               new ChatsController(this).delete(this.props.chat.id);
+            }
          }
       },
    },
