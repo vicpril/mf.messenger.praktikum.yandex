@@ -123,10 +123,7 @@ export class XHR {
       });
    }
 
-   static get(
-      url: string,
-      options: OptionsWithoutMethod = {}
-   ): Promise<XMLHttpRequestResponseType> {
+   static get(url: string, options: OptionsWithoutMethod = {}): Promise<any> {
       url = !options.data ? url : url + queryStringify(options.data);
       return XHR.request(
          url,
@@ -135,7 +132,7 @@ export class XHR {
       );
    }
 
-   static post(url: string, options: OptionsWithoutMethod = {}) {
+   static post(url: string, options: OptionsWithoutMethod = {}): Promise<any> {
       return XHR.request(
          url,
          { ...options, method: METHOD.POST },
@@ -143,7 +140,7 @@ export class XHR {
       );
    }
 
-   static put(url: string, options: OptionsWithoutMethod = {}) {
+   static put(url: string, options: OptionsWithoutMethod = {}): Promise<any> {
       return XHR.request(
          url,
          { ...options, method: METHOD.PUT },
@@ -151,7 +148,10 @@ export class XHR {
       );
    }
 
-   static delete(url: string, options: OptionsWithoutMethod = {}) {
+   static delete(
+      url: string,
+      options: OptionsWithoutMethod = {}
+   ): Promise<any> {
       return XHR.request(
          url,
          { ...options, method: METHOD.DELETE },

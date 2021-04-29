@@ -3,6 +3,10 @@ export type ApiResponse = {
    data?: any;
 };
 
+export type ErrorResponse = {
+   reason: string;
+};
+
 export class BaseAPI {
    protected basehost: string = "https://ya-praktikum.tech/api/v2";
 
