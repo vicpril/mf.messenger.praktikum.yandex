@@ -12,3 +12,9 @@
    font-size: 13px;
    font-style: normal;
 }
+
+.chat__users {
+   display: flex;
+   flex-grow: 1;
+   flex-flow: column;
+}

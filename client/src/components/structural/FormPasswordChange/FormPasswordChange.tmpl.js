@@ -9,7 +9,7 @@ export default /* html */ `
     method="{{method}}"
 </v-if>
 >
-    <div class="info__content" >
+    <div class="info__content content__password" >
         <h3>Change your password</h3>
 
         <v-for :field :index in fields>
