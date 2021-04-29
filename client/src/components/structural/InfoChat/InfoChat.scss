@@ -1,0 +1,14 @@
+@import "../../../styles/variables";
+
+.info__title {
+   margin-top: 0;
+   margin-bottom: 2px;
+}
+
+.info__displayname {
+   margin: 5px 0;
+   color: $text-grey;
+   font-weight: 600;
+   font-size: 13px;
+   font-style: normal;
+}

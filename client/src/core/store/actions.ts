@@ -47,3 +47,10 @@ export function selectChat(id: number): TAction {
       },
    };
 }
+
+export function chatUpdate(data: any): TAction {
+   return {
+      type: Actions.CHATS_UPDATE_CHAT,
+      data,
+   };
+}

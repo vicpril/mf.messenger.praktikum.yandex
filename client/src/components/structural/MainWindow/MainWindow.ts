@@ -26,7 +26,7 @@ export const MainWindow = {
          const actionData = {
             status: "open",
             componentName: data.componentName || "InfoAccount",
-            login: data.login || null,
+            chat: data.chat || null,
          };
          this.$dispatch(actions.rightSidebar(actionData));
       },

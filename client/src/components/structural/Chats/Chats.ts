@@ -61,6 +61,7 @@ export const Chats = {
             this.$emit(this.EVENTS.UPDATE);
          }
       },
+
       "App:destroy": () => {
          HideLeftSidebarLoader();
       },
@@ -73,20 +74,14 @@ export const Chats = {
             }
          });
       },
+      "Chat:updated": function (view: LeftSidebarViews) {
+         fetchChats.call(this);
+      },
    },
    async beforePrepare() {
       LeftSidebarLoaderInit();
       this.props.view = LeftSidebarController.getSidebarView();
-      ShowLeftSidebarLoader()();
-      new ChatsController(this)
-         .getChats()
-         .then((chats) => {
-            this.props.chats = chats;
-            this.props.chatsFiltered = this.props.chats;
-            this.$emit(this.EVENTS.UPDATE);
-         })
-         .finally(HideLeftSidebarLoader);
-
+      fetchChats.call(this);
       this.props.usersRemote = [];
    },
 };
@@ -113,4 +108,17 @@ function resetRemote() {
    this.props.usersRemote = [];
    this.props.remotePlaceholder = getPlaceholder();
    HideLeftSidebarLoader();
+}
+
+function fetchChats() {
+   ShowLeftSidebarLoader()();
+   new ChatsController(this)
+      .getChats()
+      .then((chats) => {
+         console.log("~ chats", chats);
+         this.props.chats = chats;
+         this.props.chatsFiltered = this.props.chats;
+         this.$emit(this.EVENTS.UPDATE);
+      })
+      .finally(HideLeftSidebarLoader);
 }

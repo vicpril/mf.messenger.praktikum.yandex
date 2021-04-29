@@ -30,6 +30,13 @@ export function rootReducer(state: TState, action: TAction): TState {
             chats: { ...mergeObjects(prevState, action.data) },
          };
 
+      case Actions.CHATS_UPDATE_CHAT:
+         prevState = state.chats || {};
+         return {
+            ...state,
+            chats: { ...mergeObjects(prevState, action.data) },
+         };
+
       case Actions.ACCOUNT_SETTINGS_UPDATE:
          prevState = state.accountSettings || {};
          return {

@@ -1,5 +1,5 @@
 import { LeftSidebarViews } from "../../controllers/LeftSidebar/LeftSidebarViews";
-import { TAccount } from "../../models/types";
+import { TAccount, TChat } from "../../models/types";
 
 export type TState = {
    title?: string;
@@ -13,7 +13,7 @@ export type TState = {
 export type TRightSidebarState = {
    status?: "open" | "close";
    componentName?: string;
-   login?: string;
+   chat?: TChat;
 };
 
 export type TLeftSidebarState = {

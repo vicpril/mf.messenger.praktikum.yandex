@@ -1,18 +1,15 @@
 import "./Chat.scss";
 
 import { $ } from "../../../utils/dom-abstraction";
-import { AppService } from "../../../services/AppService";
 import { Avatar } from "../Avatar/Avatar";
 import { DateCustom } from "../../../utils/date";
 import { TMessage } from "../../../models/types";
 import { isEmpty } from "../../../utils/isEmpty";
 import { sortByTime } from "../../../utils/sortMessages";
 import template from "./Chat.tmpl";
-import { InfoUser } from "../InfoUser/InfoUser";
-import { Router } from "../../../core/router/Router";
 import * as actions from "../../../core/store/actions";
-import { UsersController } from "../../../controllers/Users/UsersController";
 import { ChatsController } from "../../../controllers/Chats/ChatsController";
+import { InfoChat } from "../InfoChat/InfoChat";
 
 export const Chat = {
    name: "Chat",
@@ -27,9 +24,9 @@ export const Chat = {
       onClick(e: Event & { target: Element }): void {
          // Click on active Avatar
          if ($(e.target).hasClass("pulse")) {
-            const { id } = this.props.chat;
-            // const data = { componentName: InfoChat.name, id };
-            // this.$emit("openRightSidebar", data);
+            const { chat } = this.props;
+            const data = { componentName: InfoChat.name, chat };
+            this.$emit("openRightSidebar", data);
          }
          // Click on wrapper
          else if (checkSwitchUserPossible(e.target)) {

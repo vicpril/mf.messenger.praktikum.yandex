@@ -6,19 +6,21 @@ import template from "./RightSidebar.tmpl";
 import { FormChangeAvatar } from "../FormChangeAvatar/FormChangeAvatar";
 import { FormAccountSettings } from "../FormAccountSettings/FormAccountSettings";
 import { FormPasswordChange } from "../FormPasswordChange/FormPasswordChange";
-import { InfoUser } from "../InfoUser/InfoUser";
 import { RightSidebarController } from "../../../controllers/RightSidebar/RightSidebarController";
 import { RightSidebarDecorator } from "../../../controllers/RightSidebar/RightSidebarDecorators";
+import { InfoChat } from "../InfoChat/InfoChat";
+import { FormChangeChatAvatar } from "../FormChangeChatAvatar/FormChangeChatAvatar";
 
 export const RightSidebar = RightSidebarDecorator({
    name: "RightSidebar",
    template: template,
    components: [
+      InfoAccount,
       FormChangeAvatar,
       FormAccountSettings,
       FormPasswordChange,
-      InfoUser,
-      InfoAccount,
+      InfoChat,
+      FormChangeChatAvatar,
    ],
    props: {
       page: "contact-info",

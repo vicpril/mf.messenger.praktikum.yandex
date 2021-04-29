@@ -190,13 +190,12 @@ export class ChatsAPI extends BaseAPI {
          });
    }
 
-   uploadAvatar(params: ChatsUploadAvatarRequest): Promise<ApiResponse> {
+   uploadAvatar(data: FormData): Promise<ApiResponse> {
+      console.log("~ data", data);
       const options = {
-         ...{ params },
-         ...{
-            withCredentials: true,
-            beforeRequest: ShowLoader(),
-         },
+         data,
+         withCredentials: true,
+         beforeRequest: ShowLoader(),
       };
 
       return XHR.put(`${this.host}/avatar`, options)
