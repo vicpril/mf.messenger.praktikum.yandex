@@ -11,6 +11,7 @@ export default /* html */ `
       <!-- end User -->
       </v-for>
       <!-- end chats -->
+      <button type="button" class="button button_new button_primary" data-action="newChat">Create a new Chat</button>
    </v-if>
 
    <v-if="view === '${LeftSidebarViews.ChatsFilter}'">
