@@ -1,6 +1,5 @@
 import template from "./FormAccountSettings.tmpl";
 import "./FormAccountSettings.scss";
-import { AppService } from "../../../services/AppService";
 import { InputGroup } from "../InputGroup/InputGroup";
 import { $ } from "../../../utils/dom-abstraction";
 import {

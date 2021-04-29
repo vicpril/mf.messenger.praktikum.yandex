@@ -1,13 +1,6 @@
-export type UserFields = {
-   id: number;
-   first_name: string;
-   second_name: string;
-   display_name: string;
-   login: string;
-   email: string;
-   phone: string;
-   avatar: string;
-};
+import { UserResponse } from "../core/xhr/UsersAPI";
+
+export type UserFields = UserResponse;
 
 export class User {
    id: number;
@@ -18,7 +11,8 @@ export class User {
    email: string;
    phone: string;
    avatar: string;
-   constructor(data: UserFields) {
+
+   constructor(data: UserResponse) {
       this.id = data.id;
       this.first_name = data.first_name;
       this.second_name = data.second_name;

@@ -14,7 +14,7 @@ export default /* html */ `
    <v-else>
          <div class="chat_placeholder">
          <h3>
-         Select a friend to type with...
+         Select a chat to type with...
          </h3>
          </div>
    </v-if>

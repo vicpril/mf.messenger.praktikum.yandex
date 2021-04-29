@@ -1,20 +1,21 @@
 import "./Chats.scss";
 
-import { Chat } from "../Chat/Chat";
-import { TChat } from "../../../models/types";
 import { strContains } from "../../../utils/pure-functions";
 import template from "./Chats.tmpl";
 import { LeftSidebarViews } from "../../../controllers/LeftSidebar/LeftSidebarViews";
 import { UserRemote } from "../UserRemote/UserRemote";
 import { User, UserFields } from "../../../models/User";
-import { AppService } from "../../../services/AppService";
 import { LeftSidebarController } from "../../../controllers/LeftSidebar/LeftSidebarController";
 import {
    HideLeftSidebarLoader,
    LeftSidebarLoaderInit,
+   ShowLeftSidebarLoader,
 } from "../../../controllers/LeftSidebar/LeftSidebarLoader/LeftSidebarLoader";
 import { UsersController } from "../../../controllers/Users/UsersController";
-import { ModalNewChat } from "../ModalNewChat/ModalNewChat";
+import { ChatsController } from "../../../controllers/Chats/ChatsController";
+import { TChat } from "../../../models/Chat";
+import { Chat } from "../Chat/Chat";
+import { Component } from "../../../core/Component";
 
 export const Chats = {
    name: "Chats",
@@ -54,8 +55,8 @@ export const Chats = {
          this.$emit(this.EVENTS.UPDATE);
       },
       toggleLeftSidebarView: function (view: LeftSidebarViews) {
-         resetRemote.call(this);
          if (this.props.view !== view) {
+            resetRemote.call(this);
             this.props.view = view;
             this.$emit(this.EVENTS.UPDATE);
          }
@@ -63,21 +64,36 @@ export const Chats = {
       "App:destroy": () => {
          HideLeftSidebarLoader();
       },
+      "Chat:selected": function (id: number) {
+         this.componentsInst.forEach((chat: Component) => {
+            if (chat.props.chat.id === id) {
+               chat.methods.setActive.call(chat);
+            } else {
+               chat.methods.setInactive.call(chat);
+            }
+         });
+      },
    },
-   beforePrepare() {
-      this.props.view = LeftSidebarController.getSidebarView();
-      this.props.chats = AppService.getChats();
-      this.props.chatsFiltered = this.props.chats;
-      this.props.usersRemote = [];
-   },
-   afterInit() {
+   async beforePrepare() {
       LeftSidebarLoaderInit();
+      this.props.view = LeftSidebarController.getSidebarView();
+      ShowLeftSidebarLoader()();
+      new ChatsController(this)
+         .getChats()
+         .then((chats) => {
+            this.props.chats = chats;
+            this.props.chatsFiltered = this.props.chats;
+            this.$emit(this.EVENTS.UPDATE);
+         })
+         .finally(HideLeftSidebarLoader);
+
+      this.props.usersRemote = [];
    },
 };
 
 function getChatsFiltered(s: string): TChat[] {
    return this.props.chats.filter((chat: TChat) =>
-      strContains(s, chat.user.display_name, false)
+      strContains(s, chat.title, false)
    );
 }
 

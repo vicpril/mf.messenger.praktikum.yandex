@@ -5,6 +5,7 @@ export type TState = {
    title?: string;
    rightSidebar?: TRightSidebarState;
    leftSidebar?: TLeftSidebarState;
+   chats?: TChatsState;
    accountSettings?: TAccountState;
    session?: { login?: string };
 };
@@ -23,4 +24,9 @@ export type TAccountState = TAccount;
 
 export type TSessionState = {
    login?: string | null;
+};
+
+export type TChatsState = {
+   selectedChat?: any;
+   chats?: [];
 };

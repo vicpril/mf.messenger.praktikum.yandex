@@ -38,3 +38,12 @@ export function setSession(data: any = null): TAction {
            type: Actions.AUTH_LOGOUT,
         };
 }
+
+export function selectChat(id: number): TAction {
+   return {
+      type: Actions.CHATS_SELECT_CHAT,
+      data: {
+         selectedChat: id,
+      },
+   };
+}

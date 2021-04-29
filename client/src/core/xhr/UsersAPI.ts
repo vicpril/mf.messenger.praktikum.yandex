@@ -2,7 +2,6 @@ import {
    HideLeftSidebarLoader,
    ShowLeftSidebarLoader,
 } from "../../controllers/LeftSidebar/LeftSidebarLoader/LeftSidebarLoader";
-import { UserFields } from "../../models/User";
 import { HideLoader, ShowLoader } from "../loader/loader";
 import { notifyError } from "../notify/notify";
 import { BaseAPI, ApiResponse, ErrorResponse } from "./BaseApi";
@@ -78,7 +77,7 @@ export class UsersAPI extends BaseAPI {
          });
    }
 
-   update(data: Omit<UserFields, "id" | "avatar">): Promise<ApiResponse> {
+   update(data: Omit<UserResponse, "id" | "avatar">): Promise<ApiResponse> {
       const options = {
          data,
          withCredentials: true,

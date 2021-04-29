@@ -98,7 +98,7 @@ export class ChatsAPI extends BaseAPI {
          .then(
             ({ id }): ApiResponse => ({
                status: "success",
-               data: { id },
+               data: id,
             })
          )
          .catch(

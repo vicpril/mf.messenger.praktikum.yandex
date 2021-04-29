@@ -10,6 +10,9 @@ import { sortByTime } from "../../../utils/sortMessages";
 import template from "./Chat.tmpl";
 import { InfoUser } from "../InfoUser/InfoUser";
 import { Router } from "../../../core/router/Router";
+import * as actions from "../../../core/store/actions";
+import { UsersController } from "../../../controllers/Users/UsersController";
+import { ChatsController } from "../../../controllers/Chats/ChatsController";
 
 export const Chat = {
    name: "Chat",
@@ -17,7 +20,6 @@ export const Chat = {
    components: [Avatar],
    props: {
       chat: {},
-      selectedChat: {},
    },
    listeners: ["click"],
    subscribers: {},
@@ -25,40 +27,37 @@ export const Chat = {
       onClick(e: Event & { target: Element }): void {
          // Click on active Avatar
          if ($(e.target).hasClass("pulse")) {
-            const { login } = this.props.chat.user;
-            const data = { componentName: InfoUser.name, login };
-            this.$emit("openRightSidebar", data);
+            const { id } = this.props.chat;
+            // const data = { componentName: InfoChat.name, id };
+            // this.$emit("openRightSidebar", data);
          }
          // Click on wrapper
          else if (checkSwitchUserPossible(e.target)) {
-            const { login } = this.props.chat.user;
+            const { id } = this.props.chat;
             // document.location.href = `/?user=${login}`;
-            Router.navigate("chats", login);
+            this.$dispatch(actions.selectChat(id));
+            this.$emit("Chat:selected", id);
+            // Router.navigate("chats", id);
          }
+      },
+      setActive: function () {
+         this.$root.find(".user__wrapper").addClass("user__active");
+      },
+      setInactive: function () {
+         this.$root.find(".user__wrapper").removeClass("user__active");
       },
    },
    beforePrepare() {
-      this.name = `${this.name}_${this.props.chat.user.login}`;
-      this.props.selectedChat = AppService.getSelectedChat();
+      this.name = `${this.name}_${this.props.chat.id}`;
+      this.props.selectedChat = ChatsController.getState().selectedChat ?? 0;
    },
    beforeCreate() {
       const P = this.props; // just alias
-      P.is_selected =
-         !isEmpty(P.selectedChat) &&
-         P.selectedChat.user.login === P.chat.user.login;
-
-      const lastMessage = getLastMessage(P.chat.data.messages);
-
-      P.lastMessage = lastMessage;
-
-      if (lastMessage) {
-         P.last_message_content = lastMessage.content;
-         P.last_message_date = new DateCustom(
-            +lastMessage.time
-         ).getDateFormatted;
-      }
-
-      P.counter = getCounter(P.chat.data.messages);
+      P.last_message_content = P.chat.last_message?.content ?? "";
+      P.last_message_date = P.chat.last_message?.time
+         ? new DateCustom(+P.chat.last_message?.time).getDateFormatted
+         : "";
+      P.counter = getCounter(P.chat.unread_messages);
    },
 };
 

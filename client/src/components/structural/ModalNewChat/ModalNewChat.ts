@@ -1,3 +1,4 @@
+import { ChatsController } from "../../../controllers/Chats/ChatsController";
 import {
    checkInputForm,
    prepareFormFields,
@@ -20,9 +21,10 @@ export const ModalNewChat = {
       form: {},
       form_control: {},
    },
-   listeners: ["click", "blur"],
+   listeners: ["click", "blur", "submit"],
    subscribers: {
       ShowNewChatModal: showModal,
+      HideNewChatModal: hideModal,
    },
    methods: {
       onBlur(e: Event & { target: HTMLElement }) {
@@ -39,6 +41,12 @@ export const ModalNewChat = {
             setTimeout(() => {
                this.$emit(this.EVENTS.UPDATE);
             }, 300);
+         }
+      },
+      onSubmit(e: Event & { target: HTMLFormElement }) {
+         if ($(e.target).hasClass("modal_new_chat__card")) {
+            e.preventDefault();
+            new ChatsController(this).createChat(new FormData(e.target));
          }
       },
    },
