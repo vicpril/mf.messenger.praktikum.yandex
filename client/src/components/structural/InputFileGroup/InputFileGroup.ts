@@ -31,7 +31,6 @@ function changeInput($root: TDomAbstraction): void {
    if (input.name) {
       filename = input.value.split("\\").pop() as string;
    }
-   console.log("~ filename", filename);
 
    if (filename) {
       $label.addClass("has-file");

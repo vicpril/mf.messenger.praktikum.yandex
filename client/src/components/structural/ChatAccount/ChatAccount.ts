@@ -27,7 +27,12 @@ export const ChatAccount = {
          this.$emit("openRightSidebar", { componentName: InfoAccount.name });
       },
    },
-   beforePrepare() {
+   beforeCreate() {
       this.props.account = AccountController.getAccount();
+   },
+   afterInit() {
+      window.rebuildChatAccount = function () {
+         this.$emit(this.EVENTS.UPDATE);
+      }.bind(this);
    },
 };

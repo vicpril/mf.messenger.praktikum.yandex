@@ -139,7 +139,7 @@ export class ChatsAPI extends BaseAPI {
          });
    }
 
-   getChatsUsers(params: ChatsUsersRequest): Promise<ApiResponse> {
+   getChatUsers(params: ChatsUsersRequest): Promise<ApiResponse> {
       const options = {
          ...{ params },
          ...{
@@ -191,7 +191,6 @@ export class ChatsAPI extends BaseAPI {
    }
 
    uploadAvatar(data: FormData): Promise<ApiResponse> {
-      console.log("~ data", data);
       const options = {
          data,
          withCredentials: true,

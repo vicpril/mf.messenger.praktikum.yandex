@@ -7,60 +7,60 @@ import { TState } from "./stateTypes";
 import { TAction } from "./Store";
 
 export function rootReducer(state: TState, action: TAction): TState {
-   let prevState;
+   let prevStateLocal;
    switch (action.type) {
       case Actions.RIGHTSIDEBAR_CHANGE_VIEW:
-         prevState = state.rightSidebar || {};
+         prevStateLocal = state.rightSidebar || {};
          return {
             ...state,
-            rightSidebar: { ...mergeObjects(prevState, action.data) },
+            rightSidebar: { ...mergeObjects(prevStateLocal, action.data) },
          };
 
       case Actions.LEFTSIDEBAR_CHANGE_VIEW:
-         prevState = state.leftSidebar || {};
+         prevStateLocal = state.leftSidebar || {};
          return {
             ...state,
-            leftSidebar: { ...mergeObjects(prevState, action.data) },
+            leftSidebar: { ...mergeObjects(prevStateLocal, action.data) },
          };
 
       case Actions.CHATS_SELECT_CHAT:
-         prevState = state.chats || {};
+         prevStateLocal = state.chats || {};
          return {
             ...state,
-            chats: { ...mergeObjects(prevState, action.data) },
+            chats: { ...mergeObjects(prevStateLocal, action.data) },
          };
 
       case Actions.CHATS_UPDATE_CHAT:
-         prevState = state.chats || {};
+         prevStateLocal = state.chats || {};
          return {
             ...state,
-            chats: { ...mergeObjects(prevState, action.data) },
+            chats: { ...mergeObjects(prevStateLocal, action.data) },
          };
 
       case Actions.ACCOUNT_SETTINGS_UPDATE:
-         prevState = state.accountSettings || {};
+         prevStateLocal = state.accountSettings || {};
          return {
             ...state,
             accountSettings: {
-               ...mergeDeep(prevState, action.data),
+               ...mergeDeep(prevStateLocal, action.data),
             } as TAccount,
          };
 
       case Actions.ACCOUNT_PASSWORD_CHANGE:
-         prevState = state.accountSettings || {};
+         prevStateLocal = state.accountSettings || {};
          return { ...state };
 
       case Actions.AUTH_SIGN_IN:
-         prevState = state.session || {};
+         prevStateLocal = state.session || {};
          return {
             ...state,
             session: {
-               ...mergeDeep(prevState, { login: action.data }),
+               ...mergeDeep(prevStateLocal, { login: action.data }),
             },
          };
 
       case Actions.AUTH_LOGOUT:
-         prevState = state.session || {};
+         prevStateLocal = state.session || {};
          return {
             ...state,
             session: {},

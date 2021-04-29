@@ -11,6 +11,7 @@ export const InfoChat = {
    components: [Avatar],
    props: {
       chat: {},
+      users: [],
    },
    listeners: ["click"],
    subscribers: {},
@@ -20,7 +21,8 @@ export const InfoChat = {
             console.log(
                `Notifications from ${this.props.user.display_name} muted!`
             );
-         } else if (e.target.dataset.action === "delete") {
+         }
+         if (e.target.dataset.action === "delete") {
             if (
                // eslint-disable-next-line no-restricted-globals
                confirm(
@@ -32,7 +34,12 @@ export const InfoChat = {
          }
       },
    },
-   beforePrepare() {
+   async beforePrepare() {
       this.props.chat = RightSidebarController.getChat();
+   },
+   async beforeCreate() {
+      this.props.users = await new ChatsController(this).getChatUsers(
+         this.props.chat.id
+      );
    },
 };

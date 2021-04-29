@@ -52,7 +52,7 @@ export const MessagerMenu = {
             const formData = new FormData(form);
             const data = getFormData(formData);
 
-            console.log("Send form data:", data);
+            console.log("TODO Send form data:", data);
          }
       },
       onClick(e: Event & { target: Element }): void {
@@ -60,7 +60,7 @@ export const MessagerMenu = {
             $(e.target).hasClass("button__attach") ||
             $(e.target).hasClass("fa-paperclip")
          ) {
-            console.log("Yeah! This attaches something...");
+            console.log("TODO This attaches something...");
          }
       },
    },

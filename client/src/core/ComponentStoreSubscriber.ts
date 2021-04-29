@@ -1,3 +1,4 @@
+import { Indexed, isEqual } from "../utils/pure-functions";
 import { ComponentDOMListener } from "./ComponentDOMListener";
 import { IIngredients } from "./ComponentInterfaces";
 import { TState } from "./store/stateTypes";
@@ -12,7 +13,6 @@ import {
 export class ComponentStoreSubscriber extends ComponentDOMListener {
    private store: TStore = Store.get();
    protected storeSubscribers: StoreSubscriberMethods;
-   private prevState: TState;
    private storeSubscriptions: StoreSubscription[] = [];
 
    constructor(options: IIngredients) {
@@ -21,18 +21,19 @@ export class ComponentStoreSubscriber extends ComponentDOMListener {
    }
 
    protected initStoreSubscribers() {
-      this.prevState = this.store.getState();
-
       const subscription = this.store.subscribe((state: TState) => {
          Object.keys(state).forEach((key: keyof TState) => {
-            // if (
-            //    !isEqual(this.prevState[key] as Indexed, state[key] as Indexed)
-            // ) {
-            if (this.isWatching(key)) {
-               const changes = state[key];
-               this.storeSubscribers[key]?.call(this, changes);
+            if (
+               !isEqual(
+                  this.store.prevState[key] as Indexed,
+                  state[key] as Indexed
+               )
+            ) {
+               if (this.isWatching(key)) {
+                  const changes = state[key];
+                  this.storeSubscribers[key]?.call(this, changes);
+               }
             }
-            // }
          });
       });
 

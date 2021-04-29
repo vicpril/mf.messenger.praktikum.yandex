@@ -1,3 +1,4 @@
+import { cloneDeep } from "../../utils/cloneDeep";
 import { isEmpty } from "../../utils/isEmpty";
 // eslint-disable-next-line import/no-cycle
 import { rootReducer } from "./rootReducer";
@@ -18,6 +19,7 @@ export class Store {
    static _instance = {} as Store;
 
    private state: TState = {};
+   public prevState: TState = {};
    private subscribers: StoreSubscriberMethod[] = [];
 
    constructor(private rootReducer: TReducer, private initialState: TState) {
@@ -36,6 +38,7 @@ export class Store {
    }
 
    dispatch(action: TAction) {
+      this.prevState = cloneDeep(this.state);
       this.state = this.rootReducer(this.state, action);
       this.subscribers.forEach((subscriber: StoreSubscriberMethod) =>
          subscriber(this.state)

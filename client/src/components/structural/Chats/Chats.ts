@@ -16,6 +16,7 @@ import { ChatsController } from "../../../controllers/Chats/ChatsController";
 import { TChat } from "../../../models/Chat";
 import { Chat } from "../Chat/Chat";
 import { Component } from "../../../core/Component";
+import { rightSidebar } from "../../../core/store/actions";
 
 export const Chats = {
    name: "Chats",
@@ -45,7 +46,6 @@ export const Chats = {
       "ChatSearch:input": async function (s: string) {
          if (s.length >= 3) {
             const users = await getRemoteUsers(s);
-            console.log("~ users", users);
             this.props.usersRemote = users;
             this.props.remotePlaceholder = getPlaceholder(s);
             this.$emit(this.EVENTS.UPDATE);
@@ -78,6 +78,8 @@ export const Chats = {
          fetchChats.call(this);
       },
    },
+   storeSubscribers: {},
+
    async beforePrepare() {
       LeftSidebarLoaderInit();
       this.props.view = LeftSidebarController.getSidebarView();
@@ -115,7 +117,6 @@ function fetchChats() {
    new ChatsController(this)
       .getChats()
       .then((chats) => {
-         console.log("~ chats", chats);
          this.props.chats = chats;
          this.props.chatsFiltered = this.props.chats;
          this.$emit(this.EVENTS.UPDATE);

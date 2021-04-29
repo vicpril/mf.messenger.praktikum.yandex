@@ -8,12 +8,7 @@ export default /* html */ `
       <Avatar bind:user="chat" bind:css="avatar__info"></Avatar>
    </div>
    <div class="chat__users">
-   <button type="button" class="button info__button button_outline_primary" data-view="${RightSidebarViews.FormChangeChatAvatar}">Change avatar</button>
-   <button type="button" class="button info__button button_outline_danger" data-action="delete">Delete chat</button>
-   <button type="button" class="button info__button button_outline_primary" data-view="${RightSidebarViews.FormChangeChatAvatar}">Change avatar</button>
-   <button type="button" class="button info__button button_outline_danger" data-action="delete">Delete chat</button>
-   <button type="button" class="button info__button button_outline_primary" data-view="${RightSidebarViews.FormChangeChatAvatar}">Change avatar</button>
-   <button type="button" class="button info__button button_outline_danger" data-action="delete">Delete chat</button>
+   
    </div>
    <div class="info__actions">
    <button type="button" class="button info__button button_outline_primary" data-view="${RightSidebarViews.FormChangeChatAvatar}">Change avatar</button>

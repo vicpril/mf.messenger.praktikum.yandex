@@ -176,30 +176,26 @@ export type Indexed<T = unknown> = {
    [key in string]: T;
 };
 
-export function isEqual(lhs: PlainObject, rhs: PlainObject) {
-   // Сравнение количества ключей объектов и массивов
-   if (Object.keys(lhs).length !== Object.keys(rhs).length) {
+export function isEqual(a: Indexed, b: Indexed): boolean {
+   const isObject = (obj: any) => !!obj && obj.constructor === Object;
+
+   if (!isObject(a) || !isObject(b)) {
+      if (!Array.isArray(a) || !Array.isArray(b)) return a === b;
+   }
+
+   if (
+      Object.getOwnPropertyNames(a).length !==
+      Object.getOwnPropertyNames(b).length
+   )
       return false;
-   }
 
-   // eslint-disable-next-line no-restricted-syntax
-   for (const [key, value] of Object.entries(lhs)) {
-      const rightValue = rhs[key];
-      if (isArrayOrObject(value) && isArrayOrObject(rightValue)) {
-         // Здесь value и rightValue может быть только массивом или объектом
-         // И TypeScript это обрабатывает
-         if (isEqual(value as PlainObject, rightValue as PlainObject)) {
-            continue;
-         }
-         return false;
+   let result = true;
+   Object.getOwnPropertyNames(a).forEach((key: string) => {
+      if (!isEqual(a[key] as Indexed, b[key] as Indexed)) {
+         result = false;
       }
-
-      if (value !== rightValue) {
-         return false;
-      }
-   }
-
-   return true;
+   });
+   return result;
 }
 
 export function isSuccess(status: string): boolean {

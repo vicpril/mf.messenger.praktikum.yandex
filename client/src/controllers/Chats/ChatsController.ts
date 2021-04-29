@@ -8,7 +8,7 @@ import { AuthAPI } from "../../core/xhr/AuthAPI";
 import { User } from "../../models/User";
 import { Store } from "../../core/store/Store";
 import { verify } from "../../core/validator/form";
-import { UsersAPI } from "../../core/xhr/UsersAPI";
+import { UserResponse, UsersAPI } from "../../core/xhr/UsersAPI";
 import { Actions } from "../../core/store/actionTypes";
 import { NoticeStatus, notify } from "../../core/notify/notify";
 import { ChatResponse, ChatsAPI } from "../../core/xhr/ChatsAPI";
@@ -87,6 +87,22 @@ export class ChatsController {
             this.component.$emit("Chat:updated");
             this.component.$emit("closeRightSidebar");
             this.component.$dispatch(actions.rightSidebar({ chat: {} }));
+         }
+      } catch (error) {
+         console.warn(error);
+      }
+   }
+
+   async getChatUsers(chatId: number) {
+      try {
+         const options = {
+            id: chatId,
+         };
+         const { status, data: usersdata } = await new ChatsAPI().getChatUsers(
+            options
+         );
+         if (isSuccess(status)) {
+            return usersdata.map((data: UserResponse) => new User(data));
          }
       } catch (error) {
          console.warn(error);
