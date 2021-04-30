@@ -1,5 +1,5 @@
 import { Component } from "../../core/Component";
-import { isSuccess } from "../../utils/pure-functions";
+import { first, isSuccess } from "../../utils/pure-functions";
 import * as actions from "../../core/store/actions";
 import { User } from "../../models/User";
 import { Store } from "../../core/store/Store";
@@ -7,7 +7,7 @@ import { verify } from "../../core/validator/form";
 import { UserResponse } from "../../core/xhr/UsersAPI";
 import { NoticeStatus, notify } from "../../core/notify/notify";
 import { ChatResponse, ChatsAPI } from "../../core/xhr/ChatsAPI";
-import { Chat } from "../../models/Chat";
+import { Chat, TChat } from "../../models/Chat";
 import {
    HideChatInfoLoader,
    ShowChatInfoLoader,
@@ -92,6 +92,7 @@ export class ChatsController {
                NoticeStatus.SUCCESS,
                3000
             );
+            this.component.$dispatch(actions.selectChat(null));
             this.component.$emit("Chat:updated");
             this.component.$emit("closeRightSidebar");
             this.component.$dispatch(actions.rightSidebar({ chat: {} }));
@@ -144,54 +145,43 @@ export class ChatsController {
       }
    }
 
-   // async changePassword(formData: FormData) {
-   //    if (verify(this.component)()) {
-   //       try {
-   //          const userdata = {
-   //             oldPassword: formData.get("old_password")?.toString() ?? "",
-   //             newPassword: formData.get("new_password")?.toString() ?? "",
-   //          };
+   async deleteUser(userId: number, chatId: number) {
+      try {
+         const params = {
+            users: [userId],
+            chatId,
+         };
+         const options = {
+            beforeRequest: ShowChatInfoLoader,
+            afterRequest: HideChatInfoLoader,
+         };
+         const { status } = await new ChatsAPI(options).deleteUsers(params);
+         if (isSuccess(status)) {
+            this.component.$emit("Chat:userDeleted");
+         }
+      } catch (error) {
+         console.warn(error);
+      }
+   }
 
-   //          const { status } = await new UsersAPI().changePassword(userdata);
-   //          if (isSuccess(status)) {
-   //             this.component.$dispatch({
-   //                type: Actions.ACCOUNT_PASSWORD_CHANGE,
-   //             });
-   //             notify(
-   //                "Your password was updated successfuly",
-   //                NoticeStatus.SUCCESS,
-   //                3000
-   //             );
-   //          }
-   //       } catch (error) {
-   //          console.warn(error);
-   //       }
-   //    }
-   // }
-
-   // static getAccount(): TAccount | {} {
-   //    const account = ChatsController.getState();
-   //    return !isEmpty(account) ? account : ChatsController.fetch();
-   // }
-
-   // static async fetch() {
-   //    try {
-   //       const { data } = await new AuthAPI().account();
-   //       if (data) {
-   //          const user = new User(data);
-   //          Store.get().dispatch(actions.accountSettingsUpdate(user));
-   //          Store.get().dispatch(actions.setSession({ login: user.login }));
-   //       } else {
-   //          // AuthController.logout();
-   //          Store.get().dispatch(actions.setSession());
-   //       }
-   //    } catch (error) {
-   //       console.warn(error);
-   //       Store.get().dispatch(actions.setSession());
-   //    }
-   // }
+   static getAvailableChats(): TChat[] {
+      return (
+         ChatsController.getState().availableChats?.map(
+            (c: ChatResponse) => new Chat(c)
+         ) || []
+      );
+   }
 
    static getSelectedChatId(): number {
-      return ChatsController.getState().selectedChat ?? 0;
+      return ChatsController.getState().selectedChatId ?? 0;
+   }
+
+   static getSelectedChat(): TChat | null {
+      const chatId = ChatsController.getSelectedChatId();
+      const chat = ChatsController.getState().availableChats?.filter(
+         (chat: ChatResponse) => chat.id === chatId
+      )[0] as ChatResponse;
+
+      return chat ? new Chat(chat) : null;
    }
 }

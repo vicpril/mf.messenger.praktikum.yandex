@@ -15,7 +15,7 @@
    flex-flow: row nowrap;
    padding: 10px;
    border-radius: 10px;
-   cursor: pointer;
+   cursor: default;
    transition: background-color 0.5s ease-out, transform 0.5s ease-out;
 
    &:first-child {
@@ -24,7 +24,12 @@
 
    &:hover {
       background-color: $hover;
-      transform: translate(5px);
+      transform: translate(3px);
+
+      .button__delete_user {
+         visibility: visible;
+         opacity: 1;
+      }
    }
 }
 
@@ -79,32 +84,9 @@
    text-align: right;
 }
 
-.last_message_date {
-   margin-top: auto;
-   margin-bottom: auto;
-   color: $text-light-grey;
-   font-weight: 300;
-   font-size: 9px;
-   line-height: 15px;
-}
-
-.counter {
-   padding: 2px 7px;
-   color: $text-white;
-   font-weight: 600;
-   font-size: 11px;
-   line-height: 13px;
-   background-color: $primary;
-   border-radius: 8px;
-}
-
-.unread_messages_counter {
-   margin-top: auto;
-   margin-left: auto;
-   color: $text-white;
-   background-color: $secondary;
-
-   &.is_null {
-      display: none;
-   }
+.button__delete_user {
+   margin: auto 0 auto auto;
+   font-size: 1.5em;
+   visibility: hidden;
+   opacity: 0;
 }

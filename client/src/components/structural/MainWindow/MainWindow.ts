@@ -8,6 +8,7 @@ import { isEmpty } from "../../../utils/isEmpty";
 import * as actions from "../../../core/store/actions";
 import template from "./MainWindow.tmpl";
 import { RightSidebarController } from "../../../controllers/RightSidebar/RightSidebarController";
+import { ChatsController } from "../../../controllers/Chats/ChatsController";
 
 export const MainWindow = {
    name: "MainWindow",
@@ -30,11 +31,31 @@ export const MainWindow = {
          };
          this.$dispatch(actions.rightSidebar(actionData));
       },
+      refreshRightSidebar: function (data?: any) {
+         const actionData = {
+            status: "open",
+            componentName: data.componentName || "InfoAccount",
+            chat: data.chat || null,
+         };
+         this.$dispatch(actions.rightSidebar(actionData));
+      },
+      "Chat:selected": function () {
+         this.$emit(this.EVENTS.UPDATE);
+      },
+   },
+   storeSubscribers: {
+      chats: function () {
+         this.$emit(this.EVENTS.UPDATE);
+      },
    },
    methods: {},
    beforePrepare() {
-      this.props.chat = AppService.getSelectedChat();
-      this.props.is_selected = !isEmpty(this.props.chat);
+      // this.props.chat = AppService.getSelectedChat();
+   },
+   beforeCreate() {
+      this.props.selectedChat = ChatsController.getSelectedChat();
+      this.props.is_selected = this.props.selectedChat !== null;
+      console.log("~ this.props.is_selected", this.props.is_selected);
    },
    afterInit() {
       const sidebarState = RightSidebarController.getState();

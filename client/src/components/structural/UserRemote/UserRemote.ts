@@ -23,12 +23,12 @@ export const UserRemote = {
          const action =
             e.target.dataset.action ?? $(e.target).parent().data.action;
          if (action === "add") {
-            if (this.props.selectedChat === 0) {
+            if (this.props.selectedChatId === 0) {
                notify("Select a chat first", NoticeStatus.WARNING);
             } else {
                new ChatsController(this).addUser(
                   this.props.user.id,
-                  this.props.selectedChat
+                  this.props.selectedChatId
                );
             }
          }
@@ -36,7 +36,7 @@ export const UserRemote = {
    },
    async beforePrepare() {
       this.name = `${this.name}_${this.props.user.id}`;
-      this.props.selectedChat = ChatsController.getSelectedChatId();
+      this.props.selectedChatId = ChatsController.getSelectedChatId();
       this.props.chatUsers = this.parentComponent.props.chatUsers;
       this.props.isAdded = userExists(this.props.user.id, this.props.chatUsers);
       this.props.css = this.props.isAdded ? "added" : "";

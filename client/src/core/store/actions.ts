@@ -1,3 +1,4 @@
+import { TChat } from "../../models/Chat";
 import { Actions } from "./actionTypes";
 import { TAction } from "./Store";
 
@@ -39,18 +40,18 @@ export function setSession(data: any = null): TAction {
         };
 }
 
-export function selectChat(id: number): TAction {
+export function selectChat(id: number | null): TAction {
    return {
       type: Actions.CHATS_SELECT_CHAT,
       data: {
-         selectedChat: id,
+         selectedChatId: id,
       },
    };
 }
 
-export function chatUpdate(data: any): TAction {
+export function uploadChats(chats: TChat[]): TAction {
    return {
-      type: Actions.CHATS_UPDATE_CHAT,
-      data,
+      type: Actions.CHATS_UPLOAD_CHATS,
+      data: chats,
    };
 }

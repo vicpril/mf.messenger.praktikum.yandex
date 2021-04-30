@@ -1,5 +1,6 @@
 import { LeftSidebarViews } from "../../controllers/LeftSidebar/LeftSidebarViews";
-import { TAccount, TChat } from "../../models/types";
+import { TChat } from "../../models/Chat";
+import { TUser } from "../../models/User";
 
 export type TState = {
    title?: string;
@@ -20,13 +21,13 @@ export type TLeftSidebarState = {
    view?: LeftSidebarViews;
 };
 
-export type TAccountState = TAccount;
+export type TAccountState = TUser;
 
 export type TSessionState = {
    login?: string | null;
 };
 
 export type TChatsState = {
-   selectedChat?: any;
-   chats?: [];
+   selectedChatId?: number | null;
+   availableChats?: TChat[];
 };

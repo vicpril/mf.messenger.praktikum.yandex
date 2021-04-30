@@ -19,7 +19,7 @@ export const Chat = {
       chat: {},
    },
    listeners: ["click"],
-   subscribers: {},
+   storeSubscribers: {},
    methods: {
       onClick(e: Event & { target: Element }): void {
          // Click on active Avatar
@@ -31,19 +31,22 @@ export const Chat = {
          }
          // Click on wrapper
          else if (checkSwitchUserPossible(e.target)) {
+            const { chat } = this.props;
+            const data = { componentName: InfoChat.name, chat };
+            this.$emit("refreshRightSidebar", data);
             selectThisChat.call(this);
          }
       },
       setActive: function () {
-         this.$root.find(".user__wrapper").addClass("user__active");
+         this.$root.find(".chat__wrapper").addClass("chat__active");
       },
       setInactive: function () {
-         this.$root.find(".user__wrapper").removeClass("user__active");
+         this.$root.find(".chat__wrapper").removeClass("chat__active");
       },
    },
    beforePrepare() {
       this.name = `${this.name}_${this.props.chat.id}`;
-      this.props.selectedChat = ChatsController.getSelectedChatId();
+      this.props.selectedChatId = ChatsController.getSelectedChatId();
    },
    beforeCreate() {
       const P = this.props; // just alias
@@ -52,6 +55,11 @@ export const Chat = {
          ? new DateCustom(+P.chat.last_message?.time).getDateFormatted
          : "";
       P.counter = getCounter(P.chat.unread_messages);
+   },
+   beforeMount() {
+      if (this.props.selectedChatId === this.props.chat.id) {
+         this.methods.setActive.call(this);
+      }
    },
 };
 
@@ -66,9 +74,9 @@ function getCounter(messages: TMessage[]): number | undefined {
 }
 
 function checkSwitchUserPossible(element: Element): boolean {
-   const $wrapper = $(element).closest(".user__wrapper");
+   const $wrapper = $(element).closest(".chat__wrapper");
    if (!$wrapper) return false;
-   if ($wrapper.hasClass("user__active")) return false;
+   if ($wrapper.hasClass("chat__active")) return false;
    return true;
 }
 

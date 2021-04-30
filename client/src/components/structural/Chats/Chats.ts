@@ -16,7 +16,7 @@ import { ChatsController } from "../../../controllers/Chats/ChatsController";
 import { TChat } from "../../../models/Chat";
 import { Chat } from "../Chat/Chat";
 import { Component } from "../../../core/Component";
-import { rightSidebar } from "../../../core/store/actions";
+import * as actions from "../../../core/store/actions";
 
 export const Chats = {
    name: "Chats",
@@ -80,6 +80,12 @@ export const Chats = {
       "Chat:updated": function (view: LeftSidebarViews) {
          fetchChats.call(this);
       },
+      "Chat:userDeleted": function () {
+         if (this.props.view === LeftSidebarViews.ChatsSearch) {
+            resetRemote.call(this);
+            this.$emit(this.EVENTS.UPDATE);
+         }
+      },
    },
    storeSubscribers: {},
 
@@ -122,6 +128,11 @@ function fetchChats() {
       .then((chats) => {
          this.props.chats = chats;
          this.props.chatsFiltered = this.props.chats;
+         this.$dispatch(actions.uploadChats(chats));
+         if (ChatsController.getSelectedChat() === null) {
+            this.$dispatch(actions.selectChat(null));
+            this.$emit("Chat:selected");
+         }
          this.$emit(this.EVENTS.UPDATE);
       })
       .finally(HideLeftSidebarLoader);

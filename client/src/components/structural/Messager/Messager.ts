@@ -1,13 +1,15 @@
 import "./Messager.scss";
 
 import { Block, TBlock, TBlockDate, TBlockMessage } from "../Block/Block";
-import { TChat, TMessage, TUser } from "../../../models/types";
 
 import { AppService } from "../../../services/AppService";
 import { isUndefined } from "../../../utils/pure-functions";
 import { sortByTime } from "../../../utils/sortMessages";
 import template from "./Messager.tmpl";
 import { AccountController } from "../../../controllers/AccountController/AccountController";
+import { TChat } from "../../../models/Chat";
+import { TUser } from "../../../models/User";
+import { TMessage } from "../../../models/types";
 
 export const Messager = {
    name: "Messager",
@@ -38,9 +40,10 @@ export const Messager = {
       this.props.account = AccountController.getAccount();
    },
    beforeCreate() {
-      this.props.blocks = [
-         ...buildBlocksHistory(this.props.chat, this.props.account),
-      ];
+      this.props.blocks = [];
+      // this.props.blocks = [
+      //    ...buildBlocksHistory(this.props.chat, this.props.account),
+      // ];
    },
 };
 

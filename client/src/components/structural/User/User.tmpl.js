@@ -14,6 +14,9 @@ export default /* html */ `
          </span>
       </div>
       <div class="user__actions">
+      <v-if="!isAdmin">
+      <button type="button" class="button button_empty_danger button__delete_user" data-action="delete"><i class="far fa-trash-alt"></i></button>
+      </v-if>
       </div>
    </div>
 </div>;

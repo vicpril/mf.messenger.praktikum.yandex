@@ -10,7 +10,7 @@
    }
 }
 
-.user__wrapper {
+.chat__wrapper {
    display: flex;
    flex-flow: row nowrap;
    padding: 10px;
@@ -28,7 +28,7 @@
    }
 }
 
-.user__active {
+.chat__active {
    background-color: $primary;
    box-shadow: 3px 3px 10px 2px rgba(101, 136, 222, 0.51);
    cursor: default;
@@ -39,21 +39,21 @@
       transform: translate(0);
    }
 
-   .user__displayname,
-   .user__last_message,
+   .chat__displayname,
+   .chat__last_message,
    .last_message_date {
       color: $text-white;
    }
 }
 
-.user__info {
+.chat__info {
    display: flex;
    flex: 1;
    flex-flow: column;
    max-width: 150px;
    margin-left: 10px;
 }
-.user__displayname {
+.chat__displayname {
    flex: 1;
    padding-top: 5px;
    color: $text-grey;
@@ -61,7 +61,7 @@
    font-size: 13px;
    font-style: normal;
 }
-.user__last_message {
+.chat__last_message {
    flex: 1;
    overflow: hidden;
    color: $text-light-grey;
@@ -71,7 +71,7 @@
    white-space: nowrap;
    text-overflow: ellipsis;
 }
-.user__actions {
+.chat__actions {
    display: flex;
    flex: 1;
    flex-direction: column;

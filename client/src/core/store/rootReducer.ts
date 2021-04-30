@@ -1,8 +1,8 @@
-import { TAccount } from "../../models/types";
+import { TUser } from "../../models/User";
 import { mergeDeep } from "../../utils/mergeDeep";
 import { mergeObjects } from "../../utils/mergeObjects";
 import { Actions } from "./actionTypes";
-import { TState } from "./stateTypes";
+import { TAccountState, TState } from "./stateTypes";
 // eslint-disable-next-line import/no-cycle
 import { TAction } from "./Store";
 
@@ -37,13 +37,23 @@ export function rootReducer(state: TState, action: TAction): TState {
             chats: { ...mergeObjects(prevStateLocal, action.data) },
          };
 
+      case Actions.CHATS_UPLOAD_CHATS:
+         prevStateLocal = state.chats || {};
+         return {
+            ...state,
+            chats: {
+               ...prevStateLocal,
+               availableChats: action.data,
+            },
+         };
+
       case Actions.ACCOUNT_SETTINGS_UPDATE:
          prevStateLocal = state.accountSettings || {};
          return {
             ...state,
             accountSettings: {
                ...mergeDeep(prevStateLocal, action.data),
-            } as TAccount,
+            } as TUser,
          };
 
       case Actions.ACCOUNT_PASSWORD_CHANGE:
@@ -65,7 +75,7 @@ export function rootReducer(state: TState, action: TAction): TState {
             ...state,
             session: {},
             rightSidebar: {},
-            accountSettings: {} as TAccount,
+            accountSettings: {} as TUser,
          };
 
       default:
