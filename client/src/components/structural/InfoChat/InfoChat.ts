@@ -30,11 +30,7 @@ export const InfoChat = {
       "Chat:userDeleted": function () {
          refreshUsers.call(this);
       },
-      "Chat:selected": function (id: number) {
-         if (id !== this.props.chat.id && id !== null && id !== 0) {
-            refreshUsers.call(this);
-         }
-      },
+      "Chat:selected": function (id: number) {},
    },
    methods: {
       onClick(e: Event & { target: HTMLElement }) {

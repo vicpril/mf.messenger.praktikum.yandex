@@ -92,7 +92,7 @@ export const Chats = {
    async beforePrepare() {
       LeftSidebarLoaderInit();
       this.props.view = LeftSidebarController.getSidebarView();
-      fetchChats.call(this);
+      const chats = await fetchChats.call(this);
       this.props.usersRemote = [];
    },
 };
@@ -128,7 +128,6 @@ function fetchChats() {
       .then((chats) => {
          this.props.chats = chats;
          this.props.chatsFiltered = this.props.chats;
-         this.$dispatch(actions.uploadChats(chats));
          if (ChatsController.getSelectedChat() === null) {
             this.$dispatch(actions.selectChat(null));
             this.$emit("Chat:selected");

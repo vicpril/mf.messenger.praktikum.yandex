@@ -5,6 +5,10 @@ import { getFormData } from "../../../utils/pure-functions";
 import template from "./MessagerMenu.tmpl";
 import { Validators } from "../../../core/validator/validators";
 import { useForm } from "../../../core/validator/form";
+import { ChatsController } from "../../../controllers/Chats/ChatsController";
+import { AccountController } from "../../../controllers/AccountController/AccountController";
+import { TUser } from "../../../models/User";
+import { YPSocket } from "../../../core/connections/YPSocket";
 
 const { restrictedSymbols } = Validators;
 
@@ -35,24 +39,31 @@ export const MessagerMenu = {
             }
          }
       },
-      onSubmit(e: Event & { target: Element }): void {
-         const $input = $(e.target);
-         if ($input.hasClass("messager__form")) {
+      onSubmit(e: Event & { target: HTMLFormElement }): void {
+         const $form = $(e.target);
+         if ($form.hasClass("messager__form")) {
             e.preventDefault();
 
             const control = useForm(this.props.form).controls;
             if (control && !control.message.valid) {
-               $input.addClass("invalid");
+               $form.addClass("invalid");
                if (control.message.errors) {
                   alert(control.message.errors.restrictedSymbols.message);
+                  return;
                }
             }
 
-            const form = e.target as HTMLFormElement;
-            const formData = new FormData(form);
-            const data = getFormData(formData);
+            const formData = new FormData(e.target);
+            const { message } = getFormData(formData);
 
-            console.log("TODO Send form data:", data);
+            // const userId = (AccountController.getAccount() as TUser).id;
+            // const chatId = ChatsController.getSelectedChatId();
+
+            const connection = YPSocket.getInstance();
+
+            connection.send(message);
+
+            console.log("TODO Send form data:", message);
          }
       },
       onClick(e: Event & { target: Element }): void {

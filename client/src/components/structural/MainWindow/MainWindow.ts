@@ -38,19 +38,15 @@ export const MainWindow = {
          };
          this.$dispatch(actions.rightSidebar(actionData));
       },
-      "Chat:selected": function () {
-         this.$emit(this.EVENTS.UPDATE);
-      },
    },
    storeSubscribers: {
-      chats: function () {
+      selectedChatId: function () {
          this.$emit(this.EVENTS.UPDATE);
       },
    },
+
    methods: {},
-   beforePrepare() {
-      // this.props.chat = AppService.getSelectedChat();
-   },
+   beforePrepare() {},
    beforeCreate() {
       this.props.selectedChat = ChatsController.getSelectedChat();
       this.props.is_selected = this.props.selectedChat !== null;

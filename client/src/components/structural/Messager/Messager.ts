@@ -10,6 +10,8 @@ import { AccountController } from "../../../controllers/AccountController/Accoun
 import { TChat } from "../../../models/Chat";
 import { TUser } from "../../../models/User";
 import { TMessage } from "../../../models/types";
+import { ChatsController } from "../../../controllers/Chats/ChatsController";
+import { YPSocket } from "../../../core/connections/YPSocket";
 
 export const Messager = {
    name: "Messager",
@@ -27,8 +29,14 @@ export const Messager = {
             window.scrollTo(0, this.$root.$el.scrollHeight);
          }, 10);
       },
+      "Chat:selected": function () {
+         this.$emit(this.EVENTS.UPDATE);
+      },
    },
    storeSubscribers: {
+      chats: function () {
+         this.$emit(this.EVENTS.UPDATE);
+      },
       accountSettings: function (changes: any) {
          this.props.account = changes;
          this.$emit(this.EVENTS.UPDATE);
@@ -36,10 +44,17 @@ export const Messager = {
    },
    methods: {},
    beforePrepare() {
-      this.props.chat = AppService.getSelectedChat();
-      this.props.account = AccountController.getAccount();
+      const P = this.props; // alias
+      P.chat = AppService.getSelectedChat();
+      P.account = AccountController.getAccount();
    },
    beforeCreate() {
+      const P = this.props; // alias
+      P.chatId = ChatsController.getSelectedChatId();
+
+      const connection = new YPSocket(P.account.id, P.chatId);
+      connection.init();
+
       this.props.blocks = [];
       // this.props.blocks = [
       //    ...buildBlocksHistory(this.props.chat, this.props.account),

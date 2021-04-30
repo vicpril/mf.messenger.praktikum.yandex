@@ -1,8 +1,3 @@
-import {
-   HideLeftSidebarLoader,
-   ShowLeftSidebarLoader,
-} from "../../controllers/LeftSidebar/LeftSidebarLoader/LeftSidebarLoader";
-import { mergeObjects } from "../../utils/mergeObjects";
 import { HideLoader, ShowLoader } from "../loader/loader";
 import { notifyError } from "../notify/notify";
 import { ApiResponse, BaseAPI, ErrorResponse } from "./BaseApi";
@@ -14,11 +9,14 @@ export type ChatResponse = {
    title: string;
    avatar: string;
    unread_count: number;
-   last_message: {
-      user: UserResponse;
-      time: string;
-      content: string;
-   };
+   last_message:
+      | string
+      | null
+      | {
+           user: UserResponse;
+           time: string;
+           content: string;
+        };
 };
 
 type ChatsRequest = {
@@ -43,6 +41,10 @@ type ChatsUploadAvatarRequest = {
 type ChatsAddUsersRequest = {
    users: number[];
    chatId: number;
+};
+
+type ChatsTokenRequest = {
+   token: string;
 };
 
 type ChatsDeleteUsersRequest = ChatsAddUsersRequest;
@@ -221,5 +223,19 @@ export class ChatsAPI extends BaseAPI {
          )
          .catch(this.onError)
          .finally(this.onFinally);
+   }
+
+   requestToken(chatId: number): Promise<ApiResponse> {
+      const options = {
+         withCredentials: true,
+      };
+      return XHR.post(`${this.host}/token/${chatId}`, options)
+         .then(
+            (resp: ChatsTokenRequest): ApiResponse => ({
+               status: "success",
+               data: resp,
+            })
+         )
+         .catch(this.onError);
    }
 }

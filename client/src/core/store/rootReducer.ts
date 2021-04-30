@@ -46,6 +46,12 @@ export function rootReducer(state: TState, action: TAction): TState {
                availableChats: action.data,
             },
          };
+      case Actions.SELECTED_CHAT_CHANGE:
+         prevStateLocal = state.selectedChatId || {};
+         return {
+            ...state,
+            selectedChatId: action.data,
+         };
 
       case Actions.ACCOUNT_SETTINGS_UPDATE:
          prevStateLocal = state.accountSettings || {};
@@ -76,6 +82,17 @@ export function rootReducer(state: TState, action: TAction): TState {
             session: {},
             rightSidebar: {},
             accountSettings: {} as TUser,
+         };
+
+      case Actions.TOKENS_SAVE:
+         prevStateLocal = state.tokens || {};
+         return {
+            ...state,
+            tokens: {
+               ...mergeDeep(prevStateLocal, {
+                  [action.data.chatId]: action.data.token,
+               }),
+            },
          };
 
       default:

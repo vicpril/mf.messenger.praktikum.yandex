@@ -7,8 +7,12 @@ export type TState = {
    rightSidebar?: TRightSidebarState;
    leftSidebar?: TLeftSidebarState;
    chats?: TChatsState;
+   selectedChatId?: number | null;
    accountSettings?: TAccountState;
    session?: { login?: string };
+   tokens?: {
+      [chatId: number]: string;
+   };
 };
 
 export type TRightSidebarState = {
@@ -28,6 +32,5 @@ export type TSessionState = {
 };
 
 export type TChatsState = {
-   selectedChatId?: number | null;
    availableChats?: TChat[];
 };

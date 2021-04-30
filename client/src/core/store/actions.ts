@@ -42,10 +42,8 @@ export function setSession(data: any = null): TAction {
 
 export function selectChat(id: number | null): TAction {
    return {
-      type: Actions.CHATS_SELECT_CHAT,
-      data: {
-         selectedChatId: id,
-      },
+      type: Actions.SELECTED_CHAT_CHANGE,
+      data: id,
    };
 }
 
@@ -53,5 +51,15 @@ export function uploadChats(chats: TChat[]): TAction {
    return {
       type: Actions.CHATS_UPLOAD_CHATS,
       data: chats,
+   };
+}
+
+export function saveToken(chatId: number, token: string): TAction {
+   return {
+      type: Actions.TOKENS_SAVE,
+      data: {
+         chatId,
+         token,
+      },
    };
 }
