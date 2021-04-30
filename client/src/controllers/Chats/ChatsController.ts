@@ -13,6 +13,14 @@ import { Actions } from "../../core/store/actionTypes";
 import { NoticeStatus, notify } from "../../core/notify/notify";
 import { ChatResponse, ChatsAPI } from "../../core/xhr/ChatsAPI";
 import { Chat } from "../../models/Chat";
+import {
+   HideChatInfoLoader,
+   ShowChatInfoLoader,
+} from "../../components/structural/InfoChat/InfoChatLoader";
+import {
+   HideLeftSidebarLoader,
+   ShowLeftSidebarLoader,
+} from "../LeftSidebar/LeftSidebarLoader/LeftSidebarLoader";
 
 export class ChatsController {
    constructor(private component: Component) {}
@@ -46,7 +54,11 @@ export class ChatsController {
 
    async getChats() {
       try {
-         const { status, data } = await new ChatsAPI().getChats();
+         const options = {
+            beforeRequest: ShowLeftSidebarLoader(),
+            afterRequest: HideLeftSidebarLoader,
+         };
+         const { status, data } = await new ChatsAPI(options).getChats();
          if (isSuccess(status)) {
             const chats = data.map((chat: ChatResponse) => new Chat(chat));
             return chats;
@@ -95,12 +107,17 @@ export class ChatsController {
 
    async getChatUsers(chatId: number) {
       try {
-         const options = {
+         const params = {
             id: chatId,
+            limit: 10,
          };
-         const { status, data: usersdata } = await new ChatsAPI().getChatUsers(
+         const options = {
+            beforeRequest: ShowChatInfoLoader,
+            afterRequest: HideChatInfoLoader,
+         };
+         const { status, data: usersdata } = await new ChatsAPI(
             options
-         );
+         ).getChatUsers(params);
          if (isSuccess(status)) {
             return usersdata.map((data: UserResponse) => new User(data));
          }

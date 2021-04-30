@@ -2,11 +2,12 @@ import {
    HideLeftSidebarLoader,
    ShowLeftSidebarLoader,
 } from "../../controllers/LeftSidebar/LeftSidebarLoader/LeftSidebarLoader";
+import { mergeObjects } from "../../utils/mergeObjects";
 import { HideLoader, ShowLoader } from "../loader/loader";
 import { notifyError } from "../notify/notify";
 import { ApiResponse, BaseAPI, ErrorResponse } from "./BaseApi";
 import { UserResponse } from "./UsersAPI";
-import { XHR } from "./XHR";
+import { XHR, XHROptions } from "./XHR";
 
 export type ChatResponse = {
    id: number;
@@ -57,15 +58,41 @@ type ChatDeleteResponse = {
 
 export class ChatsAPI extends BaseAPI {
    private host = `${this.basehost}/chats`;
+   private xhrOptions: XHROptions = {};
+   private defaultXHROptions = {
+      withCredentials: true,
+      beforeRequest: ShowLoader(),
+      afterRequest: HideLoader,
+   };
 
-   getChats(params?: ChatsRequest): Promise<ApiResponse> {
-      const options = {
-         ...{ params },
-         ...{
-            withCredentials: true,
-            beforeRequest: ShowLeftSidebarLoader(),
-         },
+   constructor(xhrOptions: XHROptions = {}) {
+      super();
+      this.xhrOptions = {
+         withCredentials: true,
+         beforeRequest: ShowLoader(),
+         afterRequest: HideLoader,
+         ...xhrOptions,
       };
+   }
+
+   private onFinally = () => {
+      if (this.xhrOptions.afterRequest) {
+         this.xhrOptions.afterRequest();
+      } else {
+         this.defaultXHROptions.afterRequest();
+      }
+   };
+
+   private onError = (err: ErrorResponse): ApiResponse => {
+      notifyError(err.reason);
+      return { status: "failed" };
+   };
+
+   getChats(data?: ChatsRequest): Promise<ApiResponse> {
+      const options = {
+         ...this.xhrOptions,
+         data,
+      } as XHROptions;
 
       return XHR.get(`${this.host}`, options)
          .then(
@@ -74,25 +101,18 @@ export class ChatsAPI extends BaseAPI {
                data: resp,
             })
          )
-         .catch(
-            (err: ErrorResponse): ApiResponse => {
-               notifyError(err.reason);
-               return { status: "failed" };
-            }
-         )
-         .finally(() => {
-            HideLeftSidebarLoader();
-         });
+         .catch(this.onError)
+         .finally(this.onFinally);
    }
 
    createChat(title: string): Promise<ApiResponse> {
       const options = {
+         ...this.xhrOptions,
          data: {
             title,
          },
-         withCredentials: true,
-         beforeRequest: ShowLoader(),
-      };
+      } as XHROptions;
+      console.log("~ options", options);
 
       return XHR.post(`${this.host}`, options)
          .then(
@@ -101,25 +121,17 @@ export class ChatsAPI extends BaseAPI {
                data: id,
             })
          )
-         .catch(
-            (err: ErrorResponse): ApiResponse => {
-               notifyError(err.reason);
-               return { status: "failed" };
-            }
-         )
-         .finally(() => {
-            HideLoader();
-         });
+         .catch(this.onError)
+         .finally(this.onFinally);
    }
 
    deleteChat(chatId: number): Promise<ApiResponse> {
       const options = {
+         ...this.xhrOptions,
          data: {
             chatId,
          },
-         withCredentials: true,
-         beforeRequest: ShowLoader(),
-      };
+      } as XHROptions;
 
       return XHR.delete(`${this.host}`, options)
          .then(
@@ -128,49 +140,31 @@ export class ChatsAPI extends BaseAPI {
                data: resp,
             })
          )
-         .catch(
-            (err: ErrorResponse): ApiResponse => {
-               notifyError(err.reason);
-               return { status: "failed" };
-            }
-         )
-         .finally(() => {
-            HideLoader();
-         });
+         .catch(this.onError)
+         .finally(this.onFinally);
    }
 
-   getChatUsers(params: ChatsUsersRequest): Promise<ApiResponse> {
+   getChatUsers(data: ChatsUsersRequest): Promise<ApiResponse> {
       const options = {
-         ...{ params },
-         ...{
-            withCredentials: true,
-            beforeRequest: ShowLoader(),
-         },
-      };
+         ...this.xhrOptions,
+         data,
+      } as XHROptions;
 
-      return XHR.get(`${this.host}/${params.id}/users`, options)
+      return XHR.get(`${this.host}/${data.id}/users`, options)
          .then(
             (resp: UserResponse[]): ApiResponse => ({
                status: "success",
                data: resp,
             })
          )
-         .catch(
-            (err: ErrorResponse): ApiResponse => {
-               notifyError(err.reason);
-               return { status: "failed" };
-            }
-         )
-         .finally(() => {
-            HideLoader();
-         });
+         .catch(this.onError)
+         .finally(this.onFinally);
    }
 
    getNewMessages(chatId: number): Promise<ApiResponse> {
       const options = {
-         withCredentials: true,
-         beforeRequest: ShowLoader(),
-      };
+         ...this.xhrOptions,
+      } as XHROptions;
 
       return XHR.get(`${this.host}/new/${chatId}`, options)
          .then(
@@ -179,23 +173,15 @@ export class ChatsAPI extends BaseAPI {
                data: { unread_count },
             })
          )
-         .catch(
-            (err: ErrorResponse): ApiResponse => {
-               notifyError(err.reason);
-               return { status: "failed" };
-            }
-         )
-         .finally(() => {
-            HideLoader();
-         });
+         .catch(this.onError)
+         .finally(this.onFinally);
    }
 
    uploadAvatar(data: FormData): Promise<ApiResponse> {
       const options = {
+         ...this.xhrOptions,
          data,
-         withCredentials: true,
-         beforeRequest: ShowLoader(),
-      };
+      } as XHROptions;
 
       return XHR.put(`${this.host}/avatar`, options)
          .then(
@@ -204,25 +190,15 @@ export class ChatsAPI extends BaseAPI {
                data: resp,
             })
          )
-         .catch(
-            (err: ErrorResponse): ApiResponse => {
-               notifyError(err.reason);
-               return { status: "failed" };
-            }
-         )
-         .finally(() => {
-            HideLoader();
-         });
+         .catch(this.onError)
+         .finally(this.onFinally);
    }
 
-   addUsers(params: ChatsAddUsersRequest): Promise<ApiResponse> {
+   addUsers(data: ChatsAddUsersRequest): Promise<ApiResponse> {
       const options = {
-         ...{ params },
-         ...{
-            withCredentials: true,
-            beforeRequest: ShowLoader(),
-         },
-      };
+         ...this.xhrOptions,
+         data,
+      } as XHROptions;
 
       return XHR.put(`${this.host}/users`, options)
          .then(
@@ -230,25 +206,15 @@ export class ChatsAPI extends BaseAPI {
                status: "success",
             })
          )
-         .catch(
-            (err: ErrorResponse): ApiResponse => {
-               notifyError(err.reason);
-               return { status: "failed" };
-            }
-         )
-         .finally(() => {
-            HideLoader();
-         });
+         .catch(this.onError)
+         .finally(this.onFinally);
    }
 
-   deleteUsers(params: ChatsDeleteUsersRequest): Promise<ApiResponse> {
+   deleteUsers(data: ChatsDeleteUsersRequest): Promise<ApiResponse> {
       const options = {
-         ...{ params },
-         ...{
-            withCredentials: true,
-            beforeRequest: ShowLoader(),
-         },
-      };
+         ...this.xhrOptions,
+         data,
+      } as XHROptions;
 
       return XHR.delete(`${this.host}/users`, options)
          .then(
@@ -256,14 +222,7 @@ export class ChatsAPI extends BaseAPI {
                status: "success",
             })
          )
-         .catch(
-            (err: ErrorResponse): ApiResponse => {
-               notifyError(err.reason);
-               return { status: "failed" };
-            }
-         )
-         .finally(() => {
-            HideLoader();
-         });
+         .catch(this.onError)
+         .finally(this.onFinally);
    }
 }

@@ -7,6 +7,7 @@ export default /* html */ `
       <h4 class="info__title">{{chat.title}}</h4>
       <Avatar bind:user="chat" bind:css="avatar__info"></Avatar>
    </div>
+   {{loader}}
    <div class="chat__users">
    
    </div>

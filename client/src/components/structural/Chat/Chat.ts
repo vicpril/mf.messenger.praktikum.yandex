@@ -27,14 +27,11 @@ export const Chat = {
             const { chat } = this.props;
             const data = { componentName: InfoChat.name, chat };
             this.$emit("openRightSidebar", data);
+            selectThisChat.call(this);
          }
          // Click on wrapper
          else if (checkSwitchUserPossible(e.target)) {
-            const { id } = this.props.chat;
-            // document.location.href = `/?user=${login}`;
-            this.$dispatch(actions.selectChat(id));
-            this.$emit("Chat:selected", id);
-            // Router.navigate("chats", id);
+            selectThisChat.call(this);
          }
       },
       setActive: function () {
@@ -73,4 +70,13 @@ function checkSwitchUserPossible(element: Element): boolean {
    if (!$wrapper) return false;
    if ($wrapper.hasClass("user__active")) return false;
    return true;
+}
+
+function selectThisChat() {
+   if (!this.name.startsWith("Chat")) {
+      throw new Error("`this` is not defined as Chat Component");
+   }
+   const { id } = this.props.chat;
+   this.$dispatch(actions.selectChat(id));
+   this.$emit("Chat:selected", id);
 }

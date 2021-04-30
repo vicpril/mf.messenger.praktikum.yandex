@@ -18,3 +18,15 @@
    flex-grow: 1;
    flex-flow: column;
 }
+
+.chat_info__loader {
+   align-self: center;
+   visibility: hidden;
+   opacity: 0;
+   transition: all 0.3s ease-out;
+
+   &.show {
+      visibility: visible;
+      opacity: 1;
+   }
+}

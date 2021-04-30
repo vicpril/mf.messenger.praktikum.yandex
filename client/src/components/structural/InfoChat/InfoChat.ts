@@ -4,6 +4,8 @@ import { Avatar } from "../Avatar/Avatar";
 import template from "./InfoChat.tmpl";
 import { RightSidebarController } from "../../../controllers/RightSidebar/RightSidebarController";
 import { ChatsController } from "../../../controllers/Chats/ChatsController";
+import { LoaderIncfoChatTemplate as loader } from "./InfoChatLoader";
+import "../../../core/loader/loader.scss";
 
 export const InfoChat = {
    name: "InfoChat",
@@ -12,6 +14,7 @@ export const InfoChat = {
    props: {
       chat: {},
       users: [],
+      loader: loader,
    },
    listeners: ["click"],
    subscribers: {},
