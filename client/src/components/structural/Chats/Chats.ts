@@ -4,7 +4,7 @@ import { strContains } from "../../../utils/pure-functions";
 import template from "./Chats.tmpl";
 import { LeftSidebarViews } from "../../../controllers/LeftSidebar/LeftSidebarViews";
 import { UserRemote } from "../UserRemote/UserRemote";
-import { User, UserFields } from "../../../models/User";
+import { TUser, User, UserFields } from "../../../models/User";
 import { LeftSidebarController } from "../../../controllers/LeftSidebar/LeftSidebarController";
 import {
    HideLeftSidebarLoader,
@@ -54,7 +54,10 @@ export const Chats = {
          }
          this.$emit(this.EVENTS.UPDATE);
       },
-      toggleLeftSidebarView: function (view: LeftSidebarViews) {
+      toggleLeftSidebarView: async function (view: LeftSidebarViews) {
+         if (view === LeftSidebarViews.ChatsSearch) {
+            this.props.chatUsers = await fetchUsers.call(this);
+         }
          if (this.props.view !== view) {
             resetRemote.call(this);
             this.props.view = view;
@@ -122,4 +125,9 @@ function fetchChats() {
          this.$emit(this.EVENTS.UPDATE);
       })
       .finally(HideLeftSidebarLoader);
+}
+
+function fetchUsers() {
+   const chat = ChatsController.getSelectedChatId();
+   return new ChatsController(this).getChatUsers(chat);
 }

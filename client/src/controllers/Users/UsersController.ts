@@ -1,5 +1,5 @@
 import { UsersAPI } from "../../core/xhr/UsersAPI";
-import { User, UserFields } from "../../models/User";
+import { TUser, User, UserFields } from "../../models/User";
 import { isSuccess } from "../../utils/pure-functions";
 
 export class UsersController {
@@ -24,6 +24,4 @@ export class UsersController {
          console.warn(error);
       }
    }
-
-   static async addChat(user: User) {}
 }

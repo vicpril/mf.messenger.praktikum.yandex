@@ -2,8 +2,10 @@ import "./UserRemote.scss";
 
 import { Avatar } from "../Avatar/Avatar";
 import template from "./UserRemote.tmpl";
-import { TChat } from "../../../models/types";
 import { $ } from "../../../utils/dom-abstraction";
+import { ChatsController } from "../../../controllers/Chats/ChatsController";
+import { TUser } from "../../../models/User";
+import { NoticeStatus, notify } from "../../../core/notify/notify";
 
 export const UserRemote = {
    name: "UserRemote",
@@ -11,7 +13,7 @@ export const UserRemote = {
    components: [Avatar],
    props: {
       user: {},
-      chats: {},
+      chatUsers: [],
       isAdded: false,
    },
    listeners: ["click"],
@@ -21,20 +23,31 @@ export const UserRemote = {
          const action =
             e.target.dataset.action ?? $(e.target).parent().data.action;
          if (action === "add") {
-            this.props.css = "added";
-            this.$emit(this.EVENTS.UPDATE);
+            if (this.props.selectedChat === 0) {
+               notify("Select a chat first", NoticeStatus.WARNING);
+            } else {
+               new ChatsController(this).addUser(
+                  this.props.user.id,
+                  this.props.selectedChat
+               );
+            }
          }
       },
    },
-   beforePrepare() {
-      this.name = `${this.name}_${this.props.user.login}`;
-      this.props.isAdded = isInChats(this.props.user.login, this.props.chats);
+   async beforePrepare() {
+      this.name = `${this.name}_${this.props.user.id}`;
+      this.props.selectedChat = ChatsController.getSelectedChatId();
+      this.props.chatUsers = this.parentComponent.props.chatUsers;
+      this.props.isAdded = userExists(this.props.user.id, this.props.chatUsers);
       this.props.css = this.props.isAdded ? "added" : "";
    },
    beforeCreate() {},
    beforeMount() {},
 };
 
-function isInChats(login: string, chats: TChat[]): boolean {
-   return chats.filter((chat) => chat.user.login === login).length > 0;
+function userExists(userId: number, users: TUser[]): boolean {
+   if (Array.isArray(users)) {
+      return users.filter((user) => user.id === userId).length > 0;
+   }
+   return false;
 }

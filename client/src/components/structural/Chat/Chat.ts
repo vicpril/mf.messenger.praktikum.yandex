@@ -43,7 +43,7 @@ export const Chat = {
    },
    beforePrepare() {
       this.name = `${this.name}_${this.props.chat.id}`;
-      this.props.selectedChat = ChatsController.getState().selectedChat ?? 0;
+      this.props.selectedChat = ChatsController.getSelectedChatId();
    },
    beforeCreate() {
       const P = this.props; // just alias

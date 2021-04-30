@@ -2,17 +2,17 @@
 // eslint-disable-next-line import/no-cycle
 import { DateCustom } from "../utils/date";
 
-export type TUser = {
-   login: string;
-   email: string;
-   first_name: string;
-   second_name: string;
-   display_name: string;
-   avatar?: string;
-   password?: string;
-};
+// export type TUser = {
+//    login: string;
+//    email: string;
+//    first_name: string;
+//    second_name: string;
+//    display_name: string;
+//    avatar?: string;
+//    password?: string;
+// };
 
-export type TAccount = TUser;
+// export type TAccount = TUser;
 
 export type TMessage = {
    time: string | DateCustom;
@@ -22,9 +22,9 @@ export type TMessage = {
    content: string;
 };
 
-export type TChat = {
-   user: TUser;
-   data: {
-      messages: TMessage[] | [];
-   };
-};
+// export type TChat = {
+//    user: TUser;
+//    data: {
+//       messages: TMessage[] | [];
+//    };
+// };

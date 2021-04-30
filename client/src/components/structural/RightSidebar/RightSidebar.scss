@@ -46,7 +46,6 @@
 
 .info__content {
    display: flex;
-   flex-grow: 1;
    flex-flow: column nowrap;
    justify-content: start;
    margin: auto 0;
@@ -59,9 +58,7 @@
 
 .info__actions {
    display: flex;
-   // flex-grow: 1;
    flex-flow: column nowrap;
-   // margin: 20px 0;
 }
 
 .info__button {

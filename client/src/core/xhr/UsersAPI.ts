@@ -21,6 +21,7 @@ export type UserResponse = {
    email: string;
    phone: string;
    avatar: string;
+   role?: "admin" | "regular";
 };
 
 export class UsersAPI extends BaseAPI {

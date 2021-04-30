@@ -1,15 +1,10 @@
 import { Component } from "../../core/Component";
-import { isEmpty } from "../../utils/isEmpty";
 import { isSuccess } from "../../utils/pure-functions";
 import * as actions from "../../core/store/actions";
-import { TAccount } from "../../models/types";
-import { TAccountState, TChatsState } from "../../core/store/stateTypes";
-import { AuthAPI } from "../../core/xhr/AuthAPI";
 import { User } from "../../models/User";
 import { Store } from "../../core/store/Store";
 import { verify } from "../../core/validator/form";
-import { UserResponse, UsersAPI } from "../../core/xhr/UsersAPI";
-import { Actions } from "../../core/store/actionTypes";
+import { UserResponse } from "../../core/xhr/UsersAPI";
 import { NoticeStatus, notify } from "../../core/notify/notify";
 import { ChatResponse, ChatsAPI } from "../../core/xhr/ChatsAPI";
 import { Chat } from "../../models/Chat";
@@ -21,6 +16,7 @@ import {
    HideLeftSidebarLoader,
    ShowLeftSidebarLoader,
 } from "../LeftSidebar/LeftSidebarLoader/LeftSidebarLoader";
+import { TChatsState } from "../../core/store/stateTypes";
 
 export class ChatsController {
    constructor(private component: Component) {}
@@ -109,7 +105,6 @@ export class ChatsController {
       try {
          const params = {
             id: chatId,
-            limit: 10,
          };
          const options = {
             beforeRequest: ShowChatInfoLoader,
@@ -120,6 +115,29 @@ export class ChatsController {
          ).getChatUsers(params);
          if (isSuccess(status)) {
             return usersdata.map((data: UserResponse) => new User(data));
+         }
+      } catch (error) {
+         console.warn(error);
+      }
+   }
+
+   async addUser(userId: number, chatId: number) {
+      try {
+         const params = {
+            users: [userId],
+            chatId,
+         };
+         const options = {
+            beforeRequest: ShowChatInfoLoader,
+            afterRequest: HideChatInfoLoader,
+         };
+         const { status } = await new ChatsAPI(options).addUsers(params);
+         if (isSuccess(status)) {
+            if (this.component.name.startsWith("UserRemote")) {
+               this.component.props.css = "added";
+               this.component.$emit(this.component.EVENTS.UPDATE);
+            }
+            this.component.$emit("Chat:userAdded");
          }
       } catch (error) {
          console.warn(error);
@@ -172,4 +190,8 @@ export class ChatsController {
    //       Store.get().dispatch(actions.setSession());
    //    }
    // }
+
+   static getSelectedChatId(): number {
+      return ChatsController.getState().selectedChat ?? 0;
+   }
 }

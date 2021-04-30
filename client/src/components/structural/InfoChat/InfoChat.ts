@@ -4,20 +4,29 @@ import { Avatar } from "../Avatar/Avatar";
 import template from "./InfoChat.tmpl";
 import { RightSidebarController } from "../../../controllers/RightSidebar/RightSidebarController";
 import { ChatsController } from "../../../controllers/Chats/ChatsController";
-import { LoaderIncfoChatTemplate as loader } from "./InfoChatLoader";
+import {
+   HideChatInfoLoader,
+   LoaderIncfoChatTemplate as loader,
+} from "./InfoChatLoader";
 import "../../../core/loader/loader.scss";
+import { TUser } from "../../../models/User";
+import { User } from "../User/User";
 
 export const InfoChat = {
    name: "InfoChat",
    template: template,
-   components: [Avatar],
+   components: [Avatar, User],
    props: {
       chat: {},
       users: [],
       loader: loader,
    },
    listeners: ["click"],
-   subscribers: {},
+   subscribers: {
+      "Chat:userAdded": function () {
+         refreshUsers.call(this);
+      },
+   },
    methods: {
       onClick(e: Event & { target: HTMLElement }) {
          if (e.target.dataset.action === "changeAvatar") {
@@ -38,11 +47,19 @@ export const InfoChat = {
       },
    },
    async beforePrepare() {
-      this.props.chat = RightSidebarController.getChat();
-   },
-   async beforeCreate() {
-      this.props.users = await new ChatsController(this).getChatUsers(
-         this.props.chat.id
-      );
+      refreshUsers.call(this);
    },
 };
+
+function refreshUsers() {
+   this.props.chat = RightSidebarController.getChat();
+   new ChatsController(this)
+      .getChatUsers(this.props.chat.id)
+      .then((users: TUser[]) => {
+         this.props.users = users;
+         if (users.length > 0) {
+            this.$emit(this.EVENTS.UPDATE);
+         }
+      })
+      .finally(HideChatInfoLoader);
+}

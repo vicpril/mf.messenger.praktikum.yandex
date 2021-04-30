@@ -31,7 +31,7 @@ export default /* html */ `
          <!-- UsersRemote -->
          <v-for :user :index in usersRemote>
          <!-- User -->
-         <UserRemote bind:user="usersRemote[{{index}}]" bind:chats="chats"></UserRemote>
+         <UserRemote bind:user="usersRemote[{{index}}]"></UserRemote>
          <!-- end User -->
          </v-for>
          <!-- end usersremote -->

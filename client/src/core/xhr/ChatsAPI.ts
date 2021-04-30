@@ -68,9 +68,7 @@ export class ChatsAPI extends BaseAPI {
    constructor(xhrOptions: XHROptions = {}) {
       super();
       this.xhrOptions = {
-         withCredentials: true,
-         beforeRequest: ShowLoader(),
-         afterRequest: HideLoader,
+         ...this.defaultXHROptions,
          ...xhrOptions,
       };
    }
@@ -112,7 +110,6 @@ export class ChatsAPI extends BaseAPI {
             title,
          },
       } as XHROptions;
-      console.log("~ options", options);
 
       return XHR.post(`${this.host}`, options)
          .then(
