@@ -33,7 +33,6 @@ export const MainWindow = {
       },
       refreshRightSidebar: function (data?: any) {
          const actionData = {
-            status: "open",
             componentName: data.componentName || "InfoAccount",
             chat: data.chat || null,
          };
@@ -55,7 +54,6 @@ export const MainWindow = {
    beforeCreate() {
       this.props.selectedChat = ChatsController.getSelectedChat();
       this.props.is_selected = this.props.selectedChat !== null;
-      console.log("~ this.props.is_selected", this.props.is_selected);
    },
    afterInit() {
       const sidebarState = RightSidebarController.getState();
