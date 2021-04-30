@@ -2,10 +2,9 @@ import { Component } from "../../core/Component";
 import { isEmpty } from "../../utils/isEmpty";
 import { isSuccess } from "../../utils/pure-functions";
 import * as actions from "../../core/store/actions";
-import { TAccount } from "../../models/types";
 import { TAccountState } from "../../core/store/stateTypes";
 import { AuthAPI } from "../../core/xhr/AuthAPI";
-import { User } from "../../models/User";
+import { TUser, User } from "../../models/User";
 import { Store } from "../../core/store/Store";
 import { verify } from "../../core/validator/form";
 import { UsersAPI } from "../../core/xhr/UsersAPI";
@@ -90,13 +89,14 @@ export class AccountController {
                NoticeStatus.SUCCESS,
                3000
             );
+            this.component.$emit(this.component.EVENTS.UPDATE);
          }
       } catch (error) {
          console.warn(error);
       }
    }
 
-   static getAccount(): TAccount | {} {
+   static getAccount(): TUser | {} {
       const account = AccountController.getState();
       return !isEmpty(account) ? account : AccountController.fetch();
    }

@@ -14,6 +14,7 @@ export const FormChangeAvatar = {
    },
    listeners: ["change", "submit"],
    subscribers: {},
+   storeSubscribers: {},
    methods: {
       onChange(e: Event & { target: HTMLInputElement }) {
          if ($(e.target).hasClass("input-file")) {
@@ -31,7 +32,7 @@ export const FormChangeAvatar = {
          }
       },
    },
-   beforePrepare() {
+   beforeCreate() {
       this.props.account = AccountController.getAccount();
    },
 };
