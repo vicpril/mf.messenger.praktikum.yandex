@@ -21,7 +21,7 @@ export const Chat = {
    },
    listeners: ["click"],
    subscribers: {
-      refreshChat: function (id: number, message?: TMessage) {
+      "Message:new": function (id: number, message?: TMessage) {
          if (this.props.chat.id === id) {
             if (message) {
                setLastMessage.call(this, message);

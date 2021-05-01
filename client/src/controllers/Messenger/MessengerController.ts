@@ -53,6 +53,6 @@ export class MessengerController {
       let messages = mergeDeep(this.getChatMessages(), data) as TMessage[];
       Store.get().dispatch(actions.saveMessenger(this.chatId, messages));
       messages = sortByTime(messages, "desc");
-      this.component.$emit("refreshChat", this.chatId, first(messages));
+      this.component.$emit("Message:new", this.chatId, first(messages));
    }
 }

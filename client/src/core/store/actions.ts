@@ -1,6 +1,8 @@
 import { TChat } from "../../models/Chat";
 import { TMessage } from "../../models/Message";
+import { TUser } from "../../models/User";
 import { Actions } from "./actionTypes";
+import { TUserState } from "./stateTypes";
 import { TAction } from "./Store";
 
 export function rightSidebar(data: any): TAction {
@@ -72,5 +74,16 @@ export function saveMessenger(chatId: number, messages: TMessage[]): TAction {
          chatId,
          messages,
       },
+   };
+}
+
+export function saveUsers(users: TUser[]): TAction {
+   const data = users.reduce((acc: TUserState, curr) => {
+      acc[curr.id] = curr;
+      return acc;
+   }, {});
+   return {
+      type: Actions.USERS_SAVE,
+      data,
    };
 }

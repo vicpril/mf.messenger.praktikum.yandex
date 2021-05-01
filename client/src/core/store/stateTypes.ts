@@ -8,6 +8,7 @@ export type TState = {
    rightSidebar?: TRightSidebarState;
    leftSidebar?: TLeftSidebarState;
    chats?: TChatsState;
+   users?: TUserState;
    selectedChatId?: number | null;
    accountSettings?: TAccountState;
    session?: { login?: string };
@@ -39,4 +40,8 @@ export type TChatsState = {
 
 export type TMessengerState = {
    [chatId: number]: TMessage[];
+};
+
+export type TUserState = {
+   [userId: number]: TUser;
 };

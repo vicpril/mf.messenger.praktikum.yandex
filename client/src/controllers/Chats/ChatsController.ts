@@ -138,7 +138,9 @@ export class ChatsController {
             options
          ).getChatUsers(params);
          if (isSuccess(status)) {
-            return usersdata.map((data: UserResponse) => new User(data));
+            const users = usersdata.map((data: UserResponse) => new User(data));
+            Store.get().dispatch(actions.saveUsers(users));
+            return users;
          }
       } catch (error) {
          console.warn(error);

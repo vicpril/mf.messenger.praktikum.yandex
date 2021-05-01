@@ -106,6 +106,16 @@ export function rootReducer(state: TState, action: TAction): TState {
             },
          };
 
+      case Actions.USERS_SAVE:
+         prevStateLocal = state.users || {};
+         return {
+            ...state,
+            users: {
+               ...prevStateLocal,
+               ...action.data,
+            },
+         };
+
       default:
          return state;
    }
