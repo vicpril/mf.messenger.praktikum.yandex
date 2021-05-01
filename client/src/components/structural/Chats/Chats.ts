@@ -94,13 +94,11 @@ export const Chats = {
       LeftSidebarLoaderInit();
       this.props.view = LeftSidebarController.getSidebarView();
       const chats = await fetchChats.call(this);
-      window.fetchChats = fetchChats.bind(this);
       this.props.usersRemote = [];
    },
 
    afterInit() {
       const interval = Store.get().getState().checkNewMessageInterval;
-      console.log("~ interval", interval);
       if (!this.props.newMessagesChecker && interval && interval > 0) {
          this.props.newMessagesChecker = setInterval(() => {
             fetchChats.call(this, false, true);

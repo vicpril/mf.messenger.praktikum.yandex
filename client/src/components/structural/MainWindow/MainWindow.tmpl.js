@@ -1,7 +1,5 @@
 export default /* html */ `
-<main class="main right_sidebar__close">
-
-   <v-if="is_selected">
+<main class="main right_sidebar__close <v-if="!is_selected">chat_not_selected</v-if> ">
 
          <!-- messenger -->
          <Messenger></Messenger>
@@ -11,13 +9,11 @@ export default /* html */ `
          <MessengerMenu></MessengerMenu>
          <!-- end form -->
 
-   <v-else>
          <div class="chat_placeholder">
          <h3>
          Select a chat to type with...
          </h3>
          </div>
-   </v-if>
 
    <!-- Right-sidebar -->
    <RightSidebar bind:page="page"></RightSidebar>

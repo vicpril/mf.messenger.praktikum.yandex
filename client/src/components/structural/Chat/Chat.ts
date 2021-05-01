@@ -13,6 +13,7 @@ import { TChat } from "../../../models/Chat";
 import { first } from "../../../utils/pure-functions";
 import { TChatsState } from "../../../core/store/stateTypes";
 import { isEmpty } from "../../../utils/isEmpty";
+import { MessengerController } from "../../../controllers/Messenger/MessengerController";
 
 export const Chat = {
    name: "Chat",
@@ -51,8 +52,6 @@ export const Chat = {
             )
          );
          if (!isEmpty(chat) && !this.props.is_selected) {
-            console.log("show");
-
             this.methods.showCounter.call(this);
             setLastMessage.call(this, chat.last_message);
          } else {
@@ -87,8 +86,6 @@ export const Chat = {
          this.$root.find(".unread_messages_counter").removeClass("is_null");
       },
       hideCounter() {
-         console.log("sadkjahk");
-
          this.$root.find(".unread_messages_counter").addClass("is_null");
       },
    },

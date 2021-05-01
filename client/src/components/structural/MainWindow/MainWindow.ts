@@ -9,6 +9,7 @@ import * as actions from "../../../core/store/actions";
 import template from "./MainWindow.tmpl";
 import { RightSidebarController } from "../../../controllers/RightSidebar/RightSidebarController";
 import { ChatsController } from "../../../controllers/Chats/ChatsController";
+import { $ } from "../../../utils/dom-abstraction";
 
 export const MainWindow = {
    name: "MainWindow",
@@ -39,7 +40,17 @@ export const MainWindow = {
          this.$dispatch(actions.rightSidebar(actionData));
       },
    },
-   storeSubscribers: {},
+   storeSubscribers: {
+      selectedChatId: function (id: number) {
+         if (id && id > 0) {
+            this.props.is_selected = false;
+            showPlaceholder();
+         } else {
+            this.props.is_selected = true;
+            hidePlaceholder();
+         }
+      },
+   },
 
    methods: {},
    beforePrepare() {},
@@ -56,3 +67,11 @@ export const MainWindow = {
       }
    },
 };
+
+function showPlaceholder() {
+   $(".main").removeClass("chat_not_selected");
+}
+function hidePlaceholder() {
+   console.log($(".main").$el);
+   $(".main").addClass("chat_not_selected");
+}

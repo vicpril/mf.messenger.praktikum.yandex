@@ -32,7 +32,10 @@ export const Messenger = {
          await renderMessages.call(this);
       },
       "Chat:selected": async function (id: number) {
-         await renderMessages.call(this, id);
+         // if (this.props.chat.id === chatId) {
+         //    new MessengerController(this).downloadMessages(chatId);
+         // }
+         // await renderMessages.call(this, id);
       },
    },
    storeSubscribers: {
