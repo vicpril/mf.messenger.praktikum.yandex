@@ -74,7 +74,8 @@ function setLastMessage(message?: TMessage | MessageLife): void {
    P.last_message_content =
       message?.content || P.chat.last_message?.content || "";
 
-   const date = message?.time || P.chat.last_message?.time || null;
+   const dateString = message?.time || P.chat.last_message?.time || null;
+   const date = Date.parse(dateString);
    P.last_message_date = date ? new DateCustom(+date).getDateFormatted : "";
 }
 
