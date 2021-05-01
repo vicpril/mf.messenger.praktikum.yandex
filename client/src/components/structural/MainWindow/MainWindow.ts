@@ -1,8 +1,8 @@
 import "./MainWindow.scss";
 
 import { AppService } from "../../../services/AppService";
-import { Messanger } from "../Messanger/Messanger";
-import { MessangerMenu } from "../MessangerMenu/MessangerMenu";
+import { Messenger } from "../Messenger/Messenger";
+import { MessengerMenu } from "../MessengerMenu/MessengerMenu";
 import { RightSidebar } from "../RightSidebar/RightSidebar";
 import { isEmpty } from "../../../utils/isEmpty";
 import * as actions from "../../../core/store/actions";
@@ -13,7 +13,7 @@ import { ChatsController } from "../../../controllers/Chats/ChatsController";
 export const MainWindow = {
    name: "MainWindow",
    template: template,
-   components: [Messanger, MessangerMenu, RightSidebar],
+   components: [Messenger, MessengerMenu, RightSidebar],
    props: {},
    listeners: [],
    subscribers: {

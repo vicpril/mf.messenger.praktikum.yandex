@@ -26,6 +26,27 @@ export class ChatsController {
       return Store.get().getState().chats ?? {};
    }
 
+   static getAvailableChats(): TChat[] {
+      return (
+         ChatsController.getState().availableChats?.map(
+            (c: TChat) => new Chat(c)
+         ) || []
+      );
+   }
+
+   static getSelectedChatId(): number {
+      return Store.get().getState().selectedChatId ?? 0;
+   }
+
+   static getSelectedChat(): TChat | null {
+      const chatId = ChatsController.getSelectedChatId();
+      const chat = ChatsController.getState().availableChats?.filter(
+         (chat: TChat) => chat.id === chatId
+      )[0] as ChatResponse;
+
+      return chat ? new Chat(chat) : null;
+   }
+
    async createChat(formData: FormData) {
       if (verify(this.component)()) {
          try {
@@ -176,26 +197,5 @@ export class ChatsController {
       } catch (error) {
          console.warn(error);
       }
-   }
-
-   static getAvailableChats(): TChat[] {
-      return (
-         ChatsController.getState().availableChats?.map(
-            (c: TChat) => new Chat(c)
-         ) || []
-      );
-   }
-
-   static getSelectedChatId(): number {
-      return Store.get().getState().selectedChatId ?? 0;
-   }
-
-   static getSelectedChat(): TChat | null {
-      const chatId = ChatsController.getSelectedChatId();
-      const chat = ChatsController.getState().availableChats?.filter(
-         (chat: TChat) => chat.id === chatId
-      )[0] as ChatResponse;
-
-      return chat ? new Chat(chat) : null;
    }
 }

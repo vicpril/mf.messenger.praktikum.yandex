@@ -1,11 +1,11 @@
-import "./Messanger.scss";
+import "./Messenger.scss";
 
 import { Block, TBlock, TBlockDate, TBlockMessage } from "../Block/Block";
 
 import { AppService } from "../../../services/AppService";
 import { isUndefined } from "../../../utils/pure-functions";
 import { sortByTime } from "../../../utils/sortMessages";
-import template from "./Messanger.tmpl";
+import template from "./Messenger.tmpl";
 import { AccountController } from "../../../controllers/AccountController/AccountController";
 import { TChat } from "../../../models/Chat";
 import { TUser } from "../../../models/User";
@@ -13,8 +13,8 @@ import { TMessage } from "../../../models/types";
 import { ChatsController } from "../../../controllers/Chats/ChatsController";
 import { YPSocket } from "../../../core/connections/YPSocket";
 
-export const Messanger = {
-   name: "Messanger",
+export const Messenger = {
+   name: "Messenger",
    template: template,
    components: [Block],
    props: {

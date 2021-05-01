@@ -1,5 +1,6 @@
 import { LeftSidebarViews } from "../../controllers/LeftSidebar/LeftSidebarViews";
 import { TChat } from "../../models/Chat";
+import { TMessage } from "../../models/Message";
 import { TUser } from "../../models/User";
 
 export type TState = {
@@ -13,6 +14,7 @@ export type TState = {
    tokens?: {
       [chatId: number]: string;
    };
+   messenger?: TMessengerState;
 };
 
 export type TRightSidebarState = {
@@ -33,4 +35,8 @@ export type TSessionState = {
 
 export type TChatsState = {
    availableChats?: TChat[];
+};
+
+export type TMessengerState = {
+   [chatId: number]: TMessage[];
 };
