@@ -2,7 +2,6 @@ import { ChatsController } from "../../controllers/Chats/ChatsController";
 // eslint-disable-next-line import/no-cycle
 import { MessengerController } from "../../controllers/Messenger/MessengerController";
 import { MessageTypes } from "../../models/Message";
-import { TMessage } from "../../models/types";
 import { notifyError } from "../notify/notify";
 
 type MessageType = MessageTypes;
@@ -12,7 +11,7 @@ export type MessageLife = {
    time: string;
    user_id: string;
    content: string;
-   type: MessageTypes.MESSAGE;
+   type: MessageTypes;
 };
 
 export class YPSocket {

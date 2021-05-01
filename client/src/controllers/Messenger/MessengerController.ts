@@ -2,12 +2,12 @@ import { Component } from "../../core/Component";
 import { TMessengerState } from "../../core/store/stateTypes";
 import { Store } from "../../core/store/Store";
 import * as actions from "../../core/store/actions";
-import { TMessage } from "../../models/Message";
+import { MessageTypes, TMessage } from "../../models/Message";
 import { ChatsController } from "../Chats/ChatsController";
 import { AccountController } from "../AccountController/AccountController";
 // eslint-disable-next-line import/no-cycle
 import { MessageLife, YPSocket } from "../../core/connections/YPSocket";
-import { first, getFormData, Indexed } from "../../utils/pure-functions";
+import { first, getFormData } from "../../utils/pure-functions";
 import { mergeDeep } from "../../utils/mergeDeep";
 import { sortByTime } from "../../utils/sortMessages";
 
@@ -27,8 +27,12 @@ export class MessengerController {
       return Store.get().getState().messenger ?? {};
    }
 
-   getChatMessages(): TMessage[] {
-      return MessengerController.getState()[this.chatId] ?? [];
+   getChatMessages(
+      chatId = this.chatId,
+      sort: "asc" | "desc" = "asc"
+   ): TMessage[] {
+      const messages = MessengerController.getState()[chatId] ?? [];
+      return sortByTime(messages, sort);
    }
 
    connect(): void {
@@ -48,7 +52,9 @@ export class MessengerController {
    }
 
    onGetMessage(data: MessageLife) {
-      this.addMessages([data]);
+      if (data.type !== MessageTypes.USER_CONNECTED) {
+         this.addMessages([data]);
+      }
    }
 
    addMessages(data: MessageLife[] | TMessage[]) {

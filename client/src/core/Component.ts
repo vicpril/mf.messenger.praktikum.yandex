@@ -102,7 +102,7 @@ export class Component extends ComponentStoreSubscriber {
    // get props from template
    // init LifeCycle events in Emmiter
    beforePrepare(): void {}
-   private prepare(): void {
+   private prepare() {
       this.getPropsFromTemplate();
       this.beforePrepare();
 
