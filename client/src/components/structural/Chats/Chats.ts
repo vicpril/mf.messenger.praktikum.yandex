@@ -4,7 +4,7 @@ import { strContains } from "../../../utils/pure-functions";
 import template from "./Chats.tmpl";
 import { LeftSidebarViews } from "../../../controllers/LeftSidebar/LeftSidebarViews";
 import { UserRemote } from "../UserRemote/UserRemote";
-import { TUser, User, UserFields } from "../../../models/User";
+import { User, UserFields } from "../../../models/User";
 import { LeftSidebarController } from "../../../controllers/LeftSidebar/LeftSidebarController";
 import {
    HideLeftSidebarLoader,
@@ -17,6 +17,7 @@ import { TChat } from "../../../models/Chat";
 import { Chat } from "../Chat/Chat";
 import { Component } from "../../../core/Component";
 import * as actions from "../../../core/store/actions";
+import { Store } from "../../../core/store/Store";
 
 export const Chats = {
    name: "Chats",
@@ -93,7 +94,23 @@ export const Chats = {
       LeftSidebarLoaderInit();
       this.props.view = LeftSidebarController.getSidebarView();
       const chats = await fetchChats.call(this);
+      window.fetchChats = fetchChats.bind(this);
       this.props.usersRemote = [];
+   },
+
+   afterInit() {
+      const interval = Store.get().getState().checkNewMessageInterval;
+      console.log("~ interval", interval);
+      if (!this.props.newMessagesChecker && interval && interval > 0) {
+         this.props.newMessagesChecker = setInterval(() => {
+            fetchChats.call(this, false, true);
+         }, interval);
+      }
+   },
+
+   beforeDestroy() {
+      clearInterval(this.props.newMessagesChecker);
+      this.props.newMessagesChecker = null;
    },
 };
 
@@ -121,10 +138,10 @@ function resetRemote() {
    HideLeftSidebarLoader();
 }
 
-function fetchChats() {
-   ShowLeftSidebarLoader()();
+function fetchChats(reload: boolean = true, silent: boolean = false) {
+   if (!silent) ShowLeftSidebarLoader()();
    new ChatsController(this)
-      .getChats()
+      .getChats(silent)
       .then((chats) => {
          this.props.chats = chats;
          this.props.chatsFiltered = this.props.chats;
@@ -132,9 +149,13 @@ function fetchChats() {
             this.$dispatch(actions.selectChat(null));
             this.$emit("Chat:selected");
          }
-         this.$emit(this.EVENTS.UPDATE);
+         if (reload) {
+            this.$emit(this.EVENTS.UPDATE);
+         }
       })
-      .finally(HideLeftSidebarLoader);
+      .finally(() => {
+         if (!silent) HideLeftSidebarLoader();
+      });
 }
 
 function fetchUsers() {

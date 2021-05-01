@@ -3,8 +3,6 @@ import "./Chat.scss";
 import { $ } from "../../../utils/dom-abstraction";
 import { Avatar } from "../Avatar/Avatar";
 import { DateCustom } from "../../../utils/date";
-import { isEmpty } from "../../../utils/isEmpty";
-import { sortByTime } from "../../../utils/sortMessages";
 import template from "./Chat.tmpl";
 import * as actions from "../../../core/store/actions";
 import { ChatsController } from "../../../controllers/Chats/ChatsController";
@@ -12,6 +10,9 @@ import { InfoChat } from "../InfoChat/InfoChat";
 import { MessageLife } from "../../../core/connections/YPSocket";
 import { TMessage } from "../../../models/Message";
 import { TChat } from "../../../models/Chat";
+import { first } from "../../../utils/pure-functions";
+import { TChatsState } from "../../../core/store/stateTypes";
+import { isEmpty } from "../../../utils/isEmpty";
 
 export const Chat = {
    name: "Chat",
@@ -28,6 +29,34 @@ export const Chat = {
                setLastMessage.call(this, message);
                this.$emit(this.EVENTS.UPDATE);
             }
+         }
+      },
+      "Chat:selected": function (id: number) {
+         if (this.props.chat.id === id) {
+            this.methods.hideCounter.call(this);
+            this.props.is_selected = true;
+         } else {
+            this.props.is_selected = false;
+         }
+      },
+   },
+   storeSubscribers: {
+      chats: function (chats: TChatsState) {
+         if (!chats.availableChats) return;
+         const chat = first(
+            chats.availableChats.filter(
+               (chat: TChat) =>
+                  chat.id === this.props.chat.id &&
+                  chat.unread_count > this.props.chat.unread_count
+            )
+         );
+         if (!isEmpty(chat) && !this.props.is_selected) {
+            console.log("show");
+
+            this.methods.showCounter.call(this);
+            setLastMessage.call(this, chat.last_message);
+         } else {
+            this.methods.hideCounter.call(this);
          }
       },
    },
@@ -54,18 +83,24 @@ export const Chat = {
       setInactive: function () {
          this.$root.find(".chat__wrapper").removeClass("chat__active");
       },
+      showCounter() {
+         this.$root.find(".unread_messages_counter").removeClass("is_null");
+      },
+      hideCounter() {
+         console.log("sadkjahk");
+
+         this.$root.find(".unread_messages_counter").addClass("is_null");
+      },
    },
    beforePrepare() {
       this.name = `${this.name}_${this.props.chat.id}`;
       this.props.selectedChatId = ChatsController.getSelectedChatId();
       setLastMessage.call(this);
    },
-   beforeCreate() {
-      // this.props.counter = getCounter(this.props.chat.unread_messages);
-   },
    beforeMount() {
       if (this.props.selectedChatId === this.props.chat.id) {
          this.methods.setActive.call(this);
+         this.methods.hideCounter.call(this);
       }
    },
 };
@@ -78,11 +113,12 @@ function setLastMessage(message?: TMessage | MessageLife): void {
    const dateString = message?.time || P.chat.last_message?.time || null;
    const date = Date.parse(dateString);
    P.last_message_date = date ? new DateCustom(+date).getDateFormatted : "";
-}
 
-// function getCounter(chat: TChat): number | undefined {
-//    return chat.unread_count;
-// }
+   if (this.$root) {
+      this.$root.find(".chat__last_message").html(P.last_message_content);
+      this.$root.find(".last_message_date").html(P.last_message_date);
+   }
+}
 
 function checkSwitchUserPossible(element: Element): boolean {
    const $wrapper = $(element).closest(".chat__wrapper");

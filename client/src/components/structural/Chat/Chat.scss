@@ -88,23 +88,19 @@
    line-height: 15px;
 }
 
-.counter {
-   padding: 2px 7px;
-   color: $text-white;
-   font-weight: 600;
-   font-size: 11px;
-   line-height: 13px;
-   background-color: $primary;
-   border-radius: 8px;
-}
-
 .unread_messages_counter {
+   width: 15px;
+   height: 15px;
    margin-top: auto;
    margin-left: auto;
-   color: $text-white;
-   background-color: $secondary;
+   background-color: rgb(90, 206, 200);
+   border-radius: 8px;
+   visibility: visible;
+   opacity: 1;
+   transition: all 0.3s ease-out;
 
    &.is_null {
       visibility: hidden;
+      opacity: 0;
    }
 }

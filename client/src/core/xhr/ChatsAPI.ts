@@ -160,7 +160,7 @@ export class ChatsAPI extends BaseAPI {
          .finally(this.onFinally);
    }
 
-   getNewMessages(chatId: number): Promise<ApiResponse> {
+   getNewMessagesCount(chatId: number): Promise<ApiResponse> {
       const options = {
          ...this.xhrOptions,
       } as XHROptions;

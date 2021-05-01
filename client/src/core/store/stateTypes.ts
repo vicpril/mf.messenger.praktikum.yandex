@@ -4,7 +4,7 @@ import { TMessage } from "../../models/Message";
 import { TUser } from "../../models/User";
 
 export type TState = {
-   title?: string;
+   checkNewMessageInterval?: number;
    rightSidebar?: TRightSidebarState;
    leftSidebar?: TLeftSidebarState;
    chats?: TChatsState;

@@ -14,8 +14,8 @@ export default /* html */ `
       <div class="chat__actions">
          <span class="last_message_date">{{last_message_date}}</span>
          <span 
-            class="counter unread_messages_counter <v-if="!chat.unread_count">is_null</v-if>">
-            {{chat.unread_count}}
+            class="counter unread_messages_counter is_null">
+            
          </span>
       </div>
 

@@ -17,7 +17,6 @@ import {
    ShowLeftSidebarLoader,
 } from "../LeftSidebar/LeftSidebarLoader/LeftSidebarLoader";
 import { TChatsState } from "../../core/store/stateTypes";
-import { isEmpty } from "../../utils/isEmpty";
 
 export class ChatsController {
    constructor(private component: Component) {}
@@ -70,12 +69,17 @@ export class ChatsController {
       }
    }
 
-   async getChats() {
+   async getChats(silent: boolean = false) {
       try {
-         const options = {
-            beforeRequest: ShowLeftSidebarLoader(),
-            afterRequest: HideLeftSidebarLoader,
-         };
+         const options = silent
+            ? {
+                 beforeRequest: () => {},
+                 afterRequest: HideLeftSidebarLoader,
+              }
+            : {
+                 beforeRequest: ShowLeftSidebarLoader(),
+                 afterRequest: HideLeftSidebarLoader,
+              };
          const { status, data } = await new ChatsAPI(options).getChats();
          if (isSuccess(status)) {
             const chats = data.map((chat: ChatResponse) => new Chat(chat));
@@ -197,6 +201,19 @@ export class ChatsController {
          if (isSuccess(status)) {
             const { token } = data;
             return token;
+         }
+      } catch (error) {
+         console.warn(error);
+      }
+   }
+
+   static async getNewMessagesCount(chatId: number) {
+      try {
+         const { status, data } = await new ChatsAPI().getNewMessagesCount(
+            chatId
+         );
+         if (isSuccess(status)) {
+            return data.unread_count;
          }
       } catch (error) {
          console.warn(error);
