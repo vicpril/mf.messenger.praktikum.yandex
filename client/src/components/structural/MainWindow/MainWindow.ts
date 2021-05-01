@@ -39,11 +39,7 @@ export const MainWindow = {
          this.$dispatch(actions.rightSidebar(actionData));
       },
    },
-   storeSubscribers: {
-      selectedChatId: function () {
-         this.$emit(this.EVENTS.UPDATE);
-      },
-   },
+   storeSubscribers: {},
 
    methods: {},
    beforePrepare() {},

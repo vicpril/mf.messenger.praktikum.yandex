@@ -29,12 +29,9 @@ export const Messager = {
             window.scrollTo(0, this.$root.$el.scrollHeight);
          }, 10);
       },
-      "Chat:selected": function () {
-         this.$emit(this.EVENTS.UPDATE);
-      },
    },
    storeSubscribers: {
-      chats: function () {
+      selectedChatId: function () {
          this.$emit(this.EVENTS.UPDATE);
       },
       accountSettings: function (changes: any) {
@@ -45,15 +42,15 @@ export const Messager = {
    methods: {},
    beforePrepare() {
       const P = this.props; // alias
-      P.chat = AppService.getSelectedChat();
       P.account = AccountController.getAccount();
    },
    beforeCreate() {
       const P = this.props; // alias
+      P.chat = ChatsController.getSelectedChat();
       P.chatId = ChatsController.getSelectedChatId();
 
-      const connection = new YPSocket(P.account.id, P.chatId);
-      connection.init();
+      // const connection = new YPSocket(P.account.id, P.chatId);
+      // connection.init();
 
       this.props.blocks = [];
       // this.props.blocks = [
