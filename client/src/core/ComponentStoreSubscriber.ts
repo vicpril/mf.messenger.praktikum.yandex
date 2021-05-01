@@ -21,21 +21,23 @@ export class ComponentStoreSubscriber extends ComponentDOMListener {
    }
 
    protected initStoreSubscribers() {
-      const subscription = this.store.subscribe((state: TState) => {
-         Object.keys(state).forEach((key: keyof TState) => {
-            if (
-               !isEqual(
-                  this.store.prevState[key] as Indexed,
-                  state[key] as Indexed
-               )
-            ) {
-               if (this.isWatching(key)) {
-                  const changes = state[key];
-                  this.storeSubscribers[key]?.call(this, changes);
+      const subscription = this.store.subscribe(
+         (state: TState, prevState: TState) => {
+            Object.keys(state).forEach((key: keyof TState) => {
+               if (
+                  !isEqual(
+                     this.store.prevState[key] as Indexed,
+                     state[key] as Indexed
+                  )
+               ) {
+                  if (this.isWatching(key)) {
+                     const changes = state[key];
+                     this.storeSubscribers[key]?.call(this, changes, prevState);
+                  }
                }
-            }
-         });
-      });
+            });
+         }
+      );
 
       this.storeSubscriptions.push(subscription);
    }

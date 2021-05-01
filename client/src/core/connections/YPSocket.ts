@@ -57,9 +57,9 @@ export class YPSocket {
       console.log(`Code: ${event.code} | Reason: ${event.reason}`);
    };
 
-   private onMessage = (event: MessageEvent & { data: MessageLife }) => {
+   private onMessage = (event: MessageEvent & { data: string }) => {
       console.log("Получены данные", event.data);
-      this.messengerController.onGetMessage(event.data);
+      this.messengerController.onGetMessage(JSON.parse(event.data));
    };
 
    private onError = (event: ErrorEvent) => {
@@ -90,8 +90,6 @@ export class YPSocket {
    }
 
    send(content: string, type: MessageType = MessageTypes.MESSAGE) {
-      console.log(`WS SEND to ${this.chatId}: `, content);
-
       try {
          this.socket?.send(
             JSON.stringify({

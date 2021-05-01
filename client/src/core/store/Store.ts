@@ -4,7 +4,7 @@ import { isEmpty } from "../../utils/isEmpty";
 import { rootReducer } from "./rootReducer";
 import { TState } from "./stateTypes";
 
-export type StoreSubscriberMethod = (state: TState) => void;
+export type StoreSubscriberMethod = (state: TState, prevState: TState) => void;
 export type StoreSubscriberMethods = {
    [K in keyof TState]: StoreSubscriberMethod;
 };
@@ -41,7 +41,7 @@ export class Store {
       this.prevState = cloneDeep(this.state);
       this.state = this.rootReducer(this.state, action);
       this.subscribers.forEach((subscriber: StoreSubscriberMethod) =>
-         subscriber(this.state)
+         subscriber(this.state, this.prevState)
       );
    }
 

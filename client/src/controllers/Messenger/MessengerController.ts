@@ -7,8 +7,9 @@ import { ChatsController } from "../Chats/ChatsController";
 import { AccountController } from "../AccountController/AccountController";
 // eslint-disable-next-line import/no-cycle
 import { MessageLife, YPSocket } from "../../core/connections/YPSocket";
-import { getFormData, Indexed } from "../../utils/pure-functions";
+import { first, getFormData, Indexed } from "../../utils/pure-functions";
 import { mergeDeep } from "../../utils/mergeDeep";
+import { sortByTime } from "../../utils/sortMessages";
 
 export class MessengerController {
    private chatId: number;
@@ -49,7 +50,9 @@ export class MessengerController {
    }
 
    addMessages(data: MessageLife[] | TMessage[]) {
-      const messages = mergeDeep(this.getChatMessages(), data) as TMessage[];
+      let messages = mergeDeep(this.getChatMessages(), data) as TMessage[];
       Store.get().dispatch(actions.saveMessenger(this.chatId, messages));
+      messages = sortByTime(messages, "desc");
+      this.component.$emit("refreshChat", this.chatId, first(messages));
    }
 }

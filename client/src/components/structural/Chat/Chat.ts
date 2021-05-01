@@ -10,6 +10,7 @@ import template from "./Chat.tmpl";
 import * as actions from "../../../core/store/actions";
 import { ChatsController } from "../../../controllers/Chats/ChatsController";
 import { InfoChat } from "../InfoChat/InfoChat";
+import { MessageLife } from "../../../core/connections/YPSocket";
 
 export const Chat = {
    name: "Chat",
@@ -19,7 +20,16 @@ export const Chat = {
       chat: {},
    },
    listeners: ["click"],
-   storeSubscribers: {},
+   subscribers: {
+      refreshChat: function (id: number, message?: TMessage) {
+         if (this.props.chat.id === id) {
+            if (message) {
+               setLastMessage.call(this, message);
+               this.$emit(this.EVENTS.UPDATE);
+            }
+         }
+      },
+   },
    methods: {
       onClick(e: Event & { target: Element }): void {
          // Click on active Avatar
@@ -47,14 +57,10 @@ export const Chat = {
    beforePrepare() {
       this.name = `${this.name}_${this.props.chat.id}`;
       this.props.selectedChatId = ChatsController.getSelectedChatId();
+      setLastMessage.call(this);
    },
    beforeCreate() {
-      const P = this.props; // just alias
-      P.last_message_content = P.chat.last_message?.content ?? "";
-      P.last_message_date = P.chat.last_message?.time
-         ? new DateCustom(+P.chat.last_message?.time).getDateFormatted
-         : "";
-      P.counter = getCounter(P.chat.unread_messages);
+      this.props.counter = getCounter(this.props.chat.unread_messages);
    },
    beforeMount() {
       if (this.props.selectedChatId === this.props.chat.id) {
@@ -63,8 +69,13 @@ export const Chat = {
    },
 };
 
-function getLastMessage(messages: TMessage[]): TMessage | null {
-   return !isEmpty(messages) ? sortByTime(messages)[0] : null;
+function setLastMessage(message?: TMessage | MessageLife): void {
+   const P = this.props; // just alias
+   P.last_message_content =
+      message?.content || P.chat.last_message?.content || "";
+
+   const date = message?.time || P.chat.last_message?.time || null;
+   P.last_message_date = date ? new DateCustom(+date).getDateFormatted : "";
 }
 
 function getCounter(messages: TMessage[]): number | undefined {
