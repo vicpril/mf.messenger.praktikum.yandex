@@ -164,6 +164,7 @@ export class ChatsController {
                this.component.$emit(this.component.EVENTS.UPDATE);
             }
             this.component.$emit("Chat:userAdded");
+            notify("User was added to chat");
          }
       } catch (error) {
          console.warn(error);
@@ -183,6 +184,7 @@ export class ChatsController {
          const { status } = await new ChatsAPI(options).deleteUsers(params);
          if (isSuccess(status)) {
             this.component.$emit("Chat:userDeleted");
+            notify("User was removed from chat");
          }
       } catch (error) {
          console.warn(error);
