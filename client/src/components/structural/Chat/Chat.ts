@@ -11,6 +11,7 @@ import { ChatsController } from "../../../controllers/Chats/ChatsController";
 import { InfoChat } from "../InfoChat/InfoChat";
 import { MessageLife } from "../../../core/connections/YPSocket";
 import { TMessage } from "../../../models/Message";
+import { TChat } from "../../../models/Chat";
 
 export const Chat = {
    name: "Chat",
@@ -60,7 +61,7 @@ export const Chat = {
       setLastMessage.call(this);
    },
    beforeCreate() {
-      this.props.counter = getCounter(this.props.chat.unread_messages);
+      // this.props.counter = getCounter(this.props.chat.unread_messages);
    },
    beforeMount() {
       if (this.props.selectedChatId === this.props.chat.id) {
@@ -79,11 +80,9 @@ function setLastMessage(message?: TMessage | MessageLife): void {
    P.last_message_date = date ? new DateCustom(+date).getDateFormatted : "";
 }
 
-function getCounter(messages: TMessage[]): number | undefined {
-   return !isEmpty(messages)
-      ? sortByTime(messages).filter((m) => m.unread).length
-      : 0;
-}
+// function getCounter(chat: TChat): number | undefined {
+//    return chat.unread_count;
+// }
 
 function checkSwitchUserPossible(element: Element): boolean {
    const $wrapper = $(element).closest(".chat__wrapper");
