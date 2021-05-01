@@ -108,6 +108,11 @@ export function first<T>(list: T[]): T {
    return list[0];
 }
 
+export function last<T>(list: T[]): T | null {
+   if (!Array.isArray(list) || list.length === 0) return null;
+   return list[list.length - 1];
+}
+
 export function getUrlParameter(key: string): string | null {
    // eslint-disable-next-line no-restricted-globals
    const url = new URL(location.href);

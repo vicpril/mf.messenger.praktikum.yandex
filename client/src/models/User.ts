@@ -27,3 +27,7 @@ export class User {
       this.role = data.role ?? null;
    }
 }
+
+export function isSameUsers(first: TUser, second: TUser): boolean {
+   return first.id === second.id;
+}

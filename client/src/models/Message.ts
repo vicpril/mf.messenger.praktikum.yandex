@@ -1,9 +1,16 @@
+export enum MessageTypes {
+   MESSAGE = "message",
+   FILE = "file",
+   USER_CONNECTED = "user connected",
+   GET_OLD = "get old",
+}
+
 export type TMessage = {
    id?: number; // id сообщения в текущем чате (равен порядковому номеру сообщения в чате)
    chat_id: number;
    time: string;
-   type: string;
-   user_id: string;
+   type: MessageTypes;
+   user_id: number;
    content: string;
    file?: {
       id: number;

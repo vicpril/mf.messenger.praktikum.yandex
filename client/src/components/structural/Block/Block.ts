@@ -1,10 +1,10 @@
 import "./Block.scss";
 
-import { TMessage, TUser } from "../../../models/types";
-
 import { Avatar } from "../Avatar/Avatar";
 import { mapMessageDateCustom } from "../../../utils/date";
 import template from "./Block.tmpl";
+import { TUser } from "../../../models/User";
+import { TMessage } from "../../../models/Message";
 
 export const Block = {
    name: "Block",
@@ -23,20 +23,3 @@ export const Block = {
       }
    },
 };
-
-export interface TBlock {
-   type: "date" | "message";
-   content: any;
-}
-export interface TBlockDate extends TBlock {
-   type: "date";
-   content: string;
-}
-export interface TBlockMessage extends TBlock {
-   type: "message";
-   content: {
-      user: TUser;
-      isforeign: boolean;
-      messages: TMessage[];
-   };
-}

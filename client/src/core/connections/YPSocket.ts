@@ -1,15 +1,9 @@
 import { ChatsController } from "../../controllers/Chats/ChatsController";
 // eslint-disable-next-line import/no-cycle
 import { MessengerController } from "../../controllers/Messenger/MessengerController";
+import { MessageTypes } from "../../models/Message";
 import { TMessage } from "../../models/types";
 import { notifyError } from "../notify/notify";
-
-enum MessageTypes {
-   MESSAGE = "message",
-   FILE = "file",
-   USER_CONNECTED = "user connected",
-   GET_OLD = "get old",
-}
 
 type MessageType = MessageTypes;
 
@@ -49,12 +43,18 @@ export class YPSocket {
    };
 
    private onClose = (event: CloseEvent) => {
+      console.log(`Code: ${event.code} | Reason: ${event.reason}`);
       if (event.wasClean) {
          console.log("Connection close OK");
       } else {
          console.warn("Lost connection");
+         try {
+            this.messengerController.connect();
+            console.log("Connection reused");
+         } catch (error) {
+            console.warn(error);
+         }
       }
-      console.log(`Code: ${event.code} | Reason: ${event.reason}`);
    };
 
    private onMessage = (event: MessageEvent & { data: string }) => {

@@ -42,7 +42,9 @@ export class MessengerController {
 
    sendTextMessage(formData: FormData) {
       const { message } = getFormData(formData);
-      MessengerController.connection.send(message);
+      if (message !== "") {
+         MessengerController.connection.send(message);
+      }
    }
 
    onGetMessage(data: MessageLife) {

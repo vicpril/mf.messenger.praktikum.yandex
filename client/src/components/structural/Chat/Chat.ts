@@ -3,7 +3,6 @@ import "./Chat.scss";
 import { $ } from "../../../utils/dom-abstraction";
 import { Avatar } from "../Avatar/Avatar";
 import { DateCustom } from "../../../utils/date";
-import { TMessage } from "../../../models/types";
 import { isEmpty } from "../../../utils/isEmpty";
 import { sortByTime } from "../../../utils/sortMessages";
 import template from "./Chat.tmpl";
@@ -11,6 +10,7 @@ import * as actions from "../../../core/store/actions";
 import { ChatsController } from "../../../controllers/Chats/ChatsController";
 import { InfoChat } from "../InfoChat/InfoChat";
 import { MessageLife } from "../../../core/connections/YPSocket";
+import { TMessage } from "../../../models/Message";
 
 export const Chat = {
    name: "Chat",

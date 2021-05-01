@@ -1,18 +1,20 @@
 import "./Messenger.scss";
 
-import { Block, TBlock, TBlockDate, TBlockMessage } from "../Block/Block";
+import { Block } from "../Block/Block";
 
-import { AppService } from "../../../services/AppService";
-import { isUndefined } from "../../../utils/pure-functions";
+import { isUndefined, last } from "../../../utils/pure-functions";
 import { sortByTime } from "../../../utils/sortMessages";
 import template from "./Messenger.tmpl";
 import { AccountController } from "../../../controllers/AccountController/AccountController";
 import { TChat } from "../../../models/Chat";
 import { TUser } from "../../../models/User";
-import { TMessage } from "../../../models/types";
 import { ChatsController } from "../../../controllers/Chats/ChatsController";
-import { YPSocket } from "../../../core/connections/YPSocket";
 import { MessengerController } from "../../../controllers/Messenger/MessengerController";
+import { MessageTypes, TMessage } from "../../../models/Message";
+import { IBlock } from "../Block/BlockInterface";
+import { BlockMessages } from "../Block/BlockMessages";
+import { BlockDate, isSameDayBlocks } from "../Block/BlockDate";
+import { UsersController } from "../../../controllers/Users/UsersController";
 
 export const Messenger = {
    name: "Messenger",
@@ -21,14 +23,21 @@ export const Messenger = {
    props: {
       chat: {},
       account: {},
-      blocks: [],
+      blocks: [] as Partial<IBlock>,
    },
    listeners: [],
    subscribers: {
       "App:afterInit": function () {
-         setTimeout(() => {
-            window.scrollTo(0, this.$root.$el.scrollHeight);
-         }, 10);
+         sctollToButton.call(this);
+      },
+      "Message:new": function (_: any, message: TMessage) {
+         if (message.type === MessageTypes.MESSAGE) {
+            renderMessage.call(this, message);
+         }
+      },
+      "Chat:selected": function () {
+         this.props.blocks = [];
+         this.$emit(this.EVENTS.UPDATE);
       },
    },
    storeSubscribers: {
@@ -44,6 +53,7 @@ export const Messenger = {
    beforePrepare() {
       const P = this.props; // alias
       P.account = AccountController.getAccount();
+      this.props.blocks = [];
    },
    beforeCreate() {
       const P = this.props; // alias
@@ -51,13 +61,59 @@ export const Messenger = {
       P.chatId = ChatsController.getSelectedChatId();
 
       new MessengerController(this).connect();
-
-      this.props.blocks = [];
-      // this.props.blocks = [
-      //    ...buildBlocksHistory(this.props.chat, this.props.account),
-      // ];
+   },
+   afterInit() {
+      sctollToButton.call(this);
    },
 };
+
+function sctollToButton() {
+   setTimeout(() => {
+      window.scrollTo(0, this.$root.$el.scrollHeight);
+   }, 10);
+}
+
+async function renderMessage(message: TMessage) {
+   await addMessageToBlock.call(this, message);
+   this.$emit(this.EVENTS.UPDATE);
+}
+
+async function addMessageToBlock(message: TMessage) {
+   const blocks = this.props.blocks as IBlock[];
+   const owner = await UsersController.get(message.user_id);
+   const account = (await AccountController.getAccount()) as TUser;
+   if (owner && account) {
+      if (blocks.length === 0) {
+         // create new block date
+         const blockDate = new BlockDate(message.time);
+         blocks.push(blockDate);
+         // create new block message
+         const blockMessages = new BlockMessages(owner, account);
+         blockMessages.addMessage(message);
+         blocks.push(blockMessages);
+         return;
+      }
+
+      if ((last(blocks) as BlockMessages).content.user.id !== message.user_id) {
+         // MAYBE create new block date
+         const blockDate = new BlockDate(message.time);
+         const lastBlock = last(blocks) as BlockMessages;
+         const prevDate = new BlockDate(
+            lastBlock.getLastMessageTime() as string
+         );
+         if (!isSameDayBlocks(blockDate, prevDate)) {
+            blocks.push(blockDate);
+         }
+         // create new block message
+         const blockMessages = new BlockMessages(owner, account);
+         blockMessages.addMessage(message);
+         blocks.push(blockMessages);
+         return;
+      }
+
+      (last(blocks) as BlockMessages).addMessage(message);
+   }
+}
 
 function* buildBlocksHistory(chat: TChat, account: TUser): Iterable<TBlock> {
    const messages = sortByTime(chat.data.messages, "asc");
@@ -80,7 +136,7 @@ function* buildBlocksHistory(chat: TChat, account: TUser): Iterable<TBlock> {
          };
          yield block as TBlockDate;
          block = createBlockUserMessages(message.user, chat.user, account);
-         yield block as TBlockMessage;
+         yield block as TBlockMessages;
       }
 
       // create new block
@@ -92,7 +148,7 @@ function* buildBlocksHistory(chat: TChat, account: TUser): Iterable<TBlock> {
          block.content.messages.push(message);
       } else {
          // return block & create new
-         yield block as TBlockMessage;
+         yield block as TBlockMessages;
          block = createBlockUserMessages(message.user, chat.user, account);
          block.content.messages.push(message);
       }
@@ -100,11 +156,11 @@ function* buildBlocksHistory(chat: TChat, account: TUser): Iterable<TBlock> {
    }
 }
 
-function createBlockUserMessages(
+function createBlockMessages(
    login: string,
    user: TUser,
    account: TUser
-): TBlock {
+): TBlockMessages {
    const isForeign = login !== account.login;
    const currentBlockUser = isForeign ? user : account;
    return {
