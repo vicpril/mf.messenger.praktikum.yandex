@@ -1,4 +1,6 @@
 import { ChatsController } from "../../controllers/Chats/ChatsController";
+// eslint-disable-next-line import/no-cycle
+import { MessengerController } from "../../controllers/Messenger/MessengerController";
 import { TMessage } from "../../models/types";
 import { notifyError } from "../notify/notify";
 
@@ -11,6 +13,14 @@ enum MessageTypes {
 
 type MessageType = MessageTypes;
 
+export type MessageLife = {
+   id: string;
+   time: string;
+   user_id: string;
+   content: string;
+   type: MessageTypes.MESSAGE;
+};
+
 export class YPSocket {
    // private host = "wss://ya-praktikum.tech/ws/chats/<userId>/<chatId>/<token>"
    private basehost = "wss://ya-praktikum.tech/ws/chats";
@@ -19,8 +29,15 @@ export class YPSocket {
    private socket: WebSocket | null = null;
    private static _instanse: YPSocket;
 
-   constructor(private userId: number, private chatId: number) {
+   constructor(
+      private userId: number,
+      private chatId: number,
+      private messengerController: MessengerController
+   ) {
       if (YPSocket._instanse) {
+         YPSocket._instanse.userId = this.userId;
+         YPSocket._instanse.chatId = this.chatId;
+         YPSocket._instanse.messengerController = this.messengerController;
          return YPSocket._instanse;
       }
 
@@ -40,9 +57,9 @@ export class YPSocket {
       console.log(`Code: ${event.code} | Reason: ${event.reason}`);
    };
 
-   private onMessage = (event: MessageEvent) => {
+   private onMessage = (event: MessageEvent & { data: MessageLife }) => {
       console.log("Получены данные", event.data);
-      // MessengerController.onGetMessage(event.data)
+      this.messengerController.onGetMessage(event.data);
    };
 
    private onError = (event: ErrorEvent) => {
@@ -73,6 +90,8 @@ export class YPSocket {
    }
 
    send(content: string, type: MessageType = MessageTypes.MESSAGE) {
+      console.log(`WS SEND to ${this.chatId}: `, content);
+
       try {
          this.socket?.send(
             JSON.stringify({

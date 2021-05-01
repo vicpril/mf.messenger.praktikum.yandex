@@ -1,4 +1,5 @@
 import { TChat } from "../../models/Chat";
+import { TMessage } from "../../models/Message";
 import { Actions } from "./actionTypes";
 import { TAction } from "./Store";
 
@@ -60,6 +61,16 @@ export function saveToken(chatId: number, token: string): TAction {
       data: {
          chatId,
          token,
+      },
+   };
+}
+
+export function saveMessenger(chatId: number, messages: TMessage[]): TAction {
+   return {
+      type: Actions.MESSENGER_SAVE,
+      data: {
+         chatId,
+         messages,
       },
    };
 }

@@ -1,4 +1,5 @@
 export type TMessage = {
+   id?: number; // id сообщения в текущем чате (равен порядковому номеру сообщения в чате)
    chat_id: number;
    time: string;
    type: string;

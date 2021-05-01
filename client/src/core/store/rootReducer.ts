@@ -95,6 +95,17 @@ export function rootReducer(state: TState, action: TAction): TState {
             },
          };
 
+      case Actions.MESSENGER_SAVE:
+         prevStateLocal = state.messenger || {};
+         return {
+            ...state,
+            messenger: {
+               ...mergeDeep(prevStateLocal, {
+                  [action.data.chatId]: action.data.messages,
+               }),
+            },
+         };
+
       default:
          return state;
    }

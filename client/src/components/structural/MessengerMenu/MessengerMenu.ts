@@ -5,10 +5,8 @@ import { getFormData } from "../../../utils/pure-functions";
 import template from "./MessengerMenu.tmpl";
 import { Validators } from "../../../core/validator/validators";
 import { useForm } from "../../../core/validator/form";
-import { ChatsController } from "../../../controllers/Chats/ChatsController";
-import { AccountController } from "../../../controllers/AccountController/AccountController";
-import { TUser } from "../../../models/User";
 import { YPSocket } from "../../../core/connections/YPSocket";
+import { MessengerController } from "../../../controllers/Messenger/MessengerController";
 
 const { restrictedSymbols } = Validators;
 
@@ -54,16 +52,10 @@ export const MessengerMenu = {
             }
 
             const formData = new FormData(e.target);
-            const { message } = getFormData(formData);
 
-            // const userId = (AccountController.getAccount() as TUser).id;
-            // const chatId = ChatsController.getSelectedChatId();
+            new MessengerController(this).sendTextMessage(formData);
 
-            const connection = YPSocket.getInstance();
-
-            connection.send(message);
-
-            console.log("TODO Send form data:", message);
+            $(e.target).find("input.input__message").val("");
          }
       },
       onClick(e: Event & { target: Element }): void {

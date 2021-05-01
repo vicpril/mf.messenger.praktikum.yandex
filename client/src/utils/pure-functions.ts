@@ -126,7 +126,11 @@ export function strContains(
    return highstack.indexOf(needle) !== -1;
 }
 
-export function getFormData(formData: FormData): Object {
+export type TFormDataObject = {
+   [key: string]: any;
+};
+
+export function getFormData(formData: FormData): TFormDataObject {
    return [...formData.entries()].reduce(
       (obj, pair) => Object.assign(obj, { [pair[0]]: pair[1] }),
       {}

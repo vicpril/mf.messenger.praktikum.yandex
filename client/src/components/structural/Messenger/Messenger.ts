@@ -12,6 +12,7 @@ import { TUser } from "../../../models/User";
 import { TMessage } from "../../../models/types";
 import { ChatsController } from "../../../controllers/Chats/ChatsController";
 import { YPSocket } from "../../../core/connections/YPSocket";
+import { MessengerController } from "../../../controllers/Messenger/MessengerController";
 
 export const Messenger = {
    name: "Messenger",
@@ -49,8 +50,7 @@ export const Messenger = {
       P.chat = ChatsController.getSelectedChat();
       P.chatId = ChatsController.getSelectedChatId();
 
-      // const connection = new YPSocket(P.account.id, P.chatId);
-      // connection.init();
+      new MessengerController(this).connect();
 
       this.props.blocks = [];
       // this.props.blocks = [
