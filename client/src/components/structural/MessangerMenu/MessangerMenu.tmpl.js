@@ -1,6 +1,6 @@
 export default /* html */ `
-<div class="messager__menu">
-   <form class="form messager__form" 
+<div class="messanger__menu">
+   <form class="form messanger__form" 
    <v-if="action">    
       action="{{action}}"
    </v-if>

@@ -3,12 +3,12 @@ export default /* html */ `
 
    <v-if="is_selected">
 
-         <!-- messager -->
-         <Messager></Messager>
-         <!-- end messager -->
+         <!-- messanger -->
+         <Messanger></Messanger>
+         <!-- end messanger -->
 
-         <!-- messager form -->
-         <MessagerMenu></MessagerMenu>
+         <!-- messanger form -->
+         <MessangerMenu></MessangerMenu>
          <!-- end form -->
 
    <v-else>

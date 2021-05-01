@@ -1,8 +1,8 @@
-import "./MessagerMenu.scss";
+import "./MessangerMenu.scss";
 
 import { $ } from "../../../utils/dom-abstraction";
 import { getFormData } from "../../../utils/pure-functions";
-import template from "./MessagerMenu.tmpl";
+import template from "./MessangerMenu.tmpl";
 import { Validators } from "../../../core/validator/validators";
 import { useForm } from "../../../core/validator/form";
 import { ChatsController } from "../../../controllers/Chats/ChatsController";
@@ -12,8 +12,8 @@ import { YPSocket } from "../../../core/connections/YPSocket";
 
 const { restrictedSymbols } = Validators;
 
-export const MessagerMenu = {
-   name: "MessagerMenu",
+export const MessangerMenu = {
+   name: "MessangerMenu",
    template: template,
    components: [],
    props: {
@@ -41,7 +41,7 @@ export const MessagerMenu = {
       },
       onSubmit(e: Event & { target: HTMLFormElement }): void {
          const $form = $(e.target);
-         if ($form.hasClass("messager__form")) {
+         if ($form.hasClass("messanger__form")) {
             e.preventDefault();
 
             const control = useForm(this.props.form).controls;

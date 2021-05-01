@@ -42,7 +42,7 @@ export class YPSocket {
 
    private onMessage = (event: MessageEvent) => {
       console.log("Получены данные", event.data);
-      // MessagerController.onGetMessage(event.data)
+      // MessangerController.onGetMessage(event.data)
    };
 
    private onError = (event: ErrorEvent) => {
