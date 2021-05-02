@@ -7,14 +7,25 @@ import { ChatsController } from "../Chats/ChatsController";
 import { AccountController } from "../AccountController/AccountController";
 // eslint-disable-next-line import/no-cycle
 import { MessageLife, YPSocket } from "../../core/connections/YPSocket";
-import { first, getFormData } from "../../utils/pure-functions";
+import { first, getFormData, last } from "../../utils/pure-functions";
 import { mergeDeep } from "../../utils/mergeDeep";
 import { sortByTime } from "../../utils/sortMessages";
+import { mergeObjects } from "../../utils/mergeObjects";
+import {
+   HideLeftSidebarLoader,
+   ShowLeftSidebarLoader,
+} from "../LeftSidebar/LeftSidebarLoader/LeftSidebarLoader";
+import { HideLoader, ShowLoader } from "../../core/loader/loader";
 
+let lastMessageId: number;
+let unreadCount: number;
+let uploadedMessages: MessageLife[];
 export class MessengerController {
    private chatId: number;
    private userId: number;
    private static connection: YPSocket;
+
+   // private static lastMessageId: string;
 
    constructor(private component: Component) {
       this.chatId =
@@ -27,12 +38,11 @@ export class MessengerController {
       return Store.get().getState().messenger ?? {};
    }
 
-   getChatMessages(
-      chatId = this.chatId,
-      sort: "asc" | "desc" = "asc"
-   ): TMessage[] {
-      const messages = MessengerController.getState()[chatId] ?? [];
-      return sortByTime(messages, sort);
+   getChatMessages(chatId = this.chatId): TMessage[] {
+      const messages =
+         MessengerController.getState()[chatId]?.filter(filterMessageType) ??
+         [];
+      return messages;
    }
 
    connect(): void {
@@ -44,23 +54,90 @@ export class MessengerController {
       MessengerController.connection.init();
    }
 
-   sendTextMessage(formData: FormData) {
-      const { message } = getFormData(formData);
+   disconnect() {
+      MessengerController.connection.close();
+   }
+
+   async sendTextMessage(message: FormData | string) {
+      if (typeof message !== "string") {
+         message = getFormData(message).message;
+      }
+
       if (message !== "") {
-         MessengerController.connection.send(message);
+         await MessengerController.connection.send(message as string);
       }
    }
 
    onGetMessage(data: MessageLife) {
-      if (data.type !== MessageTypes.USER_CONNECTED) {
+      // single message
+      if (
+         data.type === MessageTypes.MESSAGE ||
+         data.type === MessageTypes.FILE
+      ) {
          this.addMessages([data]);
+      }
+   }
+
+   onUploadMessages(data: MessageLife[]) {
+      ShowLoader()();
+      uploadedMessages = [
+         ...(uploadedMessages ?? []),
+         ...data,
+      ] as MessageLife[];
+      const countMessages = uploadedMessages.length;
+
+      if (countMessages > 0 && countMessages < unreadCount) {
+         lastMessageId = (last(data) as MessageLife).id;
+         this.fetchMessages(this.chatId, lastMessageId);
+      } else {
+         this.updateChatMessages(uploadedMessages);
+         HideLoader();
+         unreadCount = 0;
+         lastMessageId = 0;
+         uploadedMessages = [];
       }
    }
 
    addMessages(data: MessageLife[] | TMessage[]) {
       let messages = mergeDeep(this.getChatMessages(), data) as TMessage[];
       Store.get().dispatch(actions.saveMessenger(this.chatId, messages));
-      messages = sortByTime(messages, "desc");
+      messages = sortByTime(messages, "asc");
       this.component.$emit("Message:new", this.chatId, first(messages));
    }
+
+   updateChatMessages(data: MessageLife[] | TMessage[]) {
+      let messages = this.mergeMessages(
+         this.getChatMessages(),
+         data as TMessage[]
+      ) as TMessage[];
+      Store.get().dispatch(actions.updateChetMessages(this.chatId, messages));
+      messages = sortByTime(messages, "asc");
+      this.component.$emit("Message:new", this.chatId, first(messages));
+   }
+
+   private mergeMessages<T extends TMessage>(messages: T[], data: T[]) {
+      const messagesObj = messages.reduce((acc: any, curr: T) => {
+         acc[curr.id?.toFixed() || 0] = curr;
+         return acc;
+      }, {} as T);
+      const dataObj = data.reduce((acc: any, curr: T) => {
+         acc[curr.id?.toFixed() || 0] = curr;
+         return acc;
+      }, {});
+
+      const result = { ...messagesObj, ...dataObj };
+
+      return Object.values(result) as T[];
+   }
+
+   async fetchMessages(chatId: number, lastId: number = 0) {
+      unreadCount = await ChatsController.getNewMessagesCount(chatId);
+
+      if (unreadCount > 0) {
+         await MessengerController.connection.fetch(lastId);
+      }
+   }
 }
+
+const filterMessageType = (message: TMessage) =>
+   message.type === MessageTypes.MESSAGE || message.type === MessageTypes.FILE;

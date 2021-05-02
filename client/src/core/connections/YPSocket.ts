@@ -7,7 +7,7 @@ import { notifyError } from "../notify/notify";
 type MessageType = MessageTypes;
 
 export type MessageLife = {
-   id: string;
+   id: number;
    time: string;
    user_id: string;
    content: string;
@@ -20,22 +20,14 @@ export class YPSocket {
    private host = "";
 
    private socket: WebSocket | null = null;
-   private static _instanse: YPSocket;
+   // private static _instanse: YPSocket;
 
    constructor(
       private userId: number,
       private chatId: number,
-      private messengerController: MessengerController
-   ) {
-      if (YPSocket._instanse) {
-         YPSocket._instanse.userId = this.userId;
-         YPSocket._instanse.chatId = this.chatId;
-         YPSocket._instanse.messengerController = this.messengerController;
-         return YPSocket._instanse;
-      }
-
-      YPSocket._instanse = this;
-   }
+      private messengerController: MessengerController,
+      public uploadMode: boolean = false
+   ) {}
 
    private onOpen = () => {
       console.log("Connect successful!");
@@ -57,8 +49,14 @@ export class YPSocket {
    };
 
    private onMessage = (event: MessageEvent & { data: string }) => {
-      console.log("Получены данные", event.data);
-      this.messengerController.onGetMessage(JSON.parse(event.data));
+      // console.log("Получены данные", event.data);
+      const data = JSON.parse(event.data);
+      if (!Array.isArray(data)) {
+         // single messsage
+         this.messengerController.onGetMessage(data);
+      } else {
+         this.messengerController.onUploadMessages(data);
+      }
    };
 
    private onError = (event: ErrorEvent) => {
@@ -88,29 +86,36 @@ export class YPSocket {
       }
    }
 
-   send(content: string, type: MessageType = MessageTypes.MESSAGE) {
-      try {
+   async send(content: string, type: MessageType = MessageTypes.MESSAGE) {
+      const send = function () {
          this.socket?.send(
             JSON.stringify({
                content,
                type,
             })
          );
+      };
+
+      try {
+         if (this.socket?.readyState === 1) {
+            send.call(this);
+         } else {
+            setTimeout(() => {
+               send.call(this);
+            }, 500);
+         }
       } catch (error) {
          console.warn("Send message error", error);
          notifyError(error);
       }
    }
 
-   fetch(lastFetchedMessageId: number = 0) {
-      const messages = this.socket?.send(
-         JSON.stringify({
-            content: lastFetchedMessageId.toString(),
-            type: MessageTypes.GET_OLD,
-         })
-      );
-      console.log("~ messages", messages);
-      // return messages as TMessage[];
+   async fetch(lastFetchedMessageId: number = 0) {
+      try {
+         await this.send(lastFetchedMessageId.toString(), MessageTypes.GET_OLD);
+      } catch (error) {
+         console.warn("Send message error", error);
+      }
    }
 
    destroy() {
@@ -128,11 +133,5 @@ export class YPSocket {
          this.socket.close(1000, reason);
          this.destroy();
       }
-   }
-
-   static getInstance(): YPSocket {
-      if (!YPSocket._instanse)
-         throw new Error("YPSocket must be created manually");
-      return YPSocket._instanse;
    }
 }

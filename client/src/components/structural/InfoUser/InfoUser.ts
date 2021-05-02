@@ -28,7 +28,4 @@ export const InfoUser = {
          }
       },
    },
-   beforePrepare() {
-      this.props.user = RightSidebarController.getUser();
-   },
 };

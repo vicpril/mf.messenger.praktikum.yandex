@@ -3,6 +3,7 @@ export enum MessageTypes {
    FILE = "file",
    USER_CONNECTED = "user connected",
    GET_OLD = "get old",
+   ERROR = "error",
 }
 
 export type TMessage = {

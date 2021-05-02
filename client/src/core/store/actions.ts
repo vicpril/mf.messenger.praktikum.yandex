@@ -77,6 +77,19 @@ export function saveMessenger(chatId: number, messages: TMessage[]): TAction {
    };
 }
 
+export function updateChetMessages(
+   chatId: number,
+   messages: TMessage[]
+): TAction {
+   return {
+      type: Actions.MESSENGER_UPDATE_CHAT,
+      data: {
+         chatId,
+         messages,
+      },
+   };
+}
+
 export function saveUsers(users: TUser[]): TAction {
    const data = users.reduce((acc: TUserState, curr) => {
       acc[curr.id] = curr;

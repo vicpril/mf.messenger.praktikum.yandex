@@ -31,34 +31,42 @@ export const Messenger = {
       "Message:new": async function () {
          await renderMessages.call(this);
       },
-      "Chat:selected": async function (id: number) {
-         // if (this.props.chat.id === chatId) {
-         //    new MessengerController(this).downloadMessages(chatId);
-         // }
-         // await renderMessages.call(this, id);
-      },
    },
    storeSubscribers: {
       accountSettings: function (changes: any) {
          this.props.account = changes;
          this.$emit(this.EVENTS.UPDATE);
       },
+      selectedChatId: async function (id: number) {
+         new MessengerController(this).fetchMessages(id);
+         await renderMessages.call(this, id);
+      },
    },
    methods: {},
    async beforePrepare() {
       const P = this.props; // alias
       P.account = AccountController.getAccount();
+      new MessengerController(this).fetchMessages(
+         ChatsController.getSelectedChatId()
+      );
+
       await renderMessages.call(this);
    },
-   beforeCreate() {
+   async beforeCreate() {
       const P = this.props; // alias
       P.chat = ChatsController.getSelectedChat();
       P.chatId = ChatsController.getSelectedChatId();
 
-      new MessengerController(this).connect();
+      // if (this.rebuild) {
+      await new MessengerController(this).connect();
+      // }
    },
    afterInit() {
       sctollToButton.call(this);
+   },
+   beforeDestroy() {
+      this.rebuild = true;
+      new MessengerController(this).disconnect();
    },
 };
 
@@ -77,7 +85,7 @@ async function renderMessages(chatId = this.props.chat.id) {
 
 async function initBlocks(chatId = this.props.chat.id): Promise<IBlock[]> {
    const blocks = [] as IBlock[];
-   const messages = new MessengerController(this).getChatMessages(chatId);
+   const messages = await new MessengerController(this).getChatMessages(chatId);
    await messages.forEach(async (message) => {
       await addMessageToBlocks(message, blocks);
    });

@@ -106,6 +106,16 @@ export function rootReducer(state: TState, action: TAction): TState {
             },
          };
 
+      case Actions.MESSENGER_UPDATE_CHAT:
+         prevStateLocal = state.messenger || {};
+         return {
+            ...state,
+            messenger: {
+               ...prevStateLocal,
+               ...{ [action.data.chatId]: action.data.messages },
+            },
+         };
+
       case Actions.USERS_SAVE:
          prevStateLocal = state.users || {};
          return {

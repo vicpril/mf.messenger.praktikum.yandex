@@ -208,10 +208,15 @@ export class ChatsController {
    }
 
    static async getNewMessagesCount(chatId: number) {
+      console.log("~ chatId", chatId);
       try {
-         const { status, data } = await new ChatsAPI().getNewMessagesCount(
-            chatId
-         );
+         const options = {
+            beforeRequest: () => {},
+            afterRequest: () => {},
+         };
+         const { status, data } = await new ChatsAPI(
+            options
+         ).getNewMessagesCount(chatId);
          if (isSuccess(status)) {
             return data.unread_count;
          }
