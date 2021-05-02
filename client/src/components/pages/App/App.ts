@@ -15,6 +15,7 @@ export const App = {
    template: template,
    components: [LeftSidebar, MainWindow, ModalNewChat],
    props: {},
+   subscribers: {},
    afterInit() {
       window.ShowLoader = ShowLoader();
       window.HideLoader = HideLoader;

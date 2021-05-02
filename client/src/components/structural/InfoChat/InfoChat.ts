@@ -30,15 +30,9 @@ export const InfoChat = {
       "Chat:userDeleted": function () {
          refreshUsers.call(this);
       },
-      "Chat:selected": function (id: number) {},
    },
    methods: {
       onClick(e: Event & { target: HTMLElement }) {
-         if (e.target.dataset.action === "changeAvatar") {
-            console.log(
-               `Notifications from ${this.props.user.display_name} muted!`
-            );
-         }
          if (e.target.dataset.action === "delete") {
             if (
                // eslint-disable-next-line no-restricted-globals

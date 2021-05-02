@@ -55,7 +55,15 @@ export class MessengerController {
    }
 
    disconnect() {
-      MessengerController.connection.close();
+      if (MessengerController.connection) {
+         MessengerController.connection.close();
+      }
+   }
+
+   static destroy() {
+      if (MessengerController.connection) {
+         MessengerController.connection.close();
+      }
    }
 
    async sendTextMessage(message: FormData | string) {
@@ -110,9 +118,9 @@ export class MessengerController {
          this.getChatMessages(),
          data as TMessage[]
       ) as TMessage[];
-      Store.get().dispatch(actions.updateChetMessages(this.chatId, messages));
       messages = sortByTime(messages, "asc");
-      this.component.$emit("Message:new", this.chatId, first(messages));
+      Store.get().dispatch(actions.updateChetMessages(this.chatId, messages));
+      this.component.$emit("Message:new");
    }
 
    private mergeMessages<T extends TMessage>(messages: T[], data: T[]) {

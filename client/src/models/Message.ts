@@ -1,3 +1,5 @@
+import { DateCustom } from "../utils/date";
+
 export enum MessageTypes {
    MESSAGE = "message",
    FILE = "file",
@@ -22,4 +24,5 @@ export type TMessage = {
       content_size: number;
       upload_date: string;
    };
+   date?: DateCustom;
 };

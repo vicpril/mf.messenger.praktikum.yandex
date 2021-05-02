@@ -100,3 +100,9 @@ export function saveUsers(users: TUser[]): TAction {
       data,
    };
 }
+
+export function logout(): TAction {
+   return {
+      type: Actions.AUTH_LOGOUT,
+   };
+}

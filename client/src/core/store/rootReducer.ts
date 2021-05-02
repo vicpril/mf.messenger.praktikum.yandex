@@ -82,6 +82,9 @@ export function rootReducer(state: TState, action: TAction): TState {
             session: {},
             rightSidebar: {},
             accountSettings: {} as TUser,
+            selectedChatId: null,
+            users: {},
+            chats: {},
          };
 
       case Actions.TOKENS_SAVE:

@@ -27,10 +27,17 @@ export const MainWindow = {
          this.$root.removeClass("right_sidebar__close");
          const actionData = {
             status: "open",
-            componentName: data.componentName || "InfoAccount",
-            chat: data.chat || null,
+            componentName: data?.componentName || "InfoAccount",
+            chat: data?.chat || null,
          };
          this.$dispatch(actions.rightSidebar(actionData));
+      },
+      toggleRightSidebar: function () {
+         if (this.$root.hasClass("right_sidebar__close")) {
+            this.$emit("openRightSidebar");
+         } else {
+            this.$emit("closeRightSidebar");
+         }
       },
       refreshRightSidebar: function (data?: any) {
          const actionData = {
@@ -55,8 +62,8 @@ export const MainWindow = {
    methods: {},
    beforePrepare() {},
    beforeCreate() {
-      this.props.selectedChat = ChatsController.getSelectedChat();
-      this.props.is_selected = this.props.selectedChat !== null;
+      this.props.selectedChatId = ChatsController.getSelectedChatId();
+      this.props.is_selected = this.props.selectedChatId > 0;
    },
    afterInit() {
       const sidebarState = RightSidebarController.getState();
@@ -72,6 +79,5 @@ function showPlaceholder() {
    $(".main").removeClass("chat_not_selected");
 }
 function hidePlaceholder() {
-   console.log($(".main").$el);
    $(".main").addClass("chat_not_selected");
 }

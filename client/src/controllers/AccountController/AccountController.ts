@@ -96,7 +96,7 @@ export class AccountController {
       }
    }
 
-   static getAccount(): TUser | {} {
+   static getAccount(): User | {} {
       const account = AccountController.getState();
       return !isEmpty(account) ? account : AccountController.fetch();
    }

@@ -2,7 +2,7 @@ import "./Messenger.scss";
 
 import { Block } from "../Block/Block";
 
-import { last } from "../../../utils/pure-functions";
+import { first, last } from "../../../utils/pure-functions";
 import template from "./Messenger.tmpl";
 import { AccountController } from "../../../controllers/AccountController/AccountController";
 import { TUser } from "../../../models/User";
@@ -13,6 +13,9 @@ import { IBlock } from "../Block/BlockInterface";
 import { BlockMessages } from "../Block/BlockMessages";
 import { BlockDate, isSameDayBlocks } from "../Block/BlockDate";
 import { UsersController } from "../../../controllers/Users/UsersController";
+import { Component } from "../../../core/Component";
+import { $ } from "../../../utils/dom-abstraction";
+import { IIngredients } from "../../../core/ComponentInterfaces";
 
 export const Messenger = {
    name: "Messenger",
@@ -29,7 +32,7 @@ export const Messenger = {
          sctollToButton.call(this);
       },
       "Message:new": async function () {
-         await renderMessages.call(this);
+         renderMessages.call(this);
       },
    },
    storeSubscribers: {
@@ -38,28 +41,27 @@ export const Messenger = {
          this.$emit(this.EVENTS.UPDATE);
       },
       selectedChatId: async function (id: number) {
-         new MessengerController(this).fetchMessages(id);
-         await renderMessages.call(this, id);
+         changeContent.call(this, this.parentComponent);
       },
    },
    methods: {},
-   async beforePrepare() {
+
+   beforePrepare() {
       const P = this.props; // alias
       P.account = AccountController.getAccount();
       new MessengerController(this).fetchMessages(
          ChatsController.getSelectedChatId()
       );
 
-      await renderMessages.call(this);
+      renderMessages.call(this);
    },
-   async beforeCreate() {
+
+   beforeCreate() {
       const P = this.props; // alias
       P.chat = ChatsController.getSelectedChat();
       P.chatId = ChatsController.getSelectedChatId();
 
-      // if (this.rebuild) {
-      await new MessengerController(this).connect();
-      // }
+      new MessengerController(this).connect();
    },
    afterInit() {
       sctollToButton.call(this);
@@ -76,20 +78,27 @@ function sctollToButton() {
    }, 10);
 }
 
-async function renderMessages(chatId = this.props.chat.id) {
-   await initBlocks.call(this, chatId).then((blocks: IBlock[]) => {
+// async function renderMessages(chatId?: = this.props.chat.id) {
+async function renderMessages() {
+   const chatId = ChatsController.getSelectedChatId();
+   // if (!this.props.rebuild_FLAG) return;
+   await initBlocks.call(this, chatId).then(async (blocks: IBlock[]) => {
       this.props.blocks = blocks;
+      // this.props.rebuild_FLAG = false;
       this.$emit(this.EVENTS.UPDATE);
    });
 }
 
-async function initBlocks(chatId = this.props.chat.id): Promise<IBlock[]> {
+async function initBlocks(chatId: number): Promise<IBlock[]> {
    const blocks = [] as IBlock[];
-   const messages = await new MessengerController(this).getChatMessages(chatId);
-   await messages.forEach(async (message) => {
-      await addMessageToBlocks(message, blocks);
+   const messages = new MessengerController(this).getChatMessages(chatId);
+   const promises = [] as Promise<void>[];
+   messages.forEach((message) => {
+      promises.push(addMessageToBlocks(message, blocks));
    });
-   return blocks;
+   return await Promise.all(promises).then(() => {
+      return blocks;
+   });
 }
 
 async function addMessageToBlocks(message: TMessage, blocks: IBlock[] = []) {
@@ -125,5 +134,31 @@ async function addMessageToBlocks(message: TMessage, blocks: IBlock[] = []) {
       }
 
       (last(blocks) as BlockMessages).addMessage(message);
+      return;
    }
+}
+
+function changeContent(mainWindow: Component): void {
+   const newComponentName = this.name;
+   const currentComponent = this as Component;
+
+   mainWindow.$emit(currentComponent.EVENTS.DESTROY);
+   currentComponent.$remove();
+
+   const $targetElContent = $.create(newComponentName);
+   mainWindow.$root.$el.insertAdjacentElement(
+      "afterbegin",
+      $targetElContent.$el
+   );
+
+   const newComponent = new Component(
+      getContentComponent.call(mainWindow, newComponentName),
+      $targetElContent,
+      mainWindow
+   );
+   mainWindow.componentsInst[0] = newComponent;
+}
+
+function getContentComponent(name: string): IIngredients {
+   return first(this.components.filter((c: IIngredients) => c.name === name));
 }

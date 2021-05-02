@@ -208,7 +208,9 @@ export class ChatsController {
    }
 
    static async getNewMessagesCount(chatId: number) {
-      console.log("~ chatId", chatId);
+      if (!chatId || chatId === 0) {
+         return -1;
+      }
       try {
          const options = {
             beforeRequest: () => {},

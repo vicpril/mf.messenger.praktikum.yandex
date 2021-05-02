@@ -7,5 +7,3 @@ import { Component } from "../core/Component";
 
 const $app = $("#app");
 const app = new Component($app, App);
-
-console.log(app);

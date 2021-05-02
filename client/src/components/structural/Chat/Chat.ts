@@ -65,15 +65,15 @@ export const Chat = {
          if ($(e.target).hasClass("pulse")) {
             const { chat } = this.props;
             const data = { componentName: InfoChat.name, chat };
-            this.$emit("openRightSidebar", data);
             selectThisChat.call(this);
+            this.$emit("openRightSidebar", data);
          }
          // Click on wrapper
          else if (checkSwitchUserPossible(e.target)) {
             const { chat } = this.props;
             const data = { componentName: InfoChat.name, chat };
-            this.$emit("refreshRightSidebar", data);
             selectThisChat.call(this);
+            this.$emit("refreshRightSidebar", data);
          }
       },
       setActive: function () {

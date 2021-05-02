@@ -1,3 +1,4 @@
+import { AuthController } from "../../controllers/Auth/AuthController";
 import { ChatsController } from "../../controllers/Chats/ChatsController";
 // eslint-disable-next-line import/no-cycle
 import { MessengerController } from "../../controllers/Messenger/MessengerController";
@@ -49,19 +50,22 @@ export class YPSocket {
    };
 
    private onMessage = (event: MessageEvent & { data: string }) => {
-      // console.log("Получены данные", event.data);
-      const data = JSON.parse(event.data);
-      if (!Array.isArray(data)) {
-         // single messsage
-         this.messengerController.onGetMessage(data);
-      } else {
-         this.messengerController.onUploadMessages(data);
+      try {
+         console.log("Получены данные", event.data);
+         const data = JSON.parse(event.data);
+         if (!Array.isArray(data)) {
+            // single messsage
+            this.messengerController.onGetMessage(data);
+         } else {
+            this.messengerController.onUploadMessages(data);
+         }
+      } catch (error) {
+         console.warn(error.message);
       }
    };
 
    private onError = (event: ErrorEvent) => {
       console.warn("Ошибка", event.message);
-      notifyError(event.message);
    };
 
    async init() {
@@ -69,17 +73,22 @@ export class YPSocket {
          if (this.socket) {
             this.destroy();
          }
-         // get token
-         const token = await ChatsController.getToken(this.chatId);
 
-         this.host = `${this.basehost}/${this.userId}/${this.chatId}/${token}`;
+         if (AuthController.isAuth()) {
+            // get token
+            const token = await ChatsController.getToken(this.chatId);
 
-         this.socket = new WebSocket(this.host);
+            this.host = `${this.basehost}/${this.userId}/${this.chatId}/${token}`;
 
-         this.socket.addEventListener("open", this.onOpen);
-         this.socket.addEventListener("close", this.onClose);
-         this.socket.addEventListener("message", this.onMessage);
-         this.socket.addEventListener("error", this.onError);
+            this.socket = new WebSocket(this.host);
+
+            this.socket.addEventListener("open", this.onOpen);
+            this.socket.addEventListener("close", this.onClose);
+            this.socket.addEventListener("message", this.onMessage);
+            this.socket.addEventListener("error", this.onError);
+         } else if (this.socket) {
+            this.close();
+         }
       } catch (error) {
          console.log("~ error", error);
          notifyError("Connection failed");
@@ -106,7 +115,6 @@ export class YPSocket {
          }
       } catch (error) {
          console.warn("Send message error", error);
-         notifyError(error);
       }
    }
 
@@ -132,6 +140,7 @@ export class YPSocket {
       if (this.socket) {
          this.socket.close(1000, reason);
          this.destroy();
+         console.log("Connection closed");
       }
    }
 }
