@@ -103,7 +103,7 @@ async function initBlocks(chatId: number): Promise<IBlock[]> {
 
 async function addMessageToBlocks(message: TMessage, blocks: IBlock[] = []) {
    const owner = await UsersController.get(message.user_id);
-   const account = (await AccountController.getAccount()) as TUser;
+   const account = AccountController.getAccount() as TUser;
    if (owner && account) {
       if (blocks.length === 0) {
          // create new block date

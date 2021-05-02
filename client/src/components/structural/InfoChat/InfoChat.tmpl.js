@@ -8,7 +8,7 @@ export default /* html */ `
       <Avatar bind:user="chat" bind:css="avatar__info"></Avatar>
    </div>
    <div class="chat_users loading">
-      {{loader}}
+      <div class="chat_info__loader"><div class="lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div></div>
       <div class="chat_users__wrapper">
          <span class="users__title">Users in chat:</span>
          <v-for :user :i in users>

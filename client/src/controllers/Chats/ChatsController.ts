@@ -17,6 +17,7 @@ import {
    ShowLeftSidebarLoader,
 } from "../LeftSidebar/LeftSidebarLoader/LeftSidebarLoader";
 import { TChatsState } from "../../core/store/stateTypes";
+import { htmlspecialchars } from "../../utils/htmlspecialchars";
 
 export class ChatsController {
    constructor(private component: Component) {}
@@ -51,8 +52,10 @@ export class ChatsController {
          try {
             const title = formData.get("title")?.toString() ?? "";
 
+            const cleardata = htmlspecialchars(title);
+
             const { status, data: chatId } = await new ChatsAPI().createChat(
-               title
+               cleardata
             );
             if (isSuccess(status)) {
                this.component.$emit("HideNewChatModal");

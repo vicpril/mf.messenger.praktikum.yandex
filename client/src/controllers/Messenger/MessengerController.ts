@@ -16,6 +16,7 @@ import {
    ShowLeftSidebarLoader,
 } from "../LeftSidebar/LeftSidebarLoader/LeftSidebarLoader";
 import { HideLoader, ShowLoader } from "../../core/loader/loader";
+import { htmlspecialchars } from "../../utils/htmlspecialchars";
 
 let lastMessageId: number;
 let unreadCount: number;
@@ -68,7 +69,7 @@ export class MessengerController {
 
    async sendTextMessage(message: FormData | string) {
       if (typeof message !== "string") {
-         message = getFormData(message).message;
+         message = htmlspecialchars(getFormData(message).message);
       }
 
       if (message !== "") {

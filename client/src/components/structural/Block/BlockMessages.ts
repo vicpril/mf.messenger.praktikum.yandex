@@ -13,8 +13,8 @@ export class BlockMessages implements IBlock {
    constructor(owner: TUser, account: TUser) {
       this.type = "messages";
       this.content = {
-         user: owner,
          isforeign: owner.id !== account.id,
+         user: owner.id !== account.id ? owner : account,
          messages: [],
       };
    }

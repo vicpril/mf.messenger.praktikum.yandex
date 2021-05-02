@@ -8,7 +8,7 @@ export default /* html */ `
       >
       <Avatar bind:user="chat" bind:css="pulse"></Avatar>
       <div class="chat__info">
-         <span class="chat__displayname">{{chat.id}}: {{chat.title}}</span>
+         <span class="chat__displayname">{{chat.title}}</span>
          <span class="chat__last_message">{{last_message_content}}</span>
       </div>
       <div class="chat__actions">

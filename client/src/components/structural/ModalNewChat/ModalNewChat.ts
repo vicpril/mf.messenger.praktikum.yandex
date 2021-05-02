@@ -24,7 +24,9 @@ export const ModalNewChat = {
    listeners: ["click", "blur", "submit"],
    subscribers: {
       ShowNewChatModal: showModal,
-      HideNewChatModal: hideModal,
+      HideNewChatModal: function () {
+         hideModal.call(this);
+      },
    },
    methods: {
       onBlur(e: Event & { target: HTMLElement }) {
@@ -37,10 +39,7 @@ export const ModalNewChat = {
             $(e.target).hasClass("modal_new_chat__overlay") ||
             e.target.dataset.action === "cancel"
          ) {
-            hideModal();
-            setTimeout(() => {
-               this.$emit(this.EVENTS.UPDATE);
-            }, 300);
+            hideModal.call(this);
          }
       },
       onSubmit(e: Event & { target: HTMLFormElement }) {
@@ -50,7 +49,8 @@ export const ModalNewChat = {
          }
       },
    },
-   beforePrepare() {
+   beforePrepare() {},
+   beforeCreate() {
       this.props.form = {
          title: {
             value: "",
@@ -60,8 +60,6 @@ export const ModalNewChat = {
             },
          },
       };
-   },
-   beforeCreate() {
       this.props.fields = prepareFormFields(this.props.form);
    },
 };
@@ -74,4 +72,7 @@ function showModal() {
 function hideModal() {
    const $modal = $(".modal_new_chat");
    $modal.removeClass("open");
+   setTimeout(() => {
+      this.$emit(this.EVENTS.UPDATE);
+   }, 300);
 }
