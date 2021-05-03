@@ -1,17 +1,14 @@
-import { trim } from "../../utils/pure-functions";
 import { App } from "../components/pages/App/App";
 import { $ } from "../utils/dom-abstraction";
 import { Component } from "./Component";
-import { getEmmiter } from "./Emmiter";
-import { useControl } from "./validator/control";
 
 const chai = require("chai");
 const spies = require("chai-spies");
 
 chai.use(spies);
 
-const assert = chai.assert;
-const expect = chai.expect;
+const { assert } = chai;
+const { expect } = chai;
 const should = chai.should();
 
 before(() => {
@@ -97,7 +94,6 @@ describe("Test Component", () => {
       });
 
       it("CREATE lifecycle methods called", () => {
-         expect(spy).to.be.spy;
          expect(spy).to.have.been.called.with("App:beforePrepare");
          expect(spy).to.have.been.called.with("App:beforeCreate");
          expect(spy).to.have.been.called.with("App:beforeInitChildren");
@@ -108,7 +104,6 @@ describe("Test Component", () => {
 
       it("UPDATE lifecycle methods called", () => {
          component.$emit(component.EVENTS.UPDATE);
-         expect(spy).to.be.spy;
          expect(spy).to.have.been.called.with("App:beforeCreate");
          expect(spy).to.have.been.called.with("App:beforeInitChildren");
          expect(spy).to.have.been.called.with("App:beforeMount");

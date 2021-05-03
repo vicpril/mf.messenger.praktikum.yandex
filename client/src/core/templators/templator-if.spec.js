@@ -2,10 +2,10 @@ import { trim } from "../../utils/pure-functions";
 import { TemplatorIf } from "./templator-if";
 import { TemplatorVariables } from "./templator-variables";
 
-let chai = require("chai");
+const chai = require("chai");
 
-const assert = chai.assert;
-const expect = chai.expect;
+const { assert } = chai;
+const { expect } = chai;
 const should = chai.should();
 
 describe("Templator IF", () => {

@@ -1,10 +1,10 @@
 import { TemplatorFor } from "./templator-for";
 import { TemplatorVariables } from "./templator-variables";
 
-let chai = require("chai");
+const chai = require("chai");
 
-const assert = chai.assert;
-const expect = chai.expect;
+const { assert } = chai;
+const { expect } = chai;
 const should = chai.should();
 
 describe("Templator FOR", () => {
@@ -22,7 +22,7 @@ describe("Templator FOR", () => {
 
       it(`Expect "${exp}"`, () => {
          const templatorFor = new TemplatorFor(template);
-         let result = templatorFor.compile(context);
+         const result = templatorFor.compile(context);
          assert.strictEqual(result, exp);
       });
    });
@@ -44,7 +44,7 @@ describe("Templator FOR", () => {
 
       it(`Expect "${exp}"`, () => {
          const templatorFor = new TemplatorFor(template);
-         let result = templatorFor.compile(context);
+         const result = templatorFor.compile(context);
          assert.strictEqual(result, exp);
       });
    });

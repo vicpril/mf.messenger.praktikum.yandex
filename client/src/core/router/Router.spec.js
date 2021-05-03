@@ -1,12 +1,11 @@
+/* eslint-disable no-global-assign */
+const chai = require("chai");
+const jsdom = require("jsdom");
 const { AppController } = require("../../controllers/App/AppController");
 const { AuthController } = require("../../controllers/Auth/AuthController");
 const { Router } = require("./Router");
 
-const chai = require("chai");
-
-const assert = chai.assert;
-const expect = chai.expect;
-const should = chai.should();
+const { assert } = chai;
 
 const index = `<!DOCTYPE html>
 <html lang="en">
@@ -24,7 +23,6 @@ const index = `<!DOCTYPE html>
 </html>
 `;
 
-const jsdom = require("jsdom");
 const { JSDOM } = jsdom;
 
 const dom = new JSDOM(index, {
@@ -33,7 +31,7 @@ const dom = new JSDOM(index, {
 
 let router;
 const getPageName = (route) => {
-   const pagename = route.page.props.pagename;
+   const { pagename } = route.page.props;
    if (!pagename) return undefined;
 
    if (pagename === "defaultpage")

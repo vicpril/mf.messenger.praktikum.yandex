@@ -2,8 +2,7 @@
    "env": {
       "es6": true,
       "browser": true,
-      "node": true,
-      "no-c"
+      "node": true
    },
    "parser": "@typescript-eslint/parser",
    "parserOptions": {
@@ -45,5 +44,5 @@
    },
    "globals": {
       "ChildNode": true
-   },
+   }
 }

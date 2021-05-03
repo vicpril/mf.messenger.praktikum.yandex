@@ -1,10 +1,10 @@
 import { trim } from "../../utils/pure-functions";
 import { Templator } from "./templator";
 
-let chai = require("chai");
+const chai = require("chai");
 
-const assert = chai.assert;
-const expect = chai.expect;
+const { assert } = chai;
+const { expect } = chai;
 const should = chai.should();
 
 describe("Templator FULL", () => {
@@ -26,7 +26,7 @@ describe("Templator FULL", () => {
 
       it(`Expect "${exp}"`, () => {
          const templator = new Templator(template);
-         let result = templator.compile(context);
+         const result = templator.compile(context);
          assert.strictEqual(trim(result), exp);
       });
    });
@@ -38,7 +38,7 @@ describe("Templator FULL", () => {
 
       it(`Expect "${exp}"`, () => {
          const templator = new Templator(template);
-         let result = templator.compile(context);
+         const result = templator.compile(context);
          assert.strictEqual(trim(result), exp);
       });
    });

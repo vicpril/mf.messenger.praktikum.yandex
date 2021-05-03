@@ -96,9 +96,7 @@ async function initBlocks(chatId: number): Promise<IBlock[]> {
    messages.forEach((message) => {
       promises.push(addMessageToBlocks(message, blocks));
    });
-   return await Promise.all(promises).then(() => {
-      return blocks;
-   });
+   return await Promise.all(promises).then(() => blocks);
 }
 
 async function addMessageToBlocks(message: TMessage, blocks: IBlock[] = []) {
@@ -134,7 +132,6 @@ async function addMessageToBlocks(message: TMessage, blocks: IBlock[] = []) {
       }
 
       (last(blocks) as BlockMessages).addMessage(message);
-      return;
    }
 }
 

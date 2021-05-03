@@ -2,8 +2,8 @@ import { TemplatorVariables } from "./templator-variables";
 
 const chai = require("chai");
 
-const assert = chai.assert;
-const expect = chai.expect;
+const { assert } = chai;
+const { expect } = chai;
 const should = chai.should();
 
 describe("Templator variables", () => {

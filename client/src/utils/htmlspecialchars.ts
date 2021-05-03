@@ -1,5 +1,5 @@
 export function htmlspecialchars(str: string): string {
-   if (typeof str == "string") {
+   if (typeof str === "string") {
       str = str
          .replace(/&/g, "&amp;")
          .replace(/</g, "&lt;")

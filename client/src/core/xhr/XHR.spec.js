@@ -1,7 +1,7 @@
+const chai = require("chai");
 const { XHR } = require("./XHR");
 
-const chai = require("chai");
-const assert = chai.assert;
+const { assert } = chai;
 
 describe("Test XML module", () => {
    const host = "https://httpbin.org/";

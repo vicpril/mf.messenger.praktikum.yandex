@@ -112,10 +112,9 @@ export class AccountController {
             Store.get().dispatch(actions.accountSettingsUpdate(user));
             Store.get().dispatch(actions.setSession({ login: user.login }));
             return user;
-         } else {
-            // AuthController.logout();
-            Store.get().dispatch(actions.setSession());
          }
+         // AuthController.logout();
+         Store.get().dispatch(actions.setSession());
       } catch (error) {
          console.warn(error);
          Store.get().dispatch(actions.setSession());
