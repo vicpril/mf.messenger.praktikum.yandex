@@ -2,7 +2,7 @@ import { TUser } from "../../models/User";
 import { mergeDeep } from "../../utils/mergeDeep";
 import { mergeObjects } from "../../utils/mergeObjects";
 import { Actions } from "./actionTypes";
-import { TAccountState, TState } from "./stateTypes";
+import { TState } from "./stateTypes";
 // eslint-disable-next-line import/no-cycle
 import { TAction } from "./Store";
 

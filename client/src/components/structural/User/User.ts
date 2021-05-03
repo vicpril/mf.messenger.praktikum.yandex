@@ -2,7 +2,6 @@ import "./User.scss";
 
 import { Avatar } from "../Avatar/Avatar";
 import template from "./User.tmpl";
-import * as actions from "../../../core/store/actions";
 import { $ } from "../../../utils/dom-abstraction";
 import { ChatsController } from "../../../controllers/Chats/ChatsController";
 

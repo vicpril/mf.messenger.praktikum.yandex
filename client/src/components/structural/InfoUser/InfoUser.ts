@@ -2,7 +2,6 @@ import "./InfoUser.scss";
 
 import { Avatar } from "../Avatar/Avatar";
 import template from "./InfoUser.tmpl";
-import { RightSidebarController } from "../../../controllers/RightSidebar/RightSidebarController";
 
 export const InfoUser = {
    name: "InfoUser",

@@ -1,6 +1,5 @@
 import template from "./FormPasswordChange.tmpl";
 import "./FormPasswordChange.scss";
-import { AppService } from "../../../services/AppService";
 import { InputGroup } from "../InputGroup/InputGroup";
 import { $ } from "../../../utils/dom-abstraction";
 import { Validators } from "../../../core/validator/validators";
@@ -18,7 +17,7 @@ export const FormPasswordChange = {
    template: template,
    components: [InputGroup],
    props: {
-      account: AppService.getAccount(),
+      account: AccountController.getAccount(),
       form: {},
       form_control: {},
    },

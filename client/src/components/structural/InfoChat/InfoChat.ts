@@ -4,10 +4,7 @@ import { Avatar } from "../Avatar/Avatar";
 import template from "./InfoChat.tmpl";
 import { RightSidebarController } from "../../../controllers/RightSidebar/RightSidebarController";
 import { ChatsController } from "../../../controllers/Chats/ChatsController";
-import {
-   HideChatInfoLoader,
-   LoaderIncfoChatTemplate as loader,
-} from "./InfoChatLoader";
+import { HideChatInfoLoader } from "./InfoChatLoader";
 import "../../../core/loader/loader.scss";
 import { TUser } from "../../../models/User";
 import { User } from "../User/User";
@@ -20,7 +17,6 @@ export const InfoChat = {
    props: {
       chat: {},
       users: [],
-      loader: loader,
    },
    listeners: ["click"],
    subscribers: {

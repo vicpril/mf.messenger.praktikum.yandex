@@ -1,10 +1,8 @@
 import "./MainWindow.scss";
 
-import { AppService } from "../../../services/AppService";
 import { Messenger } from "../Messenger/Messenger";
 import { MessengerMenu } from "../MessengerMenu/MessengerMenu";
 import { RightSidebar } from "../RightSidebar/RightSidebar";
-import { isEmpty } from "../../../utils/isEmpty";
 import * as actions from "../../../core/store/actions";
 import template from "./MainWindow.tmpl";
 import { RightSidebarController } from "../../../controllers/RightSidebar/RightSidebarController";

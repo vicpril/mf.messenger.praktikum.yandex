@@ -15,7 +15,8 @@
       "tslint:fix": "npx tslint --project . --fix",
       "stylelint": "stylelint './client/src/**/*{.css,.scss}'",
       "stylelint:fix": "stylelint './client/src/**/*{.css,.scss}' --fix",
-      "test": "npx mocha --recursive './client/src/**/*.spec.js'"
+      "test": "npx mocha",
+      "test:watch": "npm run test --watch"
    },
    "keywords": [],
    "author": "",
@@ -24,6 +25,7 @@
       "@types/uuid": "^8.3.0",
       "@typescript-eslint/eslint-plugin": "^4.20.0",
       "@typescript-eslint/parser": "^4.20.0",
+      "chai": "^4.3.4",
       "eslint": "^7.23.0",
       "eslint-config-airbnb": "^18.2.1",
       "eslint-config-airbnb-typescript": "^12.3.1",
@@ -32,8 +34,11 @@
       "eslint-plugin-node": "^11.1.0",
       "eslint-plugin-prettier": "^3.3.1",
       "husky": "^6.0.0",
+      "ignore-styles": "^5.0.1",
+      "jsdom-global": "^3.0.2",
       "lint-staged": "^10.5.4",
       "mocha": "^8.3.2",
+      "mocha-jsdom": "^2.0.0",
       "parcel-bundler": "^1.12.5",
       "prettier": "^2.2.1",
       "sass": "^1.32.8",
@@ -61,5 +66,19 @@
       "*.(css|scss)": [
          "stylelint --fix"
       ]
+   },
+   "mocha": {
+      "spec": "./client/src/**/*.spec.js",
+      "require": [
+         "ts-node/register",
+         "mocha-jsdom",
+         "jsdom-global/register",
+         "ignore-styles"
+      ],
+      "TS_NODE_IGNORE_DIAGNOSTICS": true,
+      "TS_NODE_COMPILER_OPTIONS": {
+         "module": "commonjs",
+         "skipDefaultLibCheck": true
+      }
    }
 }
