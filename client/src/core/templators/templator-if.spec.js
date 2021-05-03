@@ -1,80 +1,83 @@
+import { trim } from "../../utils/pure-functions";
+import { TemplatorIf } from "./templator-if";
 import { TemplatorVariables } from "./templator-variables";
 
-var chai = require("chai");
+let chai = require("chai");
 
 const assert = chai.assert;
 const expect = chai.expect;
 const should = chai.should();
 
-describe("Templator variables", () => {
-   context("- using Variables", () => {
-      const template = `{{content}}`;
-      const templator = new TemplatorVariables(template);
+describe("Templator IF", () => {
+   const template = `
+    <v-if="var1 >= var2">
+        {{var1}}
+    <v-else>
+        {{var2}}
+    </v-if>
+   `;
+
+   context("- true part should content {{var1}}", () => {
+      const templator = new TemplatorIf(template);
       const context = {
-         content: null,
+         var1: 2,
+         var2: 1,
       };
-
-      before(() => {
-         console.log("~ content: ", context.content);
-      });
-
-      context.content = 123;
-      it(`{{content}} should print "${context.content}"`, () => {
+      it(`Should return "{{var1}}"`, () => {
          const result = templator.compile(context);
-
-         assert.equal(result, context.content);
-      });
-
-      it(`Prented should be a string`, () => {
-         const result = templator.compile(context);
-         assert.isString(result, "in string");
+         assert.strictEqual(trim(result), "{{var1}}");
       });
    });
 
-   context("- using Objects", () => {
-      const output = (obj) => JSON.stringify(obj, null, 2);
-      before(() => {
-         console.log("~ content: ", output(context.content));
-      });
-
-      const template = `{{content}}`;
-      const templator = new TemplatorVariables(template);
+   context("- true part should content {{var2}}", () => {
+      const templator = new TemplatorIf(template);
       const context = {
-         content: { a: 123 },
+         var1: 1,
+         var2: 2,
+      };
+      it(`Should return "{{var2}}"`, () => {
+         const result = templator.compile(context);
+         assert.strictEqual(trim(result), "{{var2}}");
+      });
+   });
+});
+
+describe("Templator IF + Variable", () => {
+   const template = `
+    <v-if="var1 >= var2">
+        {{var1}}
+    <v-else>
+        {{var2}}
+    </v-if>
+   `;
+
+   context("- true part should return content of var1", () => {
+      const context = {
+         var1: 2,
+         var2: 1,
       };
 
-      it(`Result should be a printed object"`, () => {
-         const result = templator.compile(context);
-         assert.equal(result, output(context.content));
-      });
-
-      it(`Prented should be a string`, () => {
-         const result = templator.compile(context);
-         assert.isString(result, "in string");
+      it(`- true part should return "${context.var1}"`, () => {
+         const templatorIf = new TemplatorIf(template);
+         let result = templatorIf.compile(context);
+         const templatorVar = new TemplatorVariables(result);
+         result = templatorVar.compile(context);
+         assert.strictEqual(trim(result), context.var1.toString());
       });
    });
 
-   context("- using void Functions", () => {
-      before(() => {
-         console.log("~ content: ", context.content);
-      });
-      const output = () => {};
-
-      const template = `{{content}}`;
-      const templator = new TemplatorVariables(template);
+   context("- true part should content {{var2}}", () => {
       const context = {
-         content: output,
+         var1: 1,
+         var2: 2,
       };
 
-      it(`Output is a string`, () => {
-         const result = templator.compile(context);
-         assert.isString(result, "in string");
-      });
-
-      it(`Output starts with "window" & ends "()"`, () => {
-         const result = templator.compile(context);
-         const regexp = new RegExp(/^window.*\(\)$/gs);
-         assert.isTrue(regexp.test(result), "regexp test is true");
+      it(`- false part should return "${context.var2}"`, () => {
+         const templatorIf = new TemplatorIf(template);
+         let result = templatorIf.compile(context);
+         const templatorVar = new TemplatorVariables(result);
+         result = templatorVar.compile(context);
+         assert.strictEqual(trim(result), context.var2.toString());
       });
    });
 });

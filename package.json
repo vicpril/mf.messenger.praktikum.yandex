@@ -16,7 +16,7 @@
       "stylelint": "stylelint './client/src/**/*{.css,.scss}'",
       "stylelint:fix": "stylelint './client/src/**/*{.css,.scss}' --fix",
       "test": "npx mocha",
-      "test:watch": "npm run test --watch"
+      "test:watch": "npm run test -- --watch"
    },
    "keywords": [],
    "author": "",

@@ -70,7 +70,6 @@ export class TemplatorIf {
       while ((key = regExp.exec(template))) {
          const condition = key[2].trim();
          const partIf = key[3].trim();
-         console.log("~ partIf", partIf);
          const partElse = isUndefined(key[5]) ? "" : key[5].trim();
 
          const [postString, operator, valueString] = this._parseCondition(
