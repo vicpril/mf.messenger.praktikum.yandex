@@ -2,8 +2,7 @@ import { Component } from "../../core/Component";
 import { IIngredients } from "../../core/ComponentInterfaces";
 import { TRightSidebarState } from "../../core/store/stateTypes";
 import { Store } from "../../core/store/Store";
-import { TChat, TUser } from "../../models/types";
-import { AppService } from "../../services/AppService";
+import { TChat } from "../../models/Chat";
 import { $, TDomAbstraction } from "../../utils/dom-abstraction";
 import { first, get } from "../../utils/pure-functions";
 
@@ -51,13 +50,6 @@ export class RightSidebarController {
       const $content = $.create(contentComponentName);
       $targetElContent.append($content);
    }
-
-   // static getUser(): TUser | null {
-   //    const login = RightSidebarController.getState().login || null;
-   //    return login
-   //       ? AppService.getChatInfo(login)?.user || null
-   //       : AppService.getAccount();
-   // }
 
    static getChat(): TChat | null {
       return RightSidebarController.getState().chat || null;
