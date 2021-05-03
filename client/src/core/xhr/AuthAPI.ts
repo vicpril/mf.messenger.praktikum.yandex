@@ -1,7 +1,7 @@
 import { HideLoader, ShowLoader } from "../loader/loader";
 import { notifyError } from "../notify/notify";
 import { ApiResponse, BaseAPI } from "./BaseApi";
-import { XHR, XHROptions, METHOD } from "./XHR";
+import { XHR, XHROptions } from "./XHR";
 
 type LoginData = {
    login: string;

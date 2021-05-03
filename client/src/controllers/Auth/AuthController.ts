@@ -52,14 +52,12 @@ export class AuthController {
 
    async logout() {
       try {
-         const { status } = await new AuthAPI().logout();
-         // if (isSuccess(status) ) {
+         await new AuthAPI().logout();
          this.component.$emit("App:destroy");
          MessengerController.destroy();
 
          Store.get().dispatch(actions.logout());
          Router.navigate("signin");
-         // }
       } catch (error) {
          console.warn(error);
       }

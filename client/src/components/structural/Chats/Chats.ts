@@ -78,7 +78,7 @@ export const Chats = {
             }
          });
       },
-      "Chat:updated": function (view: LeftSidebarViews) {
+      "Chat:updated": function () {
          fetchChats.call(this);
       },
       "Chat:userDeleted": function () {
@@ -93,7 +93,7 @@ export const Chats = {
    async beforePrepare() {
       LeftSidebarLoaderInit();
       this.props.view = LeftSidebarController.getSidebarView();
-      const chats = await fetchChats.call(this);
+      await fetchChats.call(this);
       this.props.usersRemote = [];
    },
 

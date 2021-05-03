@@ -10,11 +10,6 @@ import { MessageLife, YPSocket } from "../../core/connections/YPSocket";
 import { first, getFormData, last } from "../../utils/pure-functions";
 import { mergeDeep } from "../../utils/mergeDeep";
 import { sortByTime } from "../../utils/sortMessages";
-import { mergeObjects } from "../../utils/mergeObjects";
-import {
-   HideLeftSidebarLoader,
-   ShowLeftSidebarLoader,
-} from "../LeftSidebar/LeftSidebarLoader/LeftSidebarLoader";
 import { HideLoader, ShowLoader } from "../../core/loader/loader";
 import { htmlspecialchars } from "../../utils/htmlspecialchars";
 

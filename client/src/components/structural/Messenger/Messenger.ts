@@ -40,7 +40,7 @@ export const Messenger = {
          this.props.account = changes;
          this.$emit(this.EVENTS.UPDATE);
       },
-      selectedChatId: async function (id: number) {
+      selectedChatId: async function (_: number) {
          changeContent.call(this, this.parentComponent);
       },
    },

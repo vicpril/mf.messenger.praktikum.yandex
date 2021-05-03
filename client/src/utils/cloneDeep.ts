@@ -1,7 +1,3 @@
-type Indexed<T = unknown> = {
-   [key in string]: T;
-};
-
 function isArray(value: unknown): value is [] {
    return Array.isArray(value);
 }

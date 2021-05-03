@@ -33,11 +33,6 @@ type ChatsUsersRequest = {
    email?: string;
 };
 
-type ChatsUploadAvatarRequest = {
-   chatId: number;
-   avatar?: File | FormData;
-};
-
 type ChatsAddUsersRequest = {
    users: number[];
    chatId: number;

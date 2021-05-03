@@ -1,11 +1,9 @@
 import "./MessengerMenu.scss";
 
 import { $ } from "../../../utils/dom-abstraction";
-import { getFormData } from "../../../utils/pure-functions";
 import template from "./MessengerMenu.tmpl";
 import { Validators } from "../../../core/validator/validators";
 import { useForm } from "../../../core/validator/form";
-import { YPSocket } from "../../../core/connections/YPSocket";
 import { MessengerController } from "../../../controllers/Messenger/MessengerController";
 
 const { restrictedSymbols } = Validators;

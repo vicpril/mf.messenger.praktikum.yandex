@@ -1,10 +1,6 @@
 import { AuthController } from "./AuthController";
 
-export function AuthOnly(
-   target: any,
-   propertyKey: string,
-   descriptor: PropertyDescriptor
-) {
+export function AuthOnly(_: any, _2: string, descriptor: PropertyDescriptor) {
    const oridinalMethod = descriptor.value;
 
    const authCookie = sessionStorage.getItem("authCookie");

@@ -13,7 +13,6 @@ import { TChat } from "../../../models/Chat";
 import { first } from "../../../utils/pure-functions";
 import { TChatsState } from "../../../core/store/stateTypes";
 import { isEmpty } from "../../../utils/isEmpty";
-import { MessengerController } from "../../../controllers/Messenger/MessengerController";
 
 export const Chat = {
    name: "Chat",

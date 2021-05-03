@@ -54,9 +54,7 @@ export class ChatsController {
 
             const cleardata = htmlspecialchars(title);
 
-            const { status, data: chatId } = await new ChatsAPI().createChat(
-               cleardata
-            );
+            const { status } = await new ChatsAPI().createChat(cleardata);
             if (isSuccess(status)) {
                this.component.$emit("HideNewChatModal");
                this.component.$emit("Chat:updated");
