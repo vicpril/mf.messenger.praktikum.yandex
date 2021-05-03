@@ -9,7 +9,7 @@ import { AppController } from "./controllers/App/AppController";
 import { AuthController } from "./controllers/Auth/AuthController";
 
 const store = createStore(rootReducer, {
-   checkNewMessageInterval: null,
+   checkNewMessageInterval: 5000,
    ...storage("ec-app-state"),
 });
 
