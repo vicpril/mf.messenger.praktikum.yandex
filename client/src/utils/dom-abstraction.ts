@@ -105,7 +105,7 @@ class DomAbstraction {
    }
 
    addClass(niddle: string): TDomAbstraction {
-      this.$el.classList.add(niddle);
+      this.$el?.classList.add(niddle);
       return this;
    }
 

@@ -26,6 +26,7 @@
       "@typescript-eslint/eslint-plugin": "^4.20.0",
       "@typescript-eslint/parser": "^4.20.0",
       "chai": "^4.3.4",
+      "chai-spies": "^1.0.0",
       "eslint": "^7.23.0",
       "eslint-config-airbnb": "^18.2.1",
       "eslint-config-airbnb-typescript": "^12.3.1",
@@ -43,6 +44,8 @@
       "parcel-bundler": "^1.12.5",
       "prettier": "^2.2.1",
       "sass": "^1.32.8",
+      "sinon": "^10.0.0",
+      "sinon-chai": "^3.6.0",
       "stylelint": "^13.12.0",
       "stylelint-config-prettier": "^8.0.2",
       "stylelint-config-rational-order": "^0.0.3",
@@ -74,7 +77,8 @@
          "ts-node/register",
          "mocha-jsdom",
          "jsdom-global/register",
-         "ignore-styles"
+         "ignore-styles",
+         "chai-spies"
       ],
       "TS_NODE_IGNORE_DIAGNOSTICS": true,
       "TS_NODE_COMPILER_OPTIONS": {
