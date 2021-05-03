@@ -19,7 +19,7 @@ export default /* html */ `
     </div>
     
     <div class="info__actions">
-    <button type="submit" class="button info__button button_outline_primary" data-action="submit">Update</button>
+    <button type="submit" class="button info__button button_primary" data-action="submit">Update</button>
     <button type="button" class="button info__button button_outline_primary" data-view="${RightSidebarViews.InfoAccount}">Cancel</button>
     </div>
 </form>

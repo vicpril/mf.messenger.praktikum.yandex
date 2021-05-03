@@ -1,26 +1,47 @@
 import { LeftSidebarViews } from "../../controllers/LeftSidebar/LeftSidebarViews";
-import { TAccount } from "../../models/types";
+import { TChat } from "../../models/Chat";
+import { TMessage } from "../../models/Message";
+import { TUser } from "../../models/User";
 
 export type TState = {
-   title?: string;
+   checkNewMessageInterval?: number;
    rightSidebar?: TRightSidebarState;
    leftSidebar?: TLeftSidebarState;
+   chats?: TChatsState;
+   users?: TUserState;
+   selectedChatId?: number | null;
    accountSettings?: TAccountState;
    session?: { login?: string };
+   tokens?: {
+      [chatId: number]: string;
+   };
+   messenger?: TMessengerState;
 };
 
 export type TRightSidebarState = {
    status?: "open" | "close";
    componentName?: string;
-   login?: string;
+   chat?: TChat;
 };
 
 export type TLeftSidebarState = {
    view?: LeftSidebarViews;
 };
 
-export type TAccountState = TAccount;
+export type TAccountState = TUser;
 
 export type TSessionState = {
    login?: string | null;
+};
+
+export type TChatsState = {
+   availableChats?: TChat[];
+};
+
+export type TMessengerState = {
+   [chatId: number]: TMessage[];
+};
+
+export type TUserState = {
+   [userId: number]: TUser;
 };

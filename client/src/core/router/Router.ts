@@ -138,6 +138,10 @@ export class Router {
       return this.routes.get(`/${routname}`);
    }
 
+   getCurrentRoute(): Route {
+      return this.currentRoute;
+   }
+
    getRouteName(pathname: string): string {
       return trim(pathname, "/").split("/")[0];
    }

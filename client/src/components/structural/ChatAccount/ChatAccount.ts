@@ -22,12 +22,21 @@ export const ChatAccount = {
       },
    },
    methods: {
-      onClick(e: Event & { target: Element }): void {
-         if (!$(e.target).hasClass("button__user_settings")) return;
-         this.$emit("openRightSidebar", { componentName: InfoAccount.name });
+      onClick(e: Event & { target: HTMLButtonElement }): void {
+         const action =
+            e.target.dataset.action || $(e.target).parent().data.action;
+         if (action === "settings")
+            this.$emit("toggleRightSidebar", {
+               componentName: InfoAccount.name,
+            });
       },
    },
-   beforePrepare() {
+   beforeCreate() {
       this.props.account = AccountController.getAccount();
+   },
+   afterInit() {
+      window.rebuildChatAccount = function () {
+         this.$emit(this.EVENTS.UPDATE);
+      }.bind(this);
    },
 };

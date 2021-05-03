@@ -1,6 +1,7 @@
 import { v4 as uuidv4 } from "uuid";
 import { IContext } from "./templatorInterface";
 import { get } from "../../utils/pure-functions";
+import { htmlspecialchars } from "../../utils/htmlspecialchars";
 
 declare global {
    interface Window {
@@ -51,7 +52,10 @@ export class TemplatorVariables {
                continue;
             }
 
-            template = template.replace(new RegExp(key[0], "gi"), value);
+            template = template.replace(
+               new RegExp(key[0], "gi"),
+               htmlspecialchars(value)
+            );
          }
       }
 

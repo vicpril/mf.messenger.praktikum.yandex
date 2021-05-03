@@ -18,6 +18,7 @@ import { get } from "../utils/pure-functions";
 import { isEmpty } from "../utils/isEmpty";
 import { IContext } from "./templators/templatorInterface";
 import { ComponentStoreSubscriber } from "./ComponentStoreSubscriber";
+import { TemplatorReverse } from "./templators/templator-reverse";
 
 export class Component extends ComponentStoreSubscriber {
    EVENTS: IComponentLifeCycleNames;
@@ -33,6 +34,7 @@ export class Component extends ComponentStoreSubscriber {
    id: string = uuidv4();
    methods: IMethods = {};
    page?: string;
+   templatorReverse: boolean = false;
 
    constructor(
       options: IIngredients,
@@ -57,6 +59,7 @@ export class Component extends ComponentStoreSubscriber {
       this.props = options.props ?? {};
       this.models = options.models ?? [];
       this.subscribers = options.subscribers ?? {};
+      this.templatorReverse = options.templatorReverse ?? false;
 
       this.initMethods(options);
 
@@ -99,7 +102,7 @@ export class Component extends ComponentStoreSubscriber {
    // get props from template
    // init LifeCycle events in Emmiter
    beforePrepare(): void {}
-   private prepare(): void {
+   private prepare() {
       this.getPropsFromTemplate();
       this.beforePrepare();
 
@@ -231,7 +234,9 @@ export class Component extends ComponentStoreSubscriber {
          return "";
       }
       const context = this.props;
-      const templator = new Templator(template);
+      const templator = this.templatorReverse
+         ? new TemplatorReverse(template)
+         : new Templator(template);
       return templator.compile(context).trim();
    }
 

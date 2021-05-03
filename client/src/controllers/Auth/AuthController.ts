@@ -9,7 +9,11 @@ import { Actions } from "../../core/store/actionTypes";
 import { Store } from "../../core/store/Store";
 import { verify } from "../../core/validator/form";
 import { AuthAPI } from "../../core/xhr/AuthAPI";
+import { isEmpty } from "../../utils/isEmpty";
 import { isSuccess } from "../../utils/pure-functions";
+// eslint-disable-next-line import/no-cycle
+import { MessengerController } from "../Messenger/MessengerController";
+import * as actions from "../../core/store/actions";
 
 export class AuthController {
    constructor(private component: Component) {}
@@ -46,18 +50,21 @@ export class AuthController {
       }
    }
 
-   static async logout() {
+   async logout() {
       try {
-         const { status } = await new AuthAPI().logout();
-         if (isSuccess(status)) {
-            Store.get().dispatch({
-               type: Actions.AUTH_LOGOUT,
-            });
-            Router.navigate("signin");
-         }
+         await new AuthAPI().logout();
+         this.component.$emit("App:destroy");
+         MessengerController.destroy();
+
+         Store.get().dispatch(actions.logout());
+         Router.navigate("signin");
       } catch (error) {
          console.warn(error);
       }
+   }
+
+   static isAuth() {
+      return !isEmpty(Store.get().getState().session);
    }
 
    async register(formData: FormData) {

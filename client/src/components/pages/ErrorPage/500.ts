@@ -21,6 +21,9 @@ const template = `
 export const ErrorPage500 = {
    name: "ErrorPage500",
    template: template,
+   props: {
+      pagename: "500",
+   },
    listeners: ["click"],
    methods: {
       onClick(e: Event & { target: HTMLElement }) {

@@ -4,6 +4,7 @@ import "./notify.scss";
 export enum NoticeStatus {
    SUCCESS = "success",
    ERROR = "danger",
+   WARNING = "warning",
 }
 
 class Notice {

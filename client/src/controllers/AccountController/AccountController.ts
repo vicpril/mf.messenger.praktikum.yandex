@@ -2,7 +2,6 @@ import { Component } from "../../core/Component";
 import { isEmpty } from "../../utils/isEmpty";
 import { isSuccess } from "../../utils/pure-functions";
 import * as actions from "../../core/store/actions";
-import { TAccount } from "../../models/types";
 import { TAccountState } from "../../core/store/stateTypes";
 import { AuthAPI } from "../../core/xhr/AuthAPI";
 import { User } from "../../models/User";
@@ -11,6 +10,7 @@ import { verify } from "../../core/validator/form";
 import { UsersAPI } from "../../core/xhr/UsersAPI";
 import { Actions } from "../../core/store/actionTypes";
 import { NoticeStatus, notify } from "../../core/notify/notify";
+import { specialcharsObject } from "../../utils/htmlspecialchars";
 
 export class AccountController {
    constructor(private component: Component) {}
@@ -31,7 +31,9 @@ export class AccountController {
                phone: formData.get("phone")?.toString() ?? "",
             };
 
-            const { status, data } = await new UsersAPI().update(userdata);
+            const cleardata = specialcharsObject(userdata);
+
+            const { status, data } = await new UsersAPI().update(cleardata);
             if (isSuccess(status)) {
                this.component.$dispatch({
                   type: Actions.ACCOUNT_SETTINGS_UPDATE,
@@ -90,13 +92,14 @@ export class AccountController {
                NoticeStatus.SUCCESS,
                3000
             );
+            this.component.$emit(this.component.EVENTS.UPDATE);
          }
       } catch (error) {
          console.warn(error);
       }
    }
 
-   static getAccount(): TAccount | {} {
+   static getAccount(): User | {} {
       const account = AccountController.getState();
       return !isEmpty(account) ? account : AccountController.fetch();
    }
@@ -108,10 +111,10 @@ export class AccountController {
             const user = new User(data);
             Store.get().dispatch(actions.accountSettingsUpdate(user));
             Store.get().dispatch(actions.setSession({ login: user.login }));
-         } else {
-            // AuthController.logout();
-            Store.get().dispatch(actions.setSession());
+            return user;
          }
+         // AuthController.logout();
+         Store.get().dispatch(actions.setSession());
       } catch (error) {
          console.warn(error);
          Store.get().dispatch(actions.setSession());

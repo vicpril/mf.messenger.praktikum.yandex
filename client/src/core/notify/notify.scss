@@ -29,6 +29,12 @@
       box-shadow: 0 0 30px 10px lighten($danger, 20%);
    }
 
+   &.warning {
+      color: darken($warning, 50%);
+      background-color: lighten($warning, 30%);
+      box-shadow: 0 0 30px 10px lighten($warning, 30%);
+   }
+
    &.show {
       transform: translateY(200px);
       visibility: visible;

@@ -1,23 +1,19 @@
 export default /* html */ `
-<main class="main right_sidebar__close">
+<main class="main right_sidebar__close <v-if="!is_selected">chat_not_selected</v-if> ">
 
-   <v-if="is_selected">
+         <!-- messenger -->
+         <Messenger></Messenger>
+         <!-- end messenger -->
 
-         <!-- messager -->
-         <Messager></Messager>
-         <!-- end messager -->
-
-         <!-- messager form -->
-         <MessagerMenu></MessagerMenu>
+         <!-- messenger form -->
+         <MessengerMenu></MessengerMenu>
          <!-- end form -->
 
-   <v-else>
          <div class="chat_placeholder">
          <h3>
-         Select a friend to type with...
+         Select a chat to type with...
          </h3>
          </div>
-   </v-if>
 
    <!-- Right-sidebar -->
    <RightSidebar bind:page="page"></RightSidebar>

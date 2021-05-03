@@ -24,6 +24,7 @@ export interface IBaseMethods extends IBase {
 export interface IIngredients extends IBaseMethods {
    name: string;
    template?: string;
+   templatorReverse?: boolean;
    components?: IIngredients[];
    listeners?: string[];
    subscribers?: ISubscriberMethods;

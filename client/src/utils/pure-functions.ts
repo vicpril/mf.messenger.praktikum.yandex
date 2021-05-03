@@ -108,6 +108,11 @@ export function first<T>(list: T[]): T {
    return list[0];
 }
 
+export function last<T>(list: T[]): T | null {
+   if (!Array.isArray(list) || list.length === 0) return null;
+   return list[list.length - 1];
+}
+
 export function getUrlParameter(key: string): string | null {
    // eslint-disable-next-line no-restricted-globals
    const url = new URL(location.href);
@@ -126,7 +131,11 @@ export function strContains(
    return highstack.indexOf(needle) !== -1;
 }
 
-export function getFormData(formData: FormData): Object {
+export type TFormDataObject = {
+   [key: string]: any;
+};
+
+export function getFormData(formData: FormData): TFormDataObject {
    return [...formData.entries()].reduce(
       (obj, pair) => Object.assign(obj, { [pair[0]]: pair[1] }),
       {}
@@ -176,30 +185,26 @@ export type Indexed<T = unknown> = {
    [key in string]: T;
 };
 
-export function isEqual(lhs: PlainObject, rhs: PlainObject) {
-   // Сравнение количества ключей объектов и массивов
-   if (Object.keys(lhs).length !== Object.keys(rhs).length) {
+export function isEqual(a: Indexed, b: Indexed): boolean {
+   const isObject = (obj: any) => !!obj && obj.constructor === Object;
+
+   if (!isObject(a) || !isObject(b)) {
+      if (!Array.isArray(a) || !Array.isArray(b)) return a === b;
+   }
+
+   if (
+      Object.getOwnPropertyNames(a).length !==
+      Object.getOwnPropertyNames(b).length
+   )
       return false;
-   }
 
-   // eslint-disable-next-line no-restricted-syntax
-   for (const [key, value] of Object.entries(lhs)) {
-      const rightValue = rhs[key];
-      if (isArrayOrObject(value) && isArrayOrObject(rightValue)) {
-         // Здесь value и rightValue может быть только массивом или объектом
-         // И TypeScript это обрабатывает
-         if (isEqual(value as PlainObject, rightValue as PlainObject)) {
-            continue;
-         }
-         return false;
+   let result = true;
+   Object.getOwnPropertyNames(a).forEach((key: string) => {
+      if (!isEqual(a[key] as Indexed, b[key] as Indexed)) {
+         result = false;
       }
-
-      if (value !== rightValue) {
-         return false;
-      }
-   }
-
-   return true;
+   });
+   return result;
 }
 
 export function isSuccess(status: string): boolean {

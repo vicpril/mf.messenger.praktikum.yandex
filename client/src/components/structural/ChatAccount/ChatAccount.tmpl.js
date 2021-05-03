@@ -6,8 +6,8 @@ export default /* html */ `
             <span class="user__displayname">{{account.display_name}}</span>
          </div>
          <div class="user__actions">
-            <button type="button" class="button button__user_settings button_empty_primary">
-               <i class="fas fa-ellipsis-v"></i>
+            <button type="button" class="button button__user_settings button_empty_primary" data-action="settings">
+            <i class="fas fa-cog"></i>
             </button>
          </div>
       </div>

@@ -1,18 +1,18 @@
 import "./MainWindow.scss";
 
-import { AppService } from "../../../services/AppService";
-import { Messager } from "../Messager/Messager";
-import { MessagerMenu } from "../MessagerMenu/MessagerMenu";
+import { Messenger } from "../Messenger/Messenger";
+import { MessengerMenu } from "../MessengerMenu/MessengerMenu";
 import { RightSidebar } from "../RightSidebar/RightSidebar";
-import { isEmpty } from "../../../utils/isEmpty";
 import * as actions from "../../../core/store/actions";
 import template from "./MainWindow.tmpl";
 import { RightSidebarController } from "../../../controllers/RightSidebar/RightSidebarController";
+import { ChatsController } from "../../../controllers/Chats/ChatsController";
+import { $ } from "../../../utils/dom-abstraction";
 
 export const MainWindow = {
    name: "MainWindow",
    template: template,
-   components: [Messager, MessagerMenu, RightSidebar],
+   components: [Messenger, MessengerMenu, RightSidebar],
    props: {},
    listeners: [],
    subscribers: {
@@ -25,16 +25,43 @@ export const MainWindow = {
          this.$root.removeClass("right_sidebar__close");
          const actionData = {
             status: "open",
+            componentName: data?.componentName || "InfoAccount",
+            chat: data?.chat || null,
+         };
+         this.$dispatch(actions.rightSidebar(actionData));
+      },
+      toggleRightSidebar: function () {
+         if (this.$root.hasClass("right_sidebar__close")) {
+            this.$emit("openRightSidebar");
+         } else {
+            this.$emit("closeRightSidebar");
+         }
+      },
+      refreshRightSidebar: function (data?: any) {
+         const actionData = {
             componentName: data.componentName || "InfoAccount",
-            login: data.login || null,
+            chat: data.chat || null,
          };
          this.$dispatch(actions.rightSidebar(actionData));
       },
    },
+   storeSubscribers: {
+      selectedChatId: function (id: number) {
+         if (id && id > 0) {
+            this.props.is_selected = false;
+            showPlaceholder();
+         } else {
+            this.props.is_selected = true;
+            hidePlaceholder();
+         }
+      },
+   },
+
    methods: {},
-   beforePrepare() {
-      this.props.chat = AppService.getSelectedChat();
-      this.props.is_selected = !isEmpty(this.props.chat);
+   beforePrepare() {},
+   beforeCreate() {
+      this.props.selectedChatId = ChatsController.getSelectedChatId();
+      this.props.is_selected = this.props.selectedChatId > 0;
    },
    afterInit() {
       const sidebarState = RightSidebarController.getState();
@@ -45,3 +72,10 @@ export const MainWindow = {
       }
    },
 };
+
+function showPlaceholder() {
+   $(".main").removeClass("chat_not_selected");
+}
+function hidePlaceholder() {
+   $(".main").addClass("chat_not_selected");
+}

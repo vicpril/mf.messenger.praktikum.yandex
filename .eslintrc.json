@@ -39,7 +39,8 @@
       "no-continue": "off",
       "no-nested-ternary": "off",
       "no-new": "off",
-      "consistent-return": "warn"
+      "consistent-return": "warn",
+      "import/no-cycle": ["error", { "maxDepth": 1 }]
    },
    "globals": {
       "ChildNode": true

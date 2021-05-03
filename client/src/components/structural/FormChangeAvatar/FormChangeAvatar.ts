@@ -12,18 +12,10 @@ export const FormChangeAvatar = {
    props: {
       account: {},
    },
-   listeners: ["change", "submit"],
+   listeners: ["submit"],
    subscribers: {},
+   storeSubscribers: {},
    methods: {
-      onChange(e: Event & { target: HTMLInputElement }) {
-         if ($(e.target).hasClass("input-file")) {
-            const img = document.getElementById(
-               "user_info__avatar"
-            ) as HTMLImageElement;
-            const newSrc = e.target.value;
-            // img.src = newSrc;
-         }
-      },
       onSubmit(e: Event & { target: HTMLFormElement }): void {
          if ($(e.target).hasClass("form__avatar_change")) {
             e.preventDefault();
@@ -31,7 +23,7 @@ export const FormChangeAvatar = {
          }
       },
    },
-   beforePrepare() {
+   beforeCreate() {
       this.props.account = AccountController.getAccount();
    },
 };

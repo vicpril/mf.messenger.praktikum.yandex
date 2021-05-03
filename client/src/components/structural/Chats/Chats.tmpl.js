@@ -11,16 +11,18 @@ export default /* html */ `
       <!-- end User -->
       </v-for>
       <!-- end chats -->
+      <button type="button" class="button button_new button_primary" data-action="newChat">Create a new Chat</button>
    </v-if>
 
    <v-if="view === '${LeftSidebarViews.ChatsFilter}'">
-   <!-- ChatsFiltered -->
-   <v-for :chatf :indexf in chatsFiltered>
+      <!-- ChatsFiltered -->
+      <v-for :chatf :indexf in chatsFiltered>
       <!-- User -->
       <Chat bind:chat="chatsFiltered[{{indexf}}]"></Chat>
       <!-- end User -->
       </v-for>
       <!-- end chatsfiltered -->
+      <button type="button" class="button button_new button_primary" data-action="newChat">Create a new Chat</button>
    </v-if>
 
    <v-if="view === '${LeftSidebarViews.ChatsSearch}'">
@@ -35,7 +37,7 @@ export default /* html */ `
          <!-- end usersremote -->
       <v-else>
          <div class="remote_placeholder__wrapper">
-         <h4 class="remote_placeholder">For searching type 3 or more symbols</h4>
+            <h4 class="remote_placeholder">{{remotePlaceholder}}</h4>
          </div>
       </v-if>
 

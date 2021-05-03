@@ -2,6 +2,7 @@
 
 .chat_placeholder {
    display: inline-block;
+   display: none;
    margin: auto auto;
    color: $text-light-grey;
 }
@@ -16,18 +17,30 @@ main {
    display: flex;
    flex-direction: row;
    padding: 0;
-   transition: all 0.5s ease-out;
+   transition: all 0.3s ease-out;
 }
 
 main.right_sidebar__close {
    right: 0;
 
-   .messager__menu {
+   .messenger__menu {
       right: 0;
    }
 
    .info__wrapper {
       right: -360px;
       opacity: 0;
+   }
+}
+
+.chat_not_selected {
+   .chat_placeholder {
+      display: block;
+   }
+   .messenger {
+      display: none;
+   }
+   .messenger__menu {
+      display: none;
    }
 }

@@ -19,6 +19,7 @@ export const SignUp = {
    template: template,
    components: [InputGroup],
    props: {
+      pagename: "signup",
       form: {
          login: {
             value: "",

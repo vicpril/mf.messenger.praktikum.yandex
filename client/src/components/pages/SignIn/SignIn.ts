@@ -20,6 +20,7 @@ export const SignIn = {
    template: template,
    components: [InputGroup],
    props: {
+      pagename: "signin",
       form: {
          login: {
             value: "",

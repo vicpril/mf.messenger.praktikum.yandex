@@ -85,16 +85,6 @@
    @include button_empty($danger);
 }
 
-.button__user_settings {
-   width: 25px;
-   height: 25px;
-   margin-left: auto;
-   padding: 3px 15px;
-   color: $primary;
-   background-color: transparent;
-   border-radius: 10px;
-}
-
 .button__attach {
    padding-right: 5px;
    color: $primary;

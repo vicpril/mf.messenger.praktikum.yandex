@@ -1,17 +1,27 @@
-import { UserFields } from "../../models/User";
+import {
+   HideLeftSidebarLoader,
+   ShowLeftSidebarLoader,
+} from "../../controllers/LeftSidebar/LeftSidebarLoader/LeftSidebarLoader";
 import { HideLoader, ShowLoader } from "../loader/loader";
 import { notifyError } from "../notify/notify";
-import { BaseAPI } from "./BaseApi";
+import { BaseAPI, ApiResponse, ErrorResponse } from "./BaseApi";
 import { XHR } from "./XHR";
-
-type ApiResponse = {
-   status: "success" | "failed";
-   data?: any;
-};
 
 type ChangePasswordData = {
    oldPassword: string;
    newPassword: string;
+};
+
+export type UserResponse = {
+   id: number;
+   first_name: string;
+   second_name: string;
+   display_name: string;
+   login: string;
+   email: string;
+   phone: string;
+   avatar: string;
+   role?: "admin" | "regular";
 };
 
 export class UsersAPI extends BaseAPI {
@@ -24,9 +34,14 @@ export class UsersAPI extends BaseAPI {
       };
 
       return XHR.get(`${this.host}/${id}`, options)
-         .then((resp): ApiResponse => ({ status: "success", data: resp }))
+         .then(
+            (resp: UserResponse): ApiResponse => ({
+               status: "success",
+               data: resp,
+            })
+         )
          .catch(
-            (err): ApiResponse => {
+            (err: ErrorResponse): ApiResponse => {
                notifyError(err.reason);
                return { status: "failed" };
             }
@@ -42,20 +57,28 @@ export class UsersAPI extends BaseAPI {
             login,
          },
          withCredentials: true,
+         beforeRequest: ShowLeftSidebarLoader(),
       };
 
       return XHR.post(`${this.host}/search`, options)
-         .then((resp): ApiResponse => ({ status: "success", data: resp }))
+         .then(
+            (resp: UserResponse[]): ApiResponse => ({
+               status: "success",
+               data: resp,
+            })
+         )
          .catch(
-            (err): ApiResponse => {
+            (err: ErrorResponse): ApiResponse => {
                notifyError(err.reason);
                return { status: "failed" };
             }
          )
-         .finally(() => {});
+         .finally(() => {
+            HideLeftSidebarLoader();
+         });
    }
 
-   update(data: Omit<UserFields, "id" | "avatar">): Promise<ApiResponse> {
+   update(data: Omit<UserResponse, "id" | "avatar">): Promise<ApiResponse> {
       const options = {
          data,
          withCredentials: true,
@@ -63,9 +86,14 @@ export class UsersAPI extends BaseAPI {
       };
 
       return XHR.put(`${this.host}/profile`, options)
-         .then((resp): ApiResponse => ({ status: "success", data: resp }))
+         .then(
+            (resp: UserResponse): ApiResponse => ({
+               status: "success",
+               data: resp,
+            })
+         )
          .catch(
-            (err): ApiResponse => {
+            (err: ErrorResponse): ApiResponse => {
                notifyError(err.reason);
                return { status: "failed" };
             }
@@ -83,9 +111,14 @@ export class UsersAPI extends BaseAPI {
       };
 
       return XHR.put(`${this.host}/profile/avatar`, options)
-         .then((resp): ApiResponse => ({ status: "success", data: resp }))
+         .then(
+            (resp: UserResponse): ApiResponse => ({
+               status: "success",
+               data: resp,
+            })
+         )
          .catch(
-            (err): ApiResponse => {
+            (err: ErrorResponse): ApiResponse => {
                notifyError(err.reason);
                return { status: "failed" };
             }
@@ -105,7 +138,7 @@ export class UsersAPI extends BaseAPI {
       return XHR.put(`${this.host}/password`, options)
          .then((resp): ApiResponse => ({ status: "success", data: resp }))
          .catch(
-            (err): ApiResponse => {
+            (err: ErrorResponse): ApiResponse => {
                notifyError(err.reason);
                return { status: "failed" };
             }
