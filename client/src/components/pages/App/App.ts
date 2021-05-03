@@ -14,7 +14,9 @@ export const App = {
    name: "App",
    template: template,
    components: [LeftSidebar, MainWindow, ModalNewChat],
-   props: {},
+   props: {
+      pagename: "chats",
+   },
    subscribers: {},
    afterInit() {
       window.ShowLoader = ShowLoader();

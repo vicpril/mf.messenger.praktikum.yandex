@@ -22,6 +22,9 @@ const template = `
 export const ErrorPage404: IIngredients = {
    name: "ErrorPage404",
    template: template,
+   props: {
+      pagename: "404",
+   },
    listeners: ["click"],
    methods: {
       onClick(e: Event & { target: HTMLElement }) {

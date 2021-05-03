@@ -7,7 +7,7 @@ export const DefaultPage = {
    template: template,
    components: [],
    props: {
-      page: "signin",
+      pagename: "defaultpage",
       title: "Welcome to Easy conversation chats",
       content: "You will find a companion for any topic here",
    },
