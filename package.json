@@ -5,7 +5,7 @@
    "scripts": {
       "start": "(npm run clear && parcel build client/src/index.html --out-dir build && npm run copy) && npm run server",
       "dev": "parcel ./client/src/index.html --out-dir ./build/",
-      "build": "parcel build client/src/pages*.html --out-dir build",
+      "build": "parcel build client/src/index.html --out-dir ./build/",
       "clear": "rm -rf ./static/* ./build/*",
       "copy": "mkdir -p ./static/ && cp ./build/* ./static/",
       "server": "node ./server/index.js",
