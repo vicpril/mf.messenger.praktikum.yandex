@@ -9,9 +9,9 @@
 
 ## Для ревьювера
 
-[Pull-request Sprint 3](https://github.com/vicpril/middle.messenger.praktikum.yandex/pull/4)
+[Pull-request Sprint 3](https://github.com/vicpril/mf.messenger.praktikum.yandex/pull/5)
 
-https://github.com/vicpril/middle.messenger.praktikum.yandex/pull/4
+https://github.com/vicpril/mf.messenger.praktikum.yandex/pull/5
 
 **_Готово на данный момент:_**
 
@@ -95,7 +95,7 @@ https://github.com/vicpril/middle.messenger.praktikum.yandex/pull/4
 
 ---
 
-https://github.com/vicpril/middle.messenger.praktikum.yandex/pull/4
+https://github.com/vicpril/mf.messenger.praktikum.yandex/pull/5
 
 ### **Примеры README**
 
