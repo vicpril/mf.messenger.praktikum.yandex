@@ -113,7 +113,6 @@ export class AccountController {
             Store.get().dispatch(actions.setSession({ login: user.login }));
             return user;
          }
-         // AuthController.logout();
          Store.get().dispatch(actions.setSession());
       } catch (error) {
          console.warn(error);

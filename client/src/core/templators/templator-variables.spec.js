@@ -14,10 +14,6 @@ describe("Templator variables", () => {
          content: null,
       };
 
-      before(() => {
-         // console.log("~ content: ", context.content);
-      });
-
       context.content = 123;
       it(`{{content}} should print "${context.content}"`, () => {
          const result = templator.compile(context);
@@ -33,9 +29,6 @@ describe("Templator variables", () => {
 
    context("- using Objects", () => {
       const output = (obj) => JSON.stringify(obj, null, 2);
-      before(() => {
-         // console.log("~ content: ", output(context.content));
-      });
 
       const template = `{{content}}`;
       const templator = new TemplatorVariables(template);
@@ -55,9 +48,6 @@ describe("Templator variables", () => {
    });
 
    context("- using void Functions", () => {
-      before(() => {
-         // console.log("~ content: ", context.content);
-      });
       const output = () => {};
 
       const template = `{{content}}`;

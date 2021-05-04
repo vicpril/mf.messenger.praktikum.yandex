@@ -85,11 +85,6 @@ export class XHR {
          xhr.onprogress = function (event: ProgressEvent) {
             if (options.onProgress) {
                options.onProgress(event);
-               // if (event.lengthComputable) {
-               //    console.log(`Получено ${event.loaded} из ${event.total} байт`);
-               // } else {
-               //    console.log(`Получено ${event.loaded} байт`); // если в ответе нет заголовка Content-Length
-               // }
             }
          };
 
@@ -97,7 +92,6 @@ export class XHR {
          xhr.upload.onprogress = function (event) {
             if (options.onUploadProgress) {
                options.onUploadProgress(event);
-               // console.log(`Отправлено ${event.loaded} из ${event.total}`);
             }
          };
 

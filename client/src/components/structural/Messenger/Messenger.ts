@@ -47,8 +47,8 @@ export const Messenger = {
    methods: {},
 
    beforePrepare() {
-      const P = this.props; // alias
-      P.account = AccountController.getAccount();
+      const p = this.props; // alias
+      p.account = AccountController.getAccount();
       new MessengerController(this).fetchMessages(
          ChatsController.getSelectedChatId()
       );
@@ -57,9 +57,9 @@ export const Messenger = {
    },
 
    beforeCreate() {
-      const P = this.props; // alias
-      P.chat = ChatsController.getSelectedChat();
-      P.chatId = ChatsController.getSelectedChatId();
+      const p = this.props; // alias
+      p.chat = ChatsController.getSelectedChat();
+      p.chatId = ChatsController.getSelectedChatId();
 
       new MessengerController(this).connect();
    },
@@ -78,13 +78,10 @@ function sctollToButton() {
    }, 10);
 }
 
-// async function renderMessages(chatId?: = this.props.chat.id) {
 async function renderMessages() {
    const chatId = ChatsController.getSelectedChatId();
-   // if (!this.props.rebuild_FLAG) return;
    await initBlocks.call(this, chatId).then(async (blocks: IBlock[]) => {
       this.props.blocks = blocks;
-      // this.props.rebuild_FLAG = false;
       this.$emit(this.EVENTS.UPDATE);
    });
 }

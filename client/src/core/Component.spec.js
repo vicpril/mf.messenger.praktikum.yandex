@@ -47,9 +47,7 @@ describe("Test Component", () => {
    });
 
    describe("Check lifesycle", () => {
-      const spyFunction = (param) => {
-         // console.log(`Called: ${param}`);
-      };
+      const spyFunction = (param) => {};
       spy = chai.spy(spyFunction);
 
       const Spy = {

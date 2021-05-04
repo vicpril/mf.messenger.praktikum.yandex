@@ -13,6 +13,7 @@ import { TChat } from "../../../models/Chat";
 import { first } from "../../../utils/pure-functions";
 import { TChatsState } from "../../../core/store/stateTypes";
 import { isEmpty } from "../../../utils/isEmpty";
+import { Component } from "../../../core/Component";
 
 export const Chat = {
    name: "Chat",
@@ -32,11 +33,9 @@ export const Chat = {
          }
       },
       "Chat:selected": function (id: number) {
-         if (this.props.chat.id === id) {
+         this.props.is_selected = this.props.chat.id === id;
+         if (this.props.is_selected) {
             this.methods.hideCounter.call(this);
-            this.props.is_selected = true;
-         } else {
-            this.props.is_selected = false;
          }
       },
    },
@@ -64,14 +63,14 @@ export const Chat = {
          if ($(e.target).hasClass("pulse")) {
             const { chat } = this.props;
             const data = { componentName: InfoChat.name, chat };
-            selectThisChat.call(this);
+            selectThisChat(this);
             this.$emit("openRightSidebar", data);
          }
          // Click on wrapper
          else if (checkSwitchUserPossible(e.target)) {
             const { chat } = this.props;
             const data = { componentName: InfoChat.name, chat };
-            selectThisChat.call(this);
+            selectThisChat(this);
             this.$emit("refreshRightSidebar", data);
          }
       },
@@ -102,17 +101,16 @@ export const Chat = {
 };
 
 function setLastMessage(message?: TMessage | MessageLife): void {
-   const P = this.props; // just alias
-   P.last_message_content =
-      message?.content || P.chat.last_message?.content || "";
+   const p = this.props; // just alias
+   p.last_message_content = message?.content || p.last_message?.content || "";
 
-   const dateString = message?.time || P.chat.last_message?.time || null;
+   const dateString = message?.time || p.last_message?.time || null;
    const date = Date.parse(dateString);
-   P.last_message_date = date ? new DateCustom(+date).getDateFormatted : "";
+   p.last_message_date = date ? new DateCustom(+date).getDateFormatted : "";
 
    if (this.$root) {
-      this.$root.find(".chat__last_message").html(P.last_message_content);
-      this.$root.find(".last_message_date").html(P.last_message_date);
+      this.$root.find(".chat__last_message").html(p.last_message_content);
+      this.$root.find(".last_message_date").html(p.last_message_date);
    }
 }
 
@@ -123,11 +121,11 @@ function checkSwitchUserPossible(element: Element): boolean {
    return true;
 }
 
-function selectThisChat() {
-   if (!this.name.startsWith("Chat")) {
+function selectThisChat(chat: Component) {
+   if (!chat.name.startsWith("Chat")) {
       throw new Error("`this` is not defined as Chat Component");
    }
-   const { id } = this.props.chat;
-   this.$dispatch(actions.selectChat(id));
-   this.$emit("Chat:selected", id);
+   const { id } = chat.props.chat;
+   chat.$dispatch(actions.selectChat(id));
+   chat.$emit("Chat:selected", id);
 }
