@@ -11,6 +11,8 @@
 
 [Pull-request Sprint 3](https://github.com/vicpril/middle.messenger.praktikum.yandex/pull/4)
 
+https://github.com/vicpril/middle.messenger.praktikum.yandex/pull/4
+
 **_Готово на данный момент:_**
 
 -  Внедрены Typescript, ESLint+prettier, StyleLint
@@ -93,7 +95,7 @@
 
 ---
 
-https://github.com/vicpril/middle.messenger.praktikum.yandex/pull/2
+https://github.com/vicpril/middle.messenger.praktikum.yandex/pull/4
 
 ### **Примеры README**
 
