@@ -43,7 +43,7 @@ export class ComponentStoreSubscriber extends ComponentDOMListener {
    }
 
    private isWatching(key: keyof TState): boolean {
-      return !!this.storeSubscribers[key];
+      return Boolean(this.storeSubscribers[key]);
    }
 
    protected unsubscribeStoreSubscriptioins() {

@@ -18,7 +18,7 @@ export const ErrorMesseges: TErrorMesseges = {
 };
 
 export const Validators = {
-   required: (val: any): boolean => !!val,
+   required: (val: any): boolean => Boolean(val),
    minLength: (num: number) => {
       minlength = num;
       return (val: string): boolean => val.length >= num;
