@@ -87,7 +87,7 @@ export const Chats = {
          });
       },
       "Chat:updated": function () {
-         fetchChats.call(this);
+         fetchChats.call(this, {});
       },
       "Chat:userDeleted": function () {
          if (this.props.view === LeftSidebarViews.ChatsSearch) {
@@ -102,7 +102,7 @@ export const Chats = {
       LeftSidebarLoaderInit();
       this.props.view = LeftSidebarController.getSidebarView();
       try {
-         await fetchChats.call(this);
+         await fetchChats.call(this, {});
       } catch (error) {
          throw new Error(error);
       }
@@ -113,7 +113,10 @@ export const Chats = {
       const interval = Store.get().getState().checkNewMessageInterval;
       if (!this.props.newMessagesChecker && interval && interval > 0) {
          this.props.newMessagesChecker = setInterval(() => {
-            fetchChats.call(this, false, true);
+            fetchChats.call(this, {
+               shouldUpdate: false,
+               shouldShowLoader: true,
+            });
          }, interval);
       }
    },
@@ -152,10 +155,17 @@ function resetRemote() {
    HideLeftSidebarLoader();
 }
 
-function fetchChats(reload: boolean = true, silent: boolean = false) {
-   if (!silent) ShowLeftSidebarLoader()();
+type FetchChatsParams = {
+   shouldUpdate?: boolean;
+   shouldShowLoader?: boolean;
+};
+function fetchChats({
+   shouldUpdate = true,
+   shouldShowLoader = false,
+}: FetchChatsParams) {
+   if (!shouldShowLoader) ShowLeftSidebarLoader()();
    new ChatsController(this)
-      .getChats(silent)
+      .getChats(shouldShowLoader)
       .then((chats) => {
          this.props.chats = chats;
          this.props.chatsFiltered = this.props.chats;
@@ -163,12 +173,12 @@ function fetchChats(reload: boolean = true, silent: boolean = false) {
             this.$dispatch(actions.selectChat(null));
             this.$emit("Chat:selected");
          }
-         if (reload) {
+         if (shouldUpdate) {
             this.$emit(this.EVENTS.UPDATE);
          }
       })
       .finally(() => {
-         if (!silent) HideLeftSidebarLoader();
+         if (!shouldShowLoader) HideLeftSidebarLoader();
       });
 }
 
