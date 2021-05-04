@@ -1,0 +1,43 @@
+@import "../../styles/variables";
+
+.notice {
+   position: fixed;
+   top: -200px;
+   right: 0;
+   z-index: 9000;
+   display: flex;
+   align-self: center;
+   max-width: 350px;
+   margin-top: 20px;
+   margin-right: 20px;
+   padding: 10px 30px;
+   border-radius: 15px;
+   visibility: hidden;
+   cursor: pointer;
+   opacity: 0;
+   transition: all 0.2s ease-out;
+
+   &.success {
+      color: darken($success, 50%);
+      background-color: lighten($success, 15%);
+      box-shadow: 0 0 20px 10px lighten($success, 30%);
+   }
+
+   &.danger {
+      color: darken($danger, 50%);
+      background-color: lighten($danger, 15%);
+      box-shadow: 0 0 30px 10px lighten($danger, 20%);
+   }
+
+   &.warning {
+      color: darken($warning, 50%);
+      background-color: lighten($warning, 30%);
+      box-shadow: 0 0 30px 10px lighten($warning, 30%);
+   }
+
+   &.show {
+      transform: translateY(200px);
+      visibility: visible;
+      opacity: 1;
+   }
+}

@@ -2,11 +2,11 @@
 /**
  * <v-for :item :index in array">
  *     {{content}}
- *  <v-for-end>
+ *  </v-for>
  *
  *  <v-for :value :key in object">
  *     {{content}}
- *  <v-for-end>
+ *  </v-for>
  */
 
 import { IContext } from "./templatorInterface";

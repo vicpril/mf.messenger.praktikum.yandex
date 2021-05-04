@@ -1,22 +1,37 @@
 import "./RightSidebar.scss";
 
 import { $ } from "../../../utils/dom-abstraction";
-import { InfoAccount } from "../../pages/InfoAccount/InfoAccount";
+import { InfoAccount } from "../InfoAccount/InfoAccount";
 import template from "./RightSidebar.tmpl";
-import { FormChangeAvatar } from "../../pages/FormChangeAvatar/FormChangeAvatar";
-import { FormAccountSettings } from "../../pages/FormAccountSettings/FormAccountSettings";
-import { FormPasswordChange } from "../../pages/FormPasswordChange/FormPasswordChange";
-import { InfoUser } from "../../pages/InfoUser/InfoUser";
+import { FormChangeAvatar } from "../FormChangeAvatar/FormChangeAvatar";
+import { FormAccountSettings } from "../FormAccountSettings/FormAccountSettings";
+import { FormPasswordChange } from "../FormPasswordChange/FormPasswordChange";
+import { RightSidebarController } from "../../../controllers/RightSidebar/RightSidebarController";
+import { RightSidebarDecorator } from "../../../controllers/RightSidebar/RightSidebarDecorators";
+import { InfoChat } from "../InfoChat/InfoChat";
+import { FormChangeChatAvatar } from "../FormChangeChatAvatar/FormChangeChatAvatar";
 
-export const RightSidebar = {
+export const RightSidebar = RightSidebarDecorator({
    name: "RightSidebar",
    template: template,
-   components: [],
+   components: [
+      InfoAccount,
+      FormChangeAvatar,
+      FormAccountSettings,
+      FormPasswordChange,
+      InfoChat,
+      FormChangeChatAvatar,
+   ],
    props: {
       page: "contact-info",
    },
    listeners: ["click"],
    subscribers: {},
+   storeSubscribers: {
+      rightSidebar: function () {
+         new RightSidebarController(this).changeContent();
+      },
+   },
    methods: {
       onClick(e: Event & { target: Element }): void {
          // Click on active Avatar
@@ -25,39 +40,7 @@ export const RightSidebar = {
          }
       },
    },
-   beforePrepare() {
-      switch (this.props.page) {
-         case "avatar-edit":
-            this.components = [FormChangeAvatar];
-            this.template = switchContentTag("FormChangeAvatar", this.template);
-            break;
-         case "settings-edit":
-            this.components = [FormAccountSettings];
-            this.template = switchContentTag(
-               "FormAccountSettings",
-               this.template
-            );
-            break;
-         case "password-change":
-            this.components = [FormPasswordChange];
-            this.template = switchContentTag(
-               "FormPasswordChange",
-               this.template
-            );
-            break;
-         case "contact-info":
-            this.components = [InfoUser];
-            this.template = switchContentTag("InfoUser", this.template);
-            break;
-         case "account":
-         default:
-            this.components = [InfoAccount];
-            this.template = switchContentTag("InfoAccount", this.template);
-            break;
-      }
+   beforeInitChildren() {
+      new RightSidebarController(this).addContent();
    },
-};
-
-function switchContentTag(newTagName: string, template: string): string {
-   return template.replace(/Content/gis, newTagName);
-}
+});

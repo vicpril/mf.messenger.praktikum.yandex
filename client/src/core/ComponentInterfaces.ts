@@ -1,4 +1,5 @@
 import { ISubscriberMethods } from "./Emmiter";
+import { StoreSubscriberMethods } from "./store/Store";
 
 interface IBase {
    [key: string]: any;
@@ -13,6 +14,7 @@ export interface IMethods {
 export interface IBaseMethods extends IBase {
    beforePrepare?: TMethod;
    beforeCreate?: TMethod;
+   beforeInitChildren?: TMethod;
    beforeMount?: TMethod;
    beforeInit?: TMethod;
    afterInit?: TMethod;
@@ -22,9 +24,11 @@ export interface IBaseMethods extends IBase {
 export interface IIngredients extends IBaseMethods {
    name: string;
    template?: string;
+   templatorReverse?: boolean;
    components?: IIngredients[];
    listeners?: string[];
    subscribers?: ISubscriberMethods;
+   storeSubscribers?: StoreSubscriberMethods;
    props?: {};
    methods?: IMethods;
 }

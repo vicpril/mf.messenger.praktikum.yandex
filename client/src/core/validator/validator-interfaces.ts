@@ -14,9 +14,11 @@ export interface IControl {
 
 export interface IFormField {
    value: any;
+   type?: "text" | "password" | "number";
    validators?: {
       [key: string]: (...args: any) => any;
    };
+   errorReason?: { [error: string]: string };
 }
 
 export type TErrors = {

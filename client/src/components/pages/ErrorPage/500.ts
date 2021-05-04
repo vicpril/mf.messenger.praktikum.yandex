@@ -1,3 +1,4 @@
+import { Router } from "../../../core/router/Router";
 import "./ErrorPage.scss";
 
 const template = `
@@ -6,7 +7,7 @@ const template = `
       <div class="main__wrapper">
          <h1>Oops! Houston, we have a problem.</h1>
          <p>Server error. Please contact on administrator</p>
-         <a href="#">&larr; Let's go back</a>
+         <a href="#" data-action="back">&larr; Let's go back</a>
       </div>
       <div class="default__right_sidebar">
          <div class="info__content">
@@ -20,4 +21,16 @@ const template = `
 export const ErrorPage500 = {
    name: "ErrorPage500",
    template: template,
+   props: {
+      pagename: "500",
+   },
+   listeners: ["click"],
+   methods: {
+      onClick(e: Event & { target: HTMLElement }) {
+         if (e.target.dataset.action === "back") {
+            e.preventDefault();
+            Router.back();
+         }
+      },
+   },
 };

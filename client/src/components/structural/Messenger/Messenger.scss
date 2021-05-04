@@ -1,0 +1,16 @@
+@import "../../../styles/variables";
+
+.messenger {
+   position: relative;
+   display: flex;
+   flex-flow: column nowrap;
+   align-self: self-end;
+   width: 100%;
+   padding: 0 50px;
+}
+
+.messenger__wrapper {
+   display: flex;
+   flex-flow: column nowrap;
+   padding-bottom: 70px;
+}

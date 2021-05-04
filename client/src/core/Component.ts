@@ -12,14 +12,15 @@ import {
    getEmmiter,
 } from "./Emmiter";
 
-import { ComponentDOMListener } from "./ComponentDOMListener";
 import { Templator } from "./templators/templator";
 import { TemplatorProps } from "./templators/templator-props";
 import { get } from "../utils/pure-functions";
 import { isEmpty } from "../utils/isEmpty";
 import { IContext } from "./templators/templatorInterface";
+import { ComponentStoreSubscriber } from "./ComponentStoreSubscriber";
+import { TemplatorReverse } from "./templators/templator-reverse";
 
-export class Component extends ComponentDOMListener {
+export class Component extends ComponentStoreSubscriber {
    EVENTS: IComponentLifeCycleNames;
    emmiter: TEmmiter = getEmmiter();
    emmiterSubscriptions: ISubscription[] = [];
@@ -33,14 +34,15 @@ export class Component extends ComponentDOMListener {
    id: string = uuidv4();
    methods: IMethods = {};
    page?: string;
+   templatorReverse: boolean = false;
 
    constructor(
-      private $targetEl: TDomAbstraction,
       options: IIngredients,
+      private $targetEl?: TDomAbstraction,
       public parentComponent: Component | null = null,
       ...args: object[]
    ) {
-      super(options.listeners);
+      super(options);
       if (isEmpty(options)) {
          throw new Error(`No options in Component`);
       }
@@ -57,6 +59,7 @@ export class Component extends ComponentDOMListener {
       this.props = options.props ?? {};
       this.models = options.models ?? [];
       this.subscribers = options.subscribers ?? {};
+      this.templatorReverse = options.templatorReverse ?? false;
 
       this.initMethods(options);
 
@@ -79,6 +82,7 @@ export class Component extends ComponentDOMListener {
       [
          "beforePrepare",
          "beforeCreate",
+         "beforeInitChildren",
          "beforeMount",
          "beforeInit",
          "afterInit",
@@ -98,17 +102,25 @@ export class Component extends ComponentDOMListener {
    // get props from template
    // init LifeCycle events in Emmiter
    beforePrepare(): void {}
-   private prepare(): void {
+   private prepare() {
       this.getPropsFromTemplate();
       this.beforePrepare();
+
       this.initSubscribers();
+      this.initStoreSubscribers();
       this.initEventsNames();
       this.initLifeCycleEvents();
+
       this.$emit(this.EVENTS.BEFORE_CREATE);
    }
 
    private getPropsFromTemplate(): void {
-      if (!this.parentComponent || isEmpty(this.parentComponent)) return;
+      if (
+         !this.$targetEl ||
+         !this.parentComponent ||
+         isEmpty(this.parentComponent)
+      )
+         return;
       if (!get(this.parentComponent, "props", false)) {
          this.props = {};
          return;
@@ -165,19 +177,22 @@ export class Component extends ComponentDOMListener {
    }
 
    beforeCreate(): void {}
-   private _beforeCreate(): void {
+   beforeInitChildren(): void {}
+   protected _beforeCreate(): void {
       this.beforeCreate();
+
       // CREATE: create $root
       this.initRoot();
       this.bindModels();
 
       // RENDER all children components
+      this.beforeInitChildren();
       this.initChildren();
 
       this.$emit(this.EVENTS.BEFORE_MOUNT);
    }
 
-   private bindModels(): void {
+   protected bindModels(): void {
       if (this.models) {
          this.models.forEach((modelName: string) => {
             const elements = [...this.$root.findAll(`[model="${modelName}"]`)];
@@ -209,7 +224,7 @@ export class Component extends ComponentDOMListener {
       }
    }
 
-   private initRoot(): void {
+   protected initRoot(): void {
       const templateCompiled = this.compileTemplate(this.template);
       this.$root = this.buildDomAbstraction(templateCompiled);
    }
@@ -218,9 +233,10 @@ export class Component extends ComponentDOMListener {
       if (isEmpty(template.trim())) {
          return "";
       }
-      // const context = get(this.parentComponent, "props", {});
       const context = this.props;
-      const templator = new Templator(template);
+      const templator = this.templatorReverse
+         ? new TemplatorReverse(template)
+         : new Templator(template);
       return templator.compile(context).trim();
    }
 
@@ -230,11 +246,11 @@ export class Component extends ComponentDOMListener {
          .firstChild() as TDomAbstraction;
    }
 
-   private initChildren(): void {
+   protected initChildren(): void {
       this.components.forEach((Ingredients: IIngredients) => {
          const $tags: TDomAbstraction[] = this.findAllTags(Ingredients.name);
          $tags.forEach(($targetEl) => {
-            const component = new Component($targetEl, Ingredients, this);
+            const component = new Component(Ingredients, $targetEl, this);
             this.componentsInst.push(component);
          });
       });
@@ -249,9 +265,9 @@ export class Component extends ComponentDOMListener {
       this.beforeMount();
       // MOUNT: replace $targetEl on $root
       if (!this.$root.isEmpty()) {
-         this.$targetEl.parent().replaceChild(this.$root, this.$targetEl);
+         this.$targetEl?.parent().replaceChild(this.$root, this.$targetEl);
       } else {
-         this.$targetEl.remove();
+         this.$targetEl?.remove();
       }
 
       this.$emit(this.EVENTS.BEFORE_INIT);
@@ -261,6 +277,7 @@ export class Component extends ComponentDOMListener {
    private _beforeInit(): void {
       this.beforeInit();
       this.initDOMListeners();
+
       this.$emit(this.EVENTS.AFTER_INIT);
    }
 
@@ -270,6 +287,11 @@ export class Component extends ComponentDOMListener {
             this.$on(key, this.subscribers[key].bind(this));
          }
       });
+   }
+
+   private unsubscribeSubscribers(): void {
+      this.emmiterSubscriptions.forEach((sub) => sub.unsubscribe());
+      this.emmiterSubscriptions = [];
    }
 
    afterInit(): void {}
@@ -290,7 +312,8 @@ export class Component extends ComponentDOMListener {
       // DESTROY:
       // remove listeners, unsubscribe, recursive for children
       this.removeDOMListeners();
-      this.emmiterSubscriptions.forEach((sub) => sub.unsubscribe());
+      this.unsubscribeSubscribers();
+      this.unsubscribeStoreSubscriptioins();
       this.componentsInst.forEach((component) => {
          component.$emit(component.EVENTS.DESTROY);
       });
@@ -300,6 +323,9 @@ export class Component extends ComponentDOMListener {
    private reBuild(): void {
       this.$targetEl = this.$root;
       this.$emit(this.EVENTS.DESTROY);
+      this.initSubscribers();
+      this.initStoreSubscribers();
+      this.initLifeCycleEvents();
       this.$emit(this.EVENTS.BEFORE_CREATE);
    }
 
@@ -318,5 +344,10 @@ export class Component extends ComponentDOMListener {
 
    $hide(): void {
       this.$root.css({ opacity: 0 });
+   }
+
+   $remove(): void {
+      this.$emit(this.EVENTS.DESTROY);
+      this.$root.remove();
    }
 }

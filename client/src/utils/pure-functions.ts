@@ -73,6 +73,14 @@ export function trimQuotes(text: string): string {
    return text.replace(regExp, "$1");
 }
 
+export function trim(str: string, niddle = ""): string {
+   if (!niddle) {
+      return str.trim();
+   }
+   const regExp = new RegExp(`^[${niddle}]+|[${niddle}]+$`, "g");
+   return str.replace(regExp, "");
+}
+
 type TColor = string;
 export function strToColor(str: string): TColor {
    return intToRGB(hashCode(str));
@@ -100,6 +108,11 @@ export function first<T>(list: T[]): T {
    return list[0];
 }
 
+export function last<T>(list: T[]): T | null {
+   if (!Array.isArray(list) || list.length === 0) return null;
+   return list[list.length - 1];
+}
+
 export function getUrlParameter(key: string): string | null {
    // eslint-disable-next-line no-restricted-globals
    const url = new URL(location.href);
@@ -118,7 +131,11 @@ export function strContains(
    return highstack.indexOf(needle) !== -1;
 }
 
-export function getFormData(formData: FormData): Object {
+export type TFormDataObject = {
+   [key: string]: any;
+};
+
+export function getFormData(formData: FormData): TFormDataObject {
    return [...formData.entries()].reduce(
       (obj, pair) => Object.assign(obj, { [pair[0]]: pair[1] }),
       {}
@@ -136,4 +153,60 @@ export function lodashToStr(string: string): string {
 
 export function removeNonCSSSymbolsFromStr(highstack: string): string {
    return highstack.replace(/[;:.,&%@#]/, "");
+}
+
+export function arrayUnique(arr: any[]): any[] {
+   const set = new Set(arr);
+   return Array.from(set);
+}
+
+export function isArray(value: unknown): value is [] {
+   return Array.isArray(value);
+}
+
+type PlainObject<T = unknown> = {
+   [k in string]: T;
+};
+
+export function isPlainObject(value: unknown): value is PlainObject {
+   return (
+      typeof value === "object" &&
+      value !== null &&
+      value.constructor === Object &&
+      Object.prototype.toString.call(value) === "[object Object]"
+   );
+}
+
+export function isArrayOrObject(value: unknown): value is [] | PlainObject {
+   return isPlainObject(value) || isArray(value);
+}
+
+export type Indexed<T = unknown> = {
+   [key in string]: T;
+};
+
+export function isEqual(a: Indexed, b: Indexed): boolean {
+   const isObject = (obj: any) => !!obj && obj.constructor === Object;
+
+   if (!isObject(a) || !isObject(b)) {
+      if (!Array.isArray(a) || !Array.isArray(b)) return a === b;
+   }
+
+   if (
+      Object.getOwnPropertyNames(a).length !==
+      Object.getOwnPropertyNames(b).length
+   )
+      return false;
+
+   let result = true;
+   Object.getOwnPropertyNames(a).forEach((key: string) => {
+      if (!isEqual(a[key] as Indexed, b[key] as Indexed)) {
+         result = false;
+      }
+   });
+   return result;
+}
+
+export function isSuccess(status: string): boolean {
+   return status === "success";
 }

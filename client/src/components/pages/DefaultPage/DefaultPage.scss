@@ -1,5 +1,9 @@
-@import "../../structural/App/App.scss";
+@import "../App/App.scss";
 @import "../../structural/RightSidebar/RightSidebar.scss";
+
+#app {
+   height: 100%;
+}
 
 .fluid-container {
    height: 100%;

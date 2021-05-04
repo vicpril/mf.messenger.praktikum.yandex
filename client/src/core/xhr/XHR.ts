@@ -1,4 +1,4 @@
-enum METHOD {
+export enum METHOD {
    GET = "GET",
    POST = "POST",
    PUT = "PUT",
@@ -22,8 +22,8 @@ function queryStringify(data: { [key: string]: any }): string {
    return `?${Object.getOwnPropertyNames(data).map(paramToStr).join("&")}`;
 }
 
-type Options = {
-   method: METHOD;
+export type XHROptions = {
+   method?: METHOD;
    headers?: {
       [key: string]: any;
    };
@@ -37,16 +37,21 @@ type Options = {
    onProgress?: (event: ProgressEvent) => void;
    onUploadProgress?: (event: ProgressEvent) => void;
    beforeRequest?: (event?: ProgressEvent) => void;
+   afterRequest?: (event?: ProgressEvent) => void;
    withCredentials?: boolean;
 };
 
 // Тип Omit принимает два аргумента: первый — тип, второй — строка
 // и удаляет из первого типа ключ, переданный вторым аргументом
-type OptionsWithoutMethod = Omit<Options, "method">;
+type OptionsWithoutMethod = Omit<XHROptions, "method">;
 
-export default class XHR {
-   private static request(url: string, options: Options, timeout = 5000) {
-      const { method, data, headers } = options;
+export class XHR {
+   private static request(
+      url: string,
+      options: XHROptions,
+      timeout = 5000
+   ): Promise<XMLHttpRequestResponseType> {
+      const { method = METHOD.GET, data, headers } = options;
 
       return new Promise<XMLHttpRequestResponseType>((resolve, reject) => {
          const xhr = new XMLHttpRequest();
@@ -80,11 +85,6 @@ export default class XHR {
          xhr.onprogress = function (event: ProgressEvent) {
             if (options.onProgress) {
                options.onProgress(event);
-               // if (event.lengthComputable) {
-               //    console.log(`Получено ${event.loaded} из ${event.total} байт`);
-               // } else {
-               //    console.log(`Получено ${event.loaded} байт`); // если в ответе нет заголовка Content-Length
-               // }
             }
          };
 
@@ -92,7 +92,6 @@ export default class XHR {
          xhr.upload.onprogress = function (event) {
             if (options.onUploadProgress) {
                options.onUploadProgress(event);
-               // console.log(`Отправлено ${event.loaded} из ${event.total}`);
             }
          };
 
@@ -118,10 +117,7 @@ export default class XHR {
       });
    }
 
-   static get(
-      url: string,
-      options: OptionsWithoutMethod = {}
-   ): Promise<XMLHttpRequestResponseType> {
+   static get(url: string, options: OptionsWithoutMethod = {}): Promise<any> {
       url = !options.data ? url : url + queryStringify(options.data);
       return XHR.request(
          url,
@@ -130,7 +126,7 @@ export default class XHR {
       );
    }
 
-   static post(url: string, options: OptionsWithoutMethod = {}) {
+   static post(url: string, options: OptionsWithoutMethod = {}): Promise<any> {
       return XHR.request(
          url,
          { ...options, method: METHOD.POST },
@@ -138,7 +134,7 @@ export default class XHR {
       );
    }
 
-   static put(url: string, options: OptionsWithoutMethod = {}) {
+   static put(url: string, options: OptionsWithoutMethod = {}): Promise<any> {
       return XHR.request(
          url,
          { ...options, method: METHOD.PUT },
@@ -146,7 +142,10 @@ export default class XHR {
       );
    }
 
-   static delete(url: string, options: OptionsWithoutMethod = {}) {
+   static delete(
+      url: string,
+      options: OptionsWithoutMethod = {}
+   ): Promise<any> {
       return XHR.request(
          url,
          { ...options, method: METHOD.DELETE },

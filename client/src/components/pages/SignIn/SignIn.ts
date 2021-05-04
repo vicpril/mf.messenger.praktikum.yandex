@@ -8,6 +8,10 @@ import {
    verify,
 } from "../../../core/validator/form";
 import { Validators } from "../../../core/validator/validators";
+import { Router } from "../../../core/router/Router";
+// eslint-disable-next-line import/no-cycle
+import { AuthController } from "../../../controllers/Auth/AuthController";
+import { HideLoader, ShowLoader } from "../../../core/loader/loader";
 
 const { required, minLength } = Validators;
 
@@ -16,6 +20,7 @@ export const SignIn = {
    template: template,
    components: [InputGroup],
    props: {
+      pagename: "signin",
       form: {
          login: {
             value: "",
@@ -23,7 +28,8 @@ export const SignIn = {
          },
          password: {
             value: "",
-            validators: { required, minLength: minLength(5) },
+            validators: { required, minLength: minLength(3) },
+            type: "password",
          },
       },
       form_control: {},
@@ -37,21 +43,23 @@ export const SignIn = {
          }
       },
 
-      onSubmit(e: Event & { target: Element }): void {
+      onSubmit(e: Event & { target: HTMLFormElement }): void {
          if ($(e.target).hasClass("form__sign_in")) {
             e.preventDefault();
-            if (verify(this)()) {
-               console.log("Form SignIn:", this.props.form);
-            }
+            new AuthController(this).login(new FormData(e.target));
          }
       },
       onClick(e: Event & { target: HTMLElement }) {
          if (e.target.dataset.action === "signup") {
-            document.location.href = "/signup.html";
+            Router.navigate("signup");
          }
       },
    },
    beforePrepare() {
       this.props.fields = prepareFormFields(this.props.form);
+   },
+   afterInit() {
+      window.ShowLoader = ShowLoader;
+      window.HideLoader = HideLoader;
    },
 };

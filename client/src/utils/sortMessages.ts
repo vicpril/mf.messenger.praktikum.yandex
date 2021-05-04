@@ -1,4 +1,4 @@
-import { TMessage } from "../models/types";
+import { TMessage } from "../models/Message";
 
 export function sortByTime(
    messages: TMessage[],

@@ -1,0 +1,92 @@
+@import "../../../styles/variables";
+
+.account__user {
+   padding: 10px;
+
+   &:hover {
+      background-color: $light !important;
+      transform: translate(0) !important;
+      cursor: default;
+   }
+}
+
+.user__wrapper {
+   display: flex;
+   flex-flow: row nowrap;
+   padding: 10px;
+   border-radius: 10px;
+   cursor: default;
+   transition: background-color 0.5s ease-out, transform 0.5s ease-out;
+
+   &:first-child {
+      margin-top: 0;
+   }
+
+   &:hover {
+      background-color: $hover;
+      transform: translate(3px);
+
+      .button__delete_user {
+         visibility: visible;
+         opacity: 1;
+      }
+   }
+}
+
+.user__active {
+   background-color: $primary;
+   box-shadow: 3px 3px 10px 2px rgba(101, 136, 222, 0.51);
+   cursor: default;
+
+   &:hover {
+      background-color: $primary;
+      box-shadow: 3px 3px 10px 2px rgba(101, 136, 222, 0.51);
+      transform: translate(0);
+   }
+
+   .user__displayname,
+   .user__last_message,
+   .last_message_date {
+      color: $text-white;
+   }
+}
+
+.user__info {
+   display: flex;
+   flex: 1;
+   flex-flow: column;
+   max-width: 150px;
+   margin-left: 10px;
+}
+.user__displayname {
+   flex: 1;
+   padding-top: 5px;
+   color: $text-grey;
+   font-weight: 600;
+   font-size: 13px;
+   font-style: normal;
+}
+.user__last_message {
+   flex: 1;
+   overflow: hidden;
+   color: $text-light-grey;
+   font-weight: 300;
+   font-size: 11px;
+   line-height: 15px;
+   white-space: nowrap;
+   text-overflow: ellipsis;
+}
+.user__actions {
+   display: flex;
+   flex: 1;
+   flex-direction: column;
+   width: 60px;
+   text-align: right;
+}
+
+.button__delete_user {
+   margin: auto 0 auto auto;
+   font-size: 1.5em;
+   visibility: hidden;
+   opacity: 0;
+}

@@ -23,6 +23,7 @@ export default /* html */ `
         required
     </v-if>
    />
+
    <v-for :error :key in control.errors>
       <v-if="control.errors.{{key}}.isError">
          <small>{{error.message}}</small>
