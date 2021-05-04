@@ -46,10 +46,14 @@ export const Chats = {
       },
       "ChatSearch:input": async function (s: string) {
          if (s.length >= 3) {
-            const users = await getRemoteUsers(s);
-            this.props.usersRemote = users;
-            this.props.remotePlaceholder = getPlaceholder(s);
-            this.$emit(this.EVENTS.UPDATE);
+            try {
+               const users = await getRemoteUsers(s);
+               this.props.usersRemote = users;
+               this.props.remotePlaceholder = getPlaceholder(s);
+               this.$emit(this.EVENTS.UPDATE);
+            } catch (error) {
+               throw new Error(error);
+            }
          } else {
             resetRemote.call(this);
          }
@@ -57,7 +61,11 @@ export const Chats = {
       },
       toggleLeftSidebarView: async function (view: LeftSidebarViews) {
          if (view === LeftSidebarViews.ChatsSearch) {
-            this.props.chatUsers = await fetchUsers.call(this);
+            try {
+               this.props.chatUsers = await fetchUsers.call(this);
+            } catch (error) {
+               throw new Error(error);
+            }
          }
          if (this.props.view !== view) {
             resetRemote.call(this);
@@ -93,7 +101,11 @@ export const Chats = {
    async beforePrepare() {
       LeftSidebarLoaderInit();
       this.props.view = LeftSidebarController.getSidebarView();
-      await fetchChats.call(this);
+      try {
+         await fetchChats.call(this);
+      } catch (error) {
+         throw new Error(error);
+      }
       this.props.usersRemote = [];
    },
 
@@ -119,8 +131,12 @@ function getChatsFiltered(s: string): TChat[] {
 }
 
 async function getRemoteUsers(search: string) {
-   const users = await UsersController.search(search);
-   return users.map((data: UserFields) => new User(data));
+   try {
+      const users = await UsersController.search(search);
+      return users.map((data: UserFields) => new User(data));
+   } catch (error) {
+      throw new Error(error);
+   }
 }
 
 function getPlaceholder(s: string = "") {

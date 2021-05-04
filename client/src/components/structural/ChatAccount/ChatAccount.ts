@@ -34,9 +34,4 @@ export const ChatAccount = {
    beforeCreate() {
       this.props.account = AccountController.getAccount();
    },
-   afterInit() {
-      window.rebuildChatAccount = function () {
-         this.$emit(this.EVENTS.UPDATE);
-      }.bind(this);
-   },
 };

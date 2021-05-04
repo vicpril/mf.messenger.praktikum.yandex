@@ -80,55 +80,65 @@ function sctollToButton() {
 
 async function renderMessages() {
    const chatId = ChatsController.getSelectedChatId();
-   await initBlocks.call(this, chatId).then(async (blocks: IBlock[]) => {
-      this.props.blocks = blocks;
-      this.$emit(this.EVENTS.UPDATE);
-   });
+   try {
+      await initBlocks.call(this, chatId).then(async (blocks: IBlock[]) => {
+         this.props.blocks = blocks;
+         this.$emit(this.EVENTS.UPDATE);
+      });
+   } catch (error) {
+      throw new Error(error);
+   }
 }
 
-async function initBlocks(chatId: number): Promise<IBlock[]> {
+function initBlocks(chatId: number): Promise<IBlock[]> {
    const blocks = [] as IBlock[];
    const messages = new MessengerController(this).getChatMessages(chatId);
    const promises = [] as Promise<void>[];
    messages.forEach((message) => {
       promises.push(addMessageToBlocks(message, blocks));
    });
-   return await Promise.all(promises).then(() => blocks);
+   return Promise.all(promises).then(() => blocks);
 }
 
 async function addMessageToBlocks(message: TMessage, blocks: IBlock[] = []) {
-   const owner = await UsersController.get(message.user_id);
-   const account = AccountController.getAccount() as TUser;
-   if (owner && account) {
-      if (blocks.length === 0) {
-         // create new block date
-         const blockDate = new BlockDate(message.time);
-         blocks.push(blockDate);
-         // create new block message
-         const blockMessages = new BlockMessages(owner, account);
-         blockMessages.addMessage(message);
-         blocks.push(blockMessages);
-         return;
-      }
-
-      if ((last(blocks) as BlockMessages).content.user.id !== message.user_id) {
-         // MAYBE create new block date
-         const blockDate = new BlockDate(message.time);
-         const lastBlock = last(blocks) as BlockMessages;
-         const prevDate = new BlockDate(
-            lastBlock.getLastMessageTime() as string
-         );
-         if (!isSameDayBlocks(blockDate, prevDate)) {
+   try {
+      const owner = await UsersController.get(message.user_id);
+      const account = AccountController.getAccount() as TUser;
+      if (owner && account) {
+         if (blocks.length === 0) {
+            // create new block date
+            const blockDate = new BlockDate(message.time);
             blocks.push(blockDate);
+            // create new block message
+            const blockMessages = new BlockMessages(owner, account);
+            blockMessages.addMessage(message);
+            blocks.push(blockMessages);
+            return;
          }
-         // create new block message
-         const blockMessages = new BlockMessages(owner, account);
-         blockMessages.addMessage(message);
-         blocks.push(blockMessages);
-         return;
-      }
 
-      (last(blocks) as BlockMessages).addMessage(message);
+         if (
+            (last(blocks) as BlockMessages).content.user.id !== message.user_id
+         ) {
+            // MAYBE create new block date
+            const blockDate = new BlockDate(message.time);
+            const lastBlock = last(blocks) as BlockMessages;
+            const prevDate = new BlockDate(
+               lastBlock.getLastMessageTime() as string
+            );
+            if (!isSameDayBlocks(blockDate, prevDate)) {
+               blocks.push(blockDate);
+            }
+            // create new block message
+            const blockMessages = new BlockMessages(owner, account);
+            blockMessages.addMessage(message);
+            blocks.push(blockMessages);
+            return;
+         }
+
+         (last(blocks) as BlockMessages).addMessage(message);
+      }
+   } catch (error) {
+      throw new Error(error);
    }
 }
 
