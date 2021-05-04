@@ -9,7 +9,11 @@
 
 ## Для ревьювера
 
+<<<<<<< HEAD
 [Pull-request Sprint 4](https://github.com/vicpril/middle.messenger.praktikum.yandex/pull/4)
+=======
+[Pull-request Sprint 3](https://github.com/vicpril/middle.messenger.praktikum.yandex/pull/4)
+>>>>>>> sprint_3
 
 **_Готово 3 спринт:_**
 
