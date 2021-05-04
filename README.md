@@ -9,13 +9,6 @@
 
 ## Для ревьювера
 
-<<<<<<< HEAD
-[Pull-request Sprint 3](https://github.com/vicpril/middle.messenger.praktikum.yandex/pull/4)
-
-https://github.com/vicpril/middle.messenger.praktikum.yandex/pull/4
-
-=======
->>>>>>> deploy
 **_Готово 3 спринт:_**
 
 -  Реализован роутинг страниц: авторизации, регистрации, чатов, ошибок 404, 500.
