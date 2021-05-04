@@ -78,7 +78,7 @@
 
 ## Netlify
 
-[Ссылка на netlify](https://keen-gates-c91a4b.netlify.app) (ветка deploy)
+[Ссылка на netlify](https://objective-liskov-913d81.netlify.app/) (ветка deploy)
 
 ## Figma
 
