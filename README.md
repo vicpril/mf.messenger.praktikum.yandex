@@ -11,6 +11,8 @@
 
 [Pull-request Sprint 3](https://github.com/vicpril/middle.messenger.praktikum.yandex/pull/4)
 
+https://github.com/vicpril/middle.messenger.praktikum.yandex/pull/4
+
 **_Готово 3 спринт:_**
 
 -  Реализован роутинг страниц: авторизации, регистрации, чатов, ошибок 404, 500.
@@ -104,7 +106,7 @@
 
 ---
 
-https://github.com/vicpril/middle.messenger.praktikum.yandex/pull/2
+https://github.com/vicpril/middle.messenger.praktikum.yandex/pull/4
 
 ### **Примеры README**
 
