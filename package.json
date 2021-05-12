@@ -97,10 +97,10 @@
       }
    },
    "lint-staged": {
-      "*.(js,ts)": [
+      "*.{js,ts}": [
          "npm run eslint"
       ],
-      "*.(css,scss)": [
+      "*.{css,scss}": [
          "npm run stylelint:fix",
          "git add -A"
       ]

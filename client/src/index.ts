@@ -14,7 +14,6 @@ const store = createStore(rootReducer, {
 });
 
 store.subscribe((state) => {
-   // console.log("App state: ", state);
    storage("ec-app-state", state);
 });
 
