@@ -1,19 +1,29 @@
-[![Netlify Status](https://api.netlify.com/api/v1/badges/cc37130e-3551-46c1-9f0d-68ce33b86df0/deploy-status)](https://app.netlify.com/sites/keen-gates-c91a4b/deploys)
+# Easy conversation
+
+[![Netlify Status](https://api.netlify.com/api/v1/badges/cc37130e-3551-46c1-9f0d-68ce33b86df0/deploy-status)](https://app.netlify.com/sites/keen-gates-c91a4b/deploys) [![Heroku](https://heroku-badge.herokuapp.com/?app=es-chat-app)](https://es-chat-app.herokuapp.com/)
 
 ![Общайся непринужденно](https://robohash.org/illoadipisciconsequuntur.png?size=200x200&set=set1)
 
 ## Описание
 
 Добро пожаловать в чат «**Непринужденное общение**». Здесь вы найдете собеседника для любой темы… Или Вас найдут ;)
-По правде говоря, это учебное задание курса **Яндекс.Практикум «Мидл-фронтенд разработчик»**. Модуль 1. Спринт 3.
+По правде говоря, это учебное задание курса **Яндекс.Практикум «Мидл-фронтенд разработчик»**. Модуль 1. Спринт 4.
 
 ## Для ревьювера
 
+**_Готово 4 спринт:_**
+
+-  Настроен **Webpack**:
+   -  установлены лоадеры для js, ts, css, scss, файлов картинок и шрифтов.
+   -  настроено динамическое определение среды разработки.
+   -  подключены плагины: CleanWebpackPlugin, HTMLWebpackPlugin, TerserPlugin, CopyWebpackPlugin, MiniCssExtractPlugin, CssMinimizerPlugin.
+   -  настроен devServer на 3000 порту.
+-  Образ Docker-сборки в `./Dockerfile`. Быстрый запуск через `docker-compose up --build`.
+-  Проект с Docker-сборкой размещен на [Heroku](https://es-chat-app.herokuapp.com/).
+-  Настроен `precommit` с помощью `husky` и `lint-staged`
+-  Выполнен `npm audit`, версии основных зависимостей зафиксированы. (Аудит показывает уязвимости для зависимостей `stylelint`. Уязвимости пока не решаются, т.к. эти зависимости только для разработки и в продакн не попадают, я оставил в таком виде)
+
 **_Готово 3 спринт:_**
-
-[Pull-request Sprint 3](https://github.com/vicpril/mf.messenger.praktikum.yandex/pull/5)
-
-https://github.com/vicpril/mf.messenger.praktikum.yandex/pull/5
 
 -  Реализован роутинг страниц: авторизации, регистрации, чатов, ошибок 404, 500.
    Редирект авторизованного пользователя на страницу чатов, неавторизованного на страницу регистрации.
@@ -72,13 +82,25 @@ https://github.com/vicpril/mf.messenger.praktikum.yandex/pull/5
 
 -  Сборка клиентской части в режиме разработки
 
-         npm run dev
+         npm run dev-server
+
+-  Запуск приложения в Docker-контейнере
+
+         docker-compose up --build
+
+   либо
+
+         npm run docker
 
 ## **Примеры использования**
 
 Жмакай на чаты - увидишь сообщения!
 
 ![Скрин](screenshots/chat.png)
+
+## Heroku
+
+[Ссылка на проект в heroku](https://es-chat-app.herokuapp.com/)
 
 ## Netlify
 
