@@ -11,6 +11,8 @@
 
 ## Для ревьювера
 
+https://github.com/vicpril/mf.messenger.praktikum.yandex/pull/6
+
 **_Готово 4 спринт:_**
 
 -  Настроен **Webpack**:
