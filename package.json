@@ -1,6 +1,6 @@
 {
    "name": "sprint-4",
-   "version": "1.0.0",
+   "version": "4.0.0",
    "description": "",
    "scripts": {
       "start": "(npm run clear && npm run build && npm run copy) && npm run server",
@@ -15,7 +15,7 @@
       "eslint:fix": "eslint ./client/src --ext .js,.jsx,.ts,.tsx --fix",
       "stylelint": "stylelint './client/src/**/*{.css,.scss}'",
       "stylelint:fix": "stylelint './client/src/**/*{.css,.scss}' --fix",
-      "test": "echo 132;",
+      "test": "npx mocha",
       "test:watch": "npm run test -- --watch",
       "prepare": "husky install"
    },
@@ -23,6 +23,7 @@
    "author": "",
    "license": "ISC",
    "devDependencies": {
+      "@babel/core": "^7.14.0",
       "@babel/plugin-proposal-class-properties": "7.13.0",
       "@babel/preset-env": "7.14.1",
       "@babel/preset-typescript": "7.13.0",
