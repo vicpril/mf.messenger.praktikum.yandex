@@ -81,16 +81,6 @@
       "express": "^4.17.1",
       "uuid": "^8.3.2"
    },
-   "lint-staged": {
-      "*.{css|scss}": [
-         "npm run test",
-         "npm run stylelint:fix"
-      ],
-      "*.{js|ts}": [
-         "npm test",
-         "npm run eslint"
-      ]
-   },
    "mocha": {
       "spec": "./client/src/**/*.spec.{js,ts}",
       "require": [
@@ -105,5 +95,14 @@
          "module": "commonjs",
          "skipDefaultLibCheck": true
       }
+   },
+   "lint-staged": {
+      "*.(js,ts)": [
+         "npm run eslint"
+      ],
+      "*.(css,scss)": [
+         "npm run stylelint:fix",
+         "git add -A"
+      ]
    }
 }
