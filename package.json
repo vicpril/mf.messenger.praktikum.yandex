@@ -2,12 +2,16 @@
    "name": "sprint-4",
    "version": "4.0.0",
    "description": "",
+   "engines": {
+      "node": ">=12.21 <15",
+      "npm": ">=7.12"
+   },
    "scripts": {
       "start": "(npm run clear && npm run build && npm run copy) && npm run server",
       "deploy": "npm run clear && npm run build && npm run copy",
       "dev": "cross-env NODE_ENV=development webpack --mode development",
-      "build": "cross-env NODE_ENV=production webpack --mode production",
       "dev-server": "cross-env NODE_ENV=development webpack serve --mode development --open",
+      "build": "cross-env NODE_ENV=production webpack --mode production",
       "clear": "rm -rf ./static/* ./build/*",
       "copy": "mkdir -p ./static/ && cp ./build/* ./static/",
       "server": "node ./server/index.js",
