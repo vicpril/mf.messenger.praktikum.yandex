@@ -10,7 +10,7 @@ import { AuthController } from "./controllers/Auth/AuthController";
 
 const store = createStore(rootReducer, {
    ...storage("ec-app-state"),
-   checkNewMessageInterval: 3000,
+   checkNewMessageInterval: 7000,
 });
 
 store.subscribe((state) => {
