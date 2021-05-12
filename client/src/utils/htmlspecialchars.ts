@@ -13,7 +13,7 @@ export function htmlspecialchars(str: string): string {
 export function specialcharsObject<T, K extends keyof T>(obj: T): T {
    const reducer = (acc: any, key: K) => {
       if (typeof obj[key] === "string") {
-         acc[key] = htmlspecialchars((obj[key] as unknown) as string) as string;
+         acc[key] = htmlspecialchars(obj[key] as unknown as string) as string;
       } else {
          acc[key] = obj[key];
       }

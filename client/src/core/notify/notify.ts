@@ -8,6 +8,7 @@ export enum NoticeStatus {
 }
 
 class Notice {
+   static notices: string[] = [];
    private $wrapper: TDomAbstraction;
    constructor(
       private text: string,
@@ -39,9 +40,20 @@ class Notice {
 
    hide(): void {
       this.$wrapper.removeClass("show");
+      Notice.removeText(this.text);
       setTimeout(() => {
          this.destroy();
       }, 200);
+   }
+
+   static removeText(text: string) {
+      Notice.notices = Notice.notices.filter((not) => not !== text);
+   }
+   static addText(text: string) {
+      Notice.notices.push(text);
+   }
+   static isShown(text: string): boolean {
+      return Notice.notices.includes(text);
    }
 
    private destroy() {
@@ -58,5 +70,9 @@ export function notify(
    return new Notice(text, status, delay).show();
 }
 export function notifyError(text: string, delay: number = 5000) {
-   return notify(text, NoticeStatus.ERROR, delay);
+   if (!Notice.isShown(text)) {
+      Notice.addText(text);
+      return notify(text, NoticeStatus.ERROR, delay);
+   }
+   return null;
 }

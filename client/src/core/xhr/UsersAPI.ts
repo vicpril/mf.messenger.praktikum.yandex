@@ -1,3 +1,4 @@
+import { AuthController } from "../../controllers/Auth/AuthController";
 import {
    HideLeftSidebarLoader,
    ShowLeftSidebarLoader,
@@ -27,6 +28,14 @@ export type UserResponse = {
 export class UsersAPI extends BaseAPI {
    private host = `${this.basehost}/user`;
 
+   private onError = (err: ErrorResponse): ApiResponse => {
+      if (err.reason === "Cookie is not valid") {
+         AuthController.logout(false);
+      }
+      notifyError(err.reason);
+      return { status: "failed" };
+   };
+
    get(id: number): Promise<ApiResponse> {
       const options = {
          withCredentials: true,
@@ -40,12 +49,7 @@ export class UsersAPI extends BaseAPI {
                data: resp,
             })
          )
-         .catch(
-            (err: ErrorResponse): ApiResponse => {
-               notifyError(err.reason);
-               return { status: "failed" };
-            }
-         )
+         .catch(this.onError)
          .finally(() => {
             HideLoader();
          });
@@ -67,12 +71,7 @@ export class UsersAPI extends BaseAPI {
                data: resp,
             })
          )
-         .catch(
-            (err: ErrorResponse): ApiResponse => {
-               notifyError(err.reason);
-               return { status: "failed" };
-            }
-         )
+         .catch(this.onError)
          .finally(() => {
             HideLeftSidebarLoader();
          });
@@ -92,12 +91,7 @@ export class UsersAPI extends BaseAPI {
                data: resp,
             })
          )
-         .catch(
-            (err: ErrorResponse): ApiResponse => {
-               notifyError(err.reason);
-               return { status: "failed" };
-            }
-         )
+         .catch(this.onError)
          .finally(() => {
             HideLoader();
          });
@@ -117,12 +111,7 @@ export class UsersAPI extends BaseAPI {
                data: resp,
             })
          )
-         .catch(
-            (err: ErrorResponse): ApiResponse => {
-               notifyError(err.reason);
-               return { status: "failed" };
-            }
-         )
+         .catch(this.onError)
          .finally(() => {
             HideLoader();
          });
@@ -137,12 +126,7 @@ export class UsersAPI extends BaseAPI {
 
       return XHR.put(`${this.host}/password`, options)
          .then((resp): ApiResponse => ({ status: "success", data: resp }))
-         .catch(
-            (err: ErrorResponse): ApiResponse => {
-               notifyError(err.reason);
-               return { status: "failed" };
-            }
-         )
+         .catch(this.onError)
          .finally(() => {
             HideLoader();
          });

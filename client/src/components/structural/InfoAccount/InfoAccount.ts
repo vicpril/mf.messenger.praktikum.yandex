@@ -18,7 +18,7 @@ export const InfoAccount = {
    methods: {
       onClick(e: Event & { target: HTMLElement }) {
          if (e.target.dataset.action === "logout") {
-            new AuthController(this).logout();
+            AuthController.logout();
          }
       },
    },

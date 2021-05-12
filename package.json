@@ -73,6 +73,7 @@
       "stylelint-order": "^4.1.0",
       "stylelint-prettier": "^1.2.0",
       "stylelint-scss": "^3.19.0",
+      "terser-webpack-plugin": "^5.1.2",
       "trim": "^1.0.1",
       "ts-node": "^9.1.1",
       "typescript": "^4.2.4",
