@@ -3,3 +3,4 @@ dist
 static
 build
 .cache
+*.spec.js

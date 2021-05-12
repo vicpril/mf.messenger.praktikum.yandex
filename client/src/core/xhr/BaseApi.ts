@@ -1,6 +1,3 @@
-import { AuthController } from "../../controllers/Auth/AuthController";
-import { notifyError } from "../notify/notify";
-
 export type ApiResponse = {
    status: "success" | "failed";
    data?: any;
