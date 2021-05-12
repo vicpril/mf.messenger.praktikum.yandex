@@ -11,7 +11,7 @@ app.use((request, response) => {
    response.sendFile(path.resolve(`${distFolder}index.html`));
 });
 
-app.listen(PORT, () => {
+app.listen(process.env.PORT || PORT, () => {
    console.log(
       `Example app listening on port ${PORT}! http://localhost:${PORT}/`
    );
