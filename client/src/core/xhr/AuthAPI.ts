@@ -42,15 +42,13 @@ export class AuthAPI extends BaseAPI {
                status: "success",
             })
          )
-         .catch(
-            (err): ApiResponse => {
-               if (err.reason === "User already in system") {
-                  return { status: "success" };
-               }
-               notifyError(err.reason);
-               return { status: "failed" };
+         .catch((err): ApiResponse => {
+            if (err.reason === "User already in system") {
+               return { status: "success" };
             }
-         )
+            notifyError(err.reason);
+            return { status: "failed" };
+         })
          .finally(() => {
             HideLoader();
          });
@@ -63,12 +61,10 @@ export class AuthAPI extends BaseAPI {
 
       return XHR.post(`${this.host}/logout`, options)
          .then((): ApiResponse => ({ status: "success" }))
-         .catch(
-            (err): ApiResponse => {
-               notifyError(err.reason);
-               return { status: "failed" };
-            }
-         )
+         .catch((err): ApiResponse => {
+            notifyError(err.reason);
+            return { status: "failed" };
+         })
          .finally(() => {
             HideLoader();
          });
@@ -84,12 +80,10 @@ export class AuthAPI extends BaseAPI {
 
       return XHR.post(`${this.host}/signup`, options)
          .then((): ApiResponse => ({ status: "success" }))
-         .catch(
-            (err): ApiResponse => {
-               notifyError(err.reason);
-               return { status: "failed" };
-            }
-         )
+         .catch((err): ApiResponse => {
+            notifyError(err.reason);
+            return { status: "failed" };
+         })
          .finally(() => {
             HideLoader();
          });
@@ -103,12 +97,10 @@ export class AuthAPI extends BaseAPI {
 
       return XHR.get(`${this.host}/user`, options)
          .then((resp): ApiResponse => ({ status: "success", data: resp }))
-         .catch(
-            (err): ApiResponse => {
-               notifyError(err.reason);
-               return { status: "failed" };
-            }
-         )
+         .catch((err): ApiResponse => {
+            notifyError(err.reason);
+            return { status: "failed" };
+         })
          .finally(() => {
             HideLoader();
          });

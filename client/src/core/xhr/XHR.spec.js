@@ -5,7 +5,7 @@ const { assert } = chai;
 
 describe("Test XML module", () => {
    const host = "https://httpbin.org/";
-   data = { a: "123", b: "hello" };
+   const data = { a: "123", b: "hello" };
 
    const isSame = (obj1, obj2) => JSON.stringify(obj1) === JSON.stringify(obj2);
 

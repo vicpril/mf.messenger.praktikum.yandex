@@ -72,9 +72,8 @@ export class TemplatorIf {
          const partIf = key[3].trim();
          const partElse = isUndefined(key[5]) ? "" : key[5].trim();
 
-         const [postString, operator, valueString] = this._parseCondition(
-            condition
-         );
+         const [postString, operator, valueString] =
+            this._parseCondition(condition);
 
          let post;
          if (postString.charAt(0) !== "!") {

@@ -1,3 +1,4 @@
+import { AuthController } from "../../controllers/Auth/AuthController";
 import { HideLoader, ShowLoader } from "../loader/loader";
 import { notifyError } from "../notify/notify";
 import { ApiResponse, BaseAPI, ErrorResponse } from "./BaseApi";
@@ -79,6 +80,9 @@ export class ChatsAPI extends BaseAPI {
    };
 
    private onError = (err: ErrorResponse): ApiResponse => {
+      if (err.reason === "Cookie is not valid") {
+         AuthController.logout(false);
+      }
       notifyError(err.reason);
       return { status: "failed" };
    };

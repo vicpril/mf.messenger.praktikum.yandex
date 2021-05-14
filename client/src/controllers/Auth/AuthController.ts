@@ -14,6 +14,7 @@ import { isSuccess } from "../../utils/pure-functions";
 // eslint-disable-next-line import/no-cycle
 import { MessengerController } from "../Messenger/MessengerController";
 import * as actions from "../../core/store/actions";
+import { getEmmiter } from "../../core/Emmiter";
 
 export class AuthController {
    constructor(private component: Component) {}
@@ -50,10 +51,13 @@ export class AuthController {
       }
    }
 
-   async logout() {
+   static async logout(logoutFromServer = true) {
       try {
-         await new AuthAPI().logout();
-         this.component.$emit("App:destroy");
+         if (logoutFromServer) {
+            await new AuthAPI().logout();
+         }
+         const emmiter = getEmmiter();
+         emmiter.emit("App:destroy");
          MessengerController.destroy();
 
          Store.get().dispatch(actions.logout());

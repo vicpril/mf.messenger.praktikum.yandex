@@ -6,7 +6,11 @@
    },
    "parser": "@typescript-eslint/parser",
    "parserOptions": {
-      "project": "./tsconfig.json"
+      // "ecmaVersion": 2018, // Allows for the parsing of modern ECMAScript features
+      // "sourceType": "module" // Allows for the use of imports
+
+      "project": ["./tsconfig.json"]
+      // "project": "./webpack.config.js"
    },
    "extends": ["airbnb-typescript", "prettier"],
    "plugins": ["prettier", "@typescript-eslint"],
@@ -21,7 +25,7 @@
       ],
       "no-unused-vars": "warn",
       "@typescript-eslint/no-unused-vars": "warn",
-      "camelcase": "warn",
+      "camelcase": "off",
       "no-console": "off",
       "func-names": "off",
       "class-methods-use-this": "off",
