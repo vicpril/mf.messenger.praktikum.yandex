@@ -14,3 +14,10 @@
    flex-flow: column nowrap;
    padding-bottom: 70px;
 }
+
+.messenger__wrapper .buffer {
+   height: 0;
+}
+.messenger__wrapper .buffer.file_attach_form_opened {
+   height: 80px;
+}

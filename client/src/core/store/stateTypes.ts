@@ -16,6 +16,7 @@ export type TState = {
       [chatId: number]: string;
    };
    messenger?: TMessengerState;
+   fileAttachForm?: TFileAttachState;
 };
 
 export type TRightSidebarState = {
@@ -25,6 +26,10 @@ export type TRightSidebarState = {
 };
 
 export type TLeftSidebarState = {
+   status?: "open" | "close";
+};
+
+export type TFileAttachState = {
    view?: LeftSidebarViews;
 };
 

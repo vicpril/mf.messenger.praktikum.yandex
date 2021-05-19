@@ -1,8 +1,5 @@
 export default /* html */ `
 <div class="messenger__menu">
-   <div class="messager__file_attach" style="background: grey; height: 80px;">
-      <span>File</span>
-   </div>
    <form class="form messenger__form" 
    <v-if="action">    
       action="{{action}}"

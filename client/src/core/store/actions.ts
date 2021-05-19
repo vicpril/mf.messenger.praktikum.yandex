@@ -2,7 +2,7 @@ import { TChat } from "../../models/Chat";
 import { TMessage } from "../../models/Message";
 import { TUser } from "../../models/User";
 import { Actions } from "./actionTypes";
-import { TUserState } from "./stateTypes";
+import { TFileAttachState, TUserState } from "./stateTypes";
 import { TAction } from "./Store";
 
 export function rightSidebar(data: any): TAction {
@@ -104,5 +104,12 @@ export function saveUsers(users: TUser[]): TAction {
 export function logout(): TAction {
    return {
       type: Actions.AUTH_LOGOUT,
+   };
+}
+
+export function fileAttach(data: TFileAttachState): TAction {
+   return {
+      type: Actions.RIGHTSIDEBAR_CHANGE_VIEW,
+      data,
    };
 }

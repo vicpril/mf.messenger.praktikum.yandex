@@ -14,9 +14,6 @@
    border-radius: 15px;
 }
 
-.block__message {
-}
-
 .block_foreign {
    .user__avatar {
       margin-right: 5px;
@@ -69,8 +66,8 @@
 
 .block__messages {
    display: flex;
-   flex-grow: 1;
    flex-direction: column;
+   flex-grow: 1;
    flex-wrap: nowrap;
 }
 

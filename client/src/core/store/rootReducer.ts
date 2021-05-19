@@ -129,6 +129,14 @@ export function rootReducer(state: TState, action: TAction): TState {
             },
          };
 
+      case Actions.FILE_ATTACH_CHANGE_VIEW:
+         return {
+            ...state,
+            fileAttachForm: {
+               ...action.data,
+            },
+         };
+
       default:
          return state;
    }
