@@ -4,7 +4,7 @@ import unknownAvatar from "../../../assets/unknown_avatar.png";
 
 import { strToColor } from "../../../utils/pure-functions";
 import template from "./Avatar.tmpl";
-import { BaseAPI } from "../../../core/xhr/BaseApi";
+import { ResourcesAPI } from "../../../core/xhr/ResourcesAPI";
 
 export const Avatar = {
    name: "Avatar",
@@ -22,7 +22,7 @@ export const Avatar = {
       let url = "";
       if (avatar) {
          if (avatar.startsWith("/")) {
-            url = new BaseAPI().getResourceURL(avatar);
+            url = new ResourcesAPI().getResourceURL(avatar);
          } else {
             url = avatar;
          }
