@@ -9,6 +9,7 @@ import * as actions from "../../../core/store/actions";
 import { Store } from "../../../core/store/Store";
 import { MessengerFileAttach } from "../MessengerFileAttach/MessengerFileAttach";
 import { ResourcesController } from "../../../controllers/Resource/ResourcesController";
+import { notifyError } from "../../../core/notify/notify";
 
 const { restrictedSymbols } = Validators;
 
@@ -73,6 +74,12 @@ export const MessengerMenu = {
             const input = e.target;
             if (input.files && input.files.length > 0) {
                const filename = input.value.split("\\").pop() as string;
+
+               if (!/\.(png|jpg|jpeg)$/.test(filename)) {
+                  notifyError("You can send only an image");
+                  return;
+               }
+
                const formData = new FormData();
                formData.append("resource", input.files[0], filename);
                new ResourcesController(this).uploadFile(formData);

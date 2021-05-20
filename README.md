@@ -13,6 +13,10 @@
 
 https://github.com/vicpril/mf.messenger.praktikum.yandex/pull/6
 
+**_Готово 4\* спринт:_**
+
+-  Реализована отправка изображений в чат.
+
 **_Готово 4 спринт:_**
 
 -  Настроен **Webpack**:

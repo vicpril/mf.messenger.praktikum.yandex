@@ -11,7 +11,7 @@ export default /* html */ `
    >
       <div class="input__wrapper">
          <label for="attachment">
-            <span type="button" class="button button__attach button_empty_primary"><i class="fas fa-paperclip fa-2x"></i></span>
+            <span type="button" class="button button__attach button_empty_primary"><i class="fas fa-paperclip fa-2x" title="Send a file"></i></span>
          </label>
          <input id="attachment" type="file" class="hidden" name="attachment" value=""/>
          <input type="text" class="input input__message" name="message" value="" placeholder="Type a new message ..."/>
