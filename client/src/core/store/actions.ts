@@ -2,8 +2,8 @@ import { TChat } from "../../models/Chat";
 import { TMessage } from "../../models/Message";
 import { TUser } from "../../models/User";
 import { Actions } from "./actionTypes";
-import { TFileAttachState, TUserState } from "./stateTypes";
-import { TAction } from "./Store";
+import { TFile, TFileAttachState, TUserState } from "./stateTypes";
+import { Store, TAction } from "./Store";
 
 export function rightSidebar(data: any): TAction {
    return {
@@ -107,9 +107,30 @@ export function logout(): TAction {
    };
 }
 
-export function fileAttach(data: TFileAttachState): TAction {
+export function fileAttachOpenForm(): TAction {
    return {
-      type: Actions.RIGHTSIDEBAR_CHANGE_VIEW,
-      data,
+      type: Actions.FILE_ATTACH,
+      data: { status: "open" },
+   };
+}
+
+export function fileAttachCloseForm(): TAction {
+   return {
+      type: Actions.FILE_ATTACH,
+      data: { status: "close", file: null },
+   };
+}
+
+export function fileAttachAddFile(file: TFile): TAction {
+   return {
+      type: Actions.FILE_ATTACH,
+      data: { file },
+   };
+}
+
+export function fileAttachRemoveFile(): TAction {
+   return {
+      type: Actions.FILE_ATTACH,
+      data: { file: null },
    };
 }

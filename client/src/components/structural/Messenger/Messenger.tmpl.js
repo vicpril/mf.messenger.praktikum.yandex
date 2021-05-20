@@ -5,7 +5,7 @@ export default /* html */ `
       <v-for :block :index in blocks>
          <Block bind:block="blocks[{{index}}]"></Block>
       </v-for>
-      <div class="buffer file_attach_form_opened"></div>
+      <div class="buffer"></div>
    </div>
    <!-- end messenger__wrapper -->   
 </div>

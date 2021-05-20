@@ -1,19 +1,13 @@
 export default /* html */ `
-<div class="messenger__menu">
-   <form class="form messenger__form" 
-   <v-if="action">    
-      action="{{action}}"
-   </v-if>
-   <v-if="method">    
-      method="{{method}}"
-   </v-if>
-   >
-      <div class="input__wrapper">
-         <button type="button" class="button button__attach button_empty_primary"><i class="fas fa-paperclip fa-2x"></i></button>
-         <input type="text" class="hidden" name="attachment" value=""/>
-         <input type="text" class="input input__message" name="message" value="" placeholder="Type a new message ..."/>
-         <button type="submit" class="button button__submit button_primary">Send</button>
+
+<div class="messager_menu__file_attach__wrapper">
+   <div class="messager_menu__file_attach">
+      <div class="file_attach__file">
+         <div class="file__actions">
+         <button class="button button_primary file__close" data-action="close">&times;</button>
+         </div>
+         <img src="" />
       </div>
-   </form>
+   </div>
 </div>
 `;

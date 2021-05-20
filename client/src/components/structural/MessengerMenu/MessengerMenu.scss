@@ -5,9 +5,14 @@
    right: 360px;
    bottom: 0;
    left: 330px;
+   z-index: 2000;
    padding: 0 10px;
-   background-color: #fff;
+   background-color: transparent;
    transition: right 0.5s ease-out;
+}
+
+.messenger__form {
+   background-color: #fff;
 }
 
 .input__wrapper {

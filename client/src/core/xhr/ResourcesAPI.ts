@@ -14,7 +14,7 @@ type ResourceResponse = {
 };
 
 export class ResourcesAPI extends BaseAPI {
-   private host = `${this.basehost}/resourses`;
+   private host = `${this.basehost}/resources`;
 
    private onError = (err: ErrorResponse): ApiResponse => {
       notifyError(err.reason);

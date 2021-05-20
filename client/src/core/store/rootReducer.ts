@@ -129,10 +129,12 @@ export function rootReducer(state: TState, action: TAction): TState {
             },
          };
 
-      case Actions.FILE_ATTACH_CHANGE_VIEW:
+      case Actions.FILE_ATTACH:
+         prevStateLocal = state.fileAttachForm || {};
          return {
             ...state,
             fileAttachForm: {
+               ...prevStateLocal,
                ...action.data,
             },
          };
