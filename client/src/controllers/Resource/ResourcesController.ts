@@ -1,14 +1,18 @@
 import { Component } from "../../core/Component";
 import { ResourcesAPI } from "../../core/xhr/ResourcesAPI";
 import * as actions from "../../core/store/actions";
-import { TFile } from "../../core/store/stateTypes";
+import { TFile, TFileAttachState } from "../../core/store/stateTypes";
 import { Store } from "../../core/store/Store";
 
 export class ResourcesController {
    constructor(private component: Component) {}
 
+   static getFileAttachedState(): TFileAttachState | undefined {
+      return Store.get().getState().fileAttachForm;
+   }
+
    static getAttachedFile(): TFile | null {
-      return Store.get().getState().fileAttachForm?.file || null;
+      return ResourcesController.getFileAttachedState()?.file || null;
    }
 
    async uploadFile(formData: FormData) {

@@ -1,5 +1,5 @@
 // eslint-disable-next-line import/no-cycle
-import { TMessage } from "../models/Message";
+import { MessageTypes, TMessage } from "../models/Message";
 
 export class DateCustom extends Date {
    constructor(timestemp: string | number) {
@@ -18,9 +18,4 @@ export class DateCustom extends Date {
       const YYYY = this.getFullYear();
       return `${DD}.${MM}.${YYYY}`;
    }
-}
-
-export function mapMessageDateCustom(message: TMessage) {
-   message.date = new DateCustom(+Date.parse(message.time));
-   return message;
 }

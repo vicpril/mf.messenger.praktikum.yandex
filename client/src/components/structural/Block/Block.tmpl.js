@@ -19,12 +19,7 @@ export default /* html */ `
       <Avatar bind:user="block.content.user"></Avatar>
       <div class="block__messages">
             <v-for :message :index in block.content.messages>
-               <div class="message__wrapper">
-               <div class="message__content">
-                        <span class="message_text">{{message.content}}</span>
-                  </div>
-                  <span class="message__time">{{message.date.getTimeFormatted}}</span>
-               </div>
+               <Message bind:message="block.content.messages[{{index}}]"></Message>
             </v-for>
       </div>
    </div>

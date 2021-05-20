@@ -44,6 +44,14 @@ export const MessengerMenu = {
          if ($form.hasClass("messenger__form")) {
             e.preventDefault();
 
+            // Sending file
+            const file = ResourcesController.getAttachedFile();
+            if (file) {
+               new MessengerController(this).sendFileMessage(file.id);
+               this.$dispatch(actions.fileAttachCloseForm());
+            }
+
+            // Sending message
             const control = useForm(this.props.form).controls;
             if (control && !control.message.valid) {
                $form.addClass("invalid");
@@ -69,13 +77,6 @@ export const MessengerMenu = {
                formData.append("resource", input.files[0], filename);
                new ResourcesController(this).uploadFile(formData);
             }
-
-            // const status = Store.get().getState().fileAttachForm?.status;
-            // if (status === "open") {
-            //    this.$dispatch(actions.fileAttachCloseForm());
-            // } else {
-            //    this.$dispatch(actions.fileAttachOpenForm());
-            // }
          }
       },
    },
