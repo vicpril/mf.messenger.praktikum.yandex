@@ -8,7 +8,7 @@
    margin-left: 0;
    padding: 15px;
    padding-bottom: 8px;
-   background-color: $light;
+   background-color: $secondary;
    border-radius: 0 15px 15px 15px;
 }
 .message__content {
@@ -23,12 +23,12 @@
 .message__time {
    display: block;
    margin-top: 5px;
-   color: $info;
+   color: $dark-grey;
    font-size: 11px;
    text-align: right;
 }
 
 img.message_file {
    max-height: 350px;
-   background-color: #fff;
+   background-color: $backgraund_main;
 }

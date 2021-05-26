@@ -4,7 +4,7 @@
    z-index: 1000;
    padding: 10px;
    padding-bottom: 0;
-   background-color: #fff;
+   background-color: $backgraund_main;
    visibility: hidden;
    opacity: 0;
    transition: all 0.3s ease-in;
@@ -34,7 +34,7 @@
    display: inline-block;
    width: 70px;
    height: 70px;
-   background-color: #fff;
+   background-color: $backgraund_main;
    border-radius: 5px;
 }
 .file__actions {

@@ -85,6 +85,7 @@ export function rootReducer(state: TState, action: TAction): TState {
             selectedChatId: null,
             users: {},
             chats: {},
+            theme: "light",
          };
 
       case Actions.TOKENS_SAVE:
@@ -137,6 +138,13 @@ export function rootReducer(state: TState, action: TAction): TState {
                ...prevStateLocal,
                ...action.data,
             },
+         };
+
+      case Actions.THEME_CHANGE:
+         prevStateLocal = state.theme || "light";
+         return {
+            ...state,
+            theme: prevStateLocal === "light" ? "dark" : "light",
          };
 
       default:

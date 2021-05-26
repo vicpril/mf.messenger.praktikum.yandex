@@ -1,0 +1,25 @@
+// Colors
+$primary: #6588de !default;
+$light: #e3f6fc !default;
+$secondary: #73cf61be !default;
+$grey: #b5c2ce !default;
+$dark-grey: #52585d !default;
+$info: #c0cef1 !default;
+$hover: #d7ecf9 !default;
+$success: #4af3c0 !default;
+$danger: #ff7d7d !default;
+$warning: orange !default;
+$white: #fff;
+$backgraund_main: #fff !default;
+
+// Text colors
+$text-primary: $primary !default;
+$text-secondary: $secondary !default;
+$text-danger: $danger !default;
+$text-info: $info !default;
+$text-grey: $dark-grey !default;
+$text-light-grey: $grey !default;
+$text-white: $white !important;
+
+// Fonts
+$font-primary: "Inter";

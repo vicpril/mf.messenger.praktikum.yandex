@@ -2,8 +2,8 @@ import { TChat } from "../../models/Chat";
 import { TMessage } from "../../models/Message";
 import { TUser } from "../../models/User";
 import { Actions } from "./actionTypes";
-import { TFile, TFileAttachState, TUserState } from "./stateTypes";
-import { Store, TAction } from "./Store";
+import { TFile, TUserState } from "./stateTypes";
+import { TAction } from "./Store";
 
 export function rightSidebar(data: any): TAction {
    return {
@@ -132,5 +132,11 @@ export function fileAttachRemoveFile(): TAction {
    return {
       type: Actions.FILE_ATTACH,
       data: { file: null },
+   };
+}
+
+export function toggleTheme(): TAction {
+   return {
+      type: Actions.THEME_CHANGE,
    };
 }

@@ -17,6 +17,7 @@ export type TState = {
    };
    messenger?: TMessengerState;
    fileAttachForm?: TFileAttachState;
+   theme?: "light" | "dark";
 };
 
 export type TRightSidebarState = {

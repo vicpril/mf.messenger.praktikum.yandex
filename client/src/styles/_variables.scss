@@ -1,23 +1,48 @@
+body,
+body[data-theme="light"] {
+   --light: #e3f6fc;
+   --secondary: #73cf61be;
+   --flat-white: #fff;
+   --grey: #b5c2ce;
+   --dark-grey: #52585d;
+   --hover: #d7ecf9;
+   --info: #c0cef1;
+}
+
+body[data-theme="dark"] {
+   --light: #232536;
+   --secondary: #46bba7;
+   --flat-white: #1e1e2e;
+   --grey: #c0c0c0;
+   --dark-grey: #eee;
+   --hover: #340985;
+   --info: #485679;
+}
+
+//Theme colors
+$light: var(--light) !default;
+$secondary: var(--secondary) !default;
+$white: var(--flat-white) !default;
+$grey: var(--grey) !default;
+$dark-grey: var(--dark-grey) !default;
+$hover: var(--hover) !default;
+$info: var(--info) !default;
+
 // Colors
 $primary: #6588de !default;
-$secondary: #73cf61be !default;
-$light: #e3f6fc !default;
-$grey: #b5c2ce !default;
-$info: #c0cef1 !default;
-$hover: #d7ecf9 !default;
 $success: #4af3c0 !default;
 $danger: #ff7d7d !default;
 $warning: orange !default;
-$backgraund_main: #fff !default;
+$backgraund_main: $white !default;
 
 // Text colors
 $text-primary: $primary !default;
 $text-secondary: $secondary !default;
 $text-danger: $danger !default;
 $text-info: $info !default;
-$text-grey: #52585d !default;
-$text-light-grey: #96a9ba !default;
-$text-white: #fff !important;
+$text-grey: $dark-grey !default;
+$text-light-grey: $grey !default;
+$text-white: $white !important;
 
 // Fonts
 $font-primary: "Inter";

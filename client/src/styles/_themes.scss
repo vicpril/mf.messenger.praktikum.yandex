@@ -1,0 +1,14 @@
+body,
+body[data-theme="light"] {
+   --primaryColor: #6588de;
+   --lightColor: #e3f6fc;
+}
+body[data-theme="dark"] {
+   --primaryColor: black;
+   --secondaryColor: white;
+}
+
+:root {
+   --primaryColor: black;
+   --lightColor: #e3f6fc;
+}
