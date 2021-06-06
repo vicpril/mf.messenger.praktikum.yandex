@@ -118,6 +118,29 @@ export class YPSocket {
       }
    }
 
+   async sendFile(fileId: number) {
+      const send = function () {
+         this.socket?.send(
+            JSON.stringify({
+               content: fileId.toString(),
+               type: MessageTypes.FILE,
+            })
+         );
+      };
+
+      try {
+         if (this.socket?.readyState === 1) {
+            send.call(this);
+         } else {
+            setTimeout(() => {
+               send.call(this);
+            }, 500);
+         }
+      } catch (error) {
+         console.warn("Send file error", error);
+      }
+   }
+
    async fetch(lastFetchedMessageId: number = 0) {
       try {
          await this.send(lastFetchedMessageId.toString(), MessageTypes.GET_OLD);

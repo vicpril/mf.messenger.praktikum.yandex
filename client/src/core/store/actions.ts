@@ -2,7 +2,7 @@ import { TChat } from "../../models/Chat";
 import { TMessage } from "../../models/Message";
 import { TUser } from "../../models/User";
 import { Actions } from "./actionTypes";
-import { TUserState } from "./stateTypes";
+import { TFile, TUserState } from "./stateTypes";
 import { TAction } from "./Store";
 
 export function rightSidebar(data: any): TAction {
@@ -104,5 +104,39 @@ export function saveUsers(users: TUser[]): TAction {
 export function logout(): TAction {
    return {
       type: Actions.AUTH_LOGOUT,
+   };
+}
+
+export function fileAttachOpenForm(): TAction {
+   return {
+      type: Actions.FILE_ATTACH,
+      data: { status: "open" },
+   };
+}
+
+export function fileAttachCloseForm(): TAction {
+   return {
+      type: Actions.FILE_ATTACH,
+      data: { status: "close", file: null },
+   };
+}
+
+export function fileAttachAddFile(file: TFile): TAction {
+   return {
+      type: Actions.FILE_ATTACH,
+      data: { file },
+   };
+}
+
+export function fileAttachRemoveFile(): TAction {
+   return {
+      type: Actions.FILE_ATTACH,
+      data: { file: null },
+   };
+}
+
+export function toggleTheme(): TAction {
+   return {
+      type: Actions.THEME_CHANGE,
    };
 }

@@ -1,14 +1,16 @@
+@import "../styles/variables";
 .input {
    height: 30px;
    padding: 0 15px;
-   color: #52585d;
-   background-color: rgba(#fff, 0.8);
+   color: $grey;
+   background-color: $backgraund_main;
    border: 1px solid $info;
    border-radius: 12px;
    outline: none;
+   opacity: 0.8;
 }
 
 .input.invalid {
-   background-color: lighten($danger, 50%);
+   background-color: $danger;
    border-color: $danger;
 }

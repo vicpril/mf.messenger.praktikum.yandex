@@ -5,13 +5,18 @@ import template from "./MessengerMenu.tmpl";
 import { Validators } from "../../../core/validator/validators";
 import { useForm } from "../../../core/validator/form";
 import { MessengerController } from "../../../controllers/Messenger/MessengerController";
+import * as actions from "../../../core/store/actions";
+import { Store } from "../../../core/store/Store";
+import { MessengerFileAttach } from "../MessengerFileAttach/MessengerFileAttach";
+import { ResourcesController } from "../../../controllers/Resource/ResourcesController";
+import { notifyError } from "../../../core/notify/notify";
 
 const { restrictedSymbols } = Validators;
 
 export const MessengerMenu = {
    name: "MessengerMenu",
    template: template,
-   components: [],
+   components: [MessengerFileAttach],
    props: {
       form: {
          message: {
@@ -20,7 +25,7 @@ export const MessengerMenu = {
          },
       },
    },
-   listeners: ["submit", "click", "keyup"],
+   listeners: ["submit", "change", "keyup"],
    subscribers: {},
    methods: {
       onKeyup(e: Event & { target: HTMLInputElement }) {
@@ -40,6 +45,14 @@ export const MessengerMenu = {
          if ($form.hasClass("messenger__form")) {
             e.preventDefault();
 
+            // Sending file
+            const file = ResourcesController.getAttachedFile();
+            if (file) {
+               new MessengerController(this).sendFileMessage(file.id);
+               this.$dispatch(actions.fileAttachCloseForm());
+            }
+
+            // Sending message
             const control = useForm(this.props.form).controls;
             if (control && !control.message.valid) {
                $form.addClass("invalid");
@@ -56,12 +69,21 @@ export const MessengerMenu = {
             $(e.target).find("input.input__message").val("");
          }
       },
-      onClick(e: Event & { target: Element }): void {
-         if (
-            $(e.target).hasClass("button__attach") ||
-            $(e.target).hasClass("fa-paperclip")
-         ) {
-            console.log("TODO This attaches something...");
+      onChange(e: Event & { target: HTMLInputElement }): void {
+         if ($(e.target).hasId("attachment")) {
+            const input = e.target;
+            if (input.files && input.files.length > 0) {
+               const filename = input.value.split("\\").pop() as string;
+
+               if (!/\.(png|jpg|jpeg)$/.test(filename)) {
+                  notifyError("You can send only an image");
+                  return;
+               }
+
+               const formData = new FormData();
+               formData.append("resource", input.files[0], filename);
+               new ResourcesController(this).uploadFile(formData);
+            }
          }
       },
    },

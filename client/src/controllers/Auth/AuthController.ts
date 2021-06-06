@@ -61,6 +61,7 @@ export class AuthController {
          MessengerController.destroy();
 
          Store.get().dispatch(actions.logout());
+         document.body.removeAttribute("data-theme");
          Router.navigate("signin");
       } catch (error) {
          console.warn(error);

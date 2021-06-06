@@ -14,9 +14,6 @@
    border-radius: 15px;
 }
 
-.block__message {
-}
-
 .block_foreign {
    .user__avatar {
       margin-right: 5px;
@@ -39,7 +36,7 @@
    .message__wrapper {
       margin-right: 0;
       margin-left: auto;
-      background-color: $secondary !important;
+      background-color: $primary !important;
       border-radius: 15px 0 15px 15px;
    }
 
@@ -48,7 +45,7 @@
    }
 
    .message__time {
-      color: darken($secondary, 20%);
+      color: lighten($primary, 20%);
    }
 }
 
@@ -69,35 +66,7 @@
 
 .block__messages {
    display: flex;
-   flex-grow: 1;
    flex-direction: column;
+   flex-grow: 1;
    flex-wrap: nowrap;
-}
-
-.message__wrapper {
-   display: inline-block;
-   max-width: 75%;
-   margin-right: auto;
-   margin-bottom: 10px;
-   margin-left: 0;
-   padding: 15px;
-   padding-bottom: 8px;
-   background-color: $light;
-   border-radius: 0 15px 15px 15px;
-}
-.message__content {
-   display: flex;
-   flex-flow: column nowrap;
-}
-.message_text {
-   color: $text-grey;
-   font-size: 13px;
-   line-height: 20px;
-}
-.message__time {
-   display: block;
-   margin-top: 5px;
-   color: $info;
-   font-size: 11px;
-   text-align: right;
 }

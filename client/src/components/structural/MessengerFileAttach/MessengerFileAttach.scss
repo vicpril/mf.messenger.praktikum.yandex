@@ -1,0 +1,54 @@
+@import "../../../styles/variables";
+
+.messager_menu__file_attach__wrapper {
+   z-index: 1000;
+   padding: 10px;
+   padding-bottom: 0;
+   background-color: $backgraund_main;
+   visibility: hidden;
+   opacity: 0;
+   transition: all 0.3s ease-in;
+
+   &.open {
+      visibility: visible;
+      opacity: 1;
+   }
+}
+
+.messager_menu__file_attach {
+   display: flex;
+   flex-flow: row;
+   width: min-content;
+   height: 70px;
+   margin: 0 20px;
+   padding: 10px 20px;
+   background: $light;
+   border-radius: 20px;
+}
+
+.file_attach__file:not(:last-child) {
+   margin-right: 15px;
+}
+
+.file_attach__file img {
+   display: inline-block;
+   width: 70px;
+   height: 70px;
+   background-color: $backgraund_main;
+   border-radius: 5px;
+}
+.file__actions {
+   position: relative;
+   background-color: chocolate;
+}
+
+.file__close {
+   position: absolute;
+   top: -2px;
+   right: -2px;
+   align-self: flex-start;
+   padding: 0 5px !important;
+   color: $text-white;
+   font-size: 17px;
+   background-color: $primary;
+}

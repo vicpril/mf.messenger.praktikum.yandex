@@ -13,6 +13,11 @@
 
 https://github.com/vicpril/mf.messenger.praktikum.yandex/pull/6
 
+**_Готово 4\* спринт:_**
+
+-  Реализована отправка изображений в чат.
+-  Реализовано переключение светлой/темной темы с приятной анимацией.
+
 **_Готово 4 спринт:_**
 
 -  Настроен **Webpack**:
@@ -98,7 +103,13 @@ https://github.com/vicpril/mf.messenger.praktikum.yandex/pull/6
 
 Жмакай на чаты - увидишь сообщения!
 
-![Скрин](screenshots/chat.png)
+#### Светлая тема
+
+![Light Theme](screenshots/light-theme.png)
+
+#### Темная тема
+
+![Dark Theme](screenshots/dark-theme.png)
 
 ## Heroku
 

@@ -72,6 +72,10 @@ export class MessengerController {
       }
    }
 
+   async sendFileMessage(fileId: number) {
+      await MessengerController.connection.sendFile(fileId);
+   }
+
    onGetMessage(data: MessageLife) {
       // single message
       if (

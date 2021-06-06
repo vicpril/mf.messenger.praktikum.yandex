@@ -43,6 +43,14 @@ export const Messenger = {
       selectedChatId: async function (_: number) {
          changeContent.call(this, this.parentComponent);
       },
+      fileAttachForm: function (changes: any) {
+         console.log("~ changes", changes);
+         if (changes.status === "open") {
+            this.$root.find(".buffer").addClass("file_attach_form_opened");
+         } else {
+            this.$root.find(".buffer").removeClass("file_attach_form_opened");
+         }
+      },
    },
    methods: {},
 

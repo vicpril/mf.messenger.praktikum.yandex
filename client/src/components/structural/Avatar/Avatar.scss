@@ -1,10 +1,10 @@
 @import "../../../styles/variables";
 
 img.user__avatar {
-   object-fit: cover;
    width: 44px;
    height: 44px;
-   background-color: #fff;
+   object-fit: cover;
+   background-color: $backgraund_main;
    border: 3px solid;
    border-radius: 50%;
 }
